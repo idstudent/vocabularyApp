@@ -1,11 +1,9 @@
-package com.ljyVoca.vocabularyapp
+package com.ljyVoca.vocabularyapp.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ljyVoca.vocabularyapp.databinding.ActivityMainBinding
 import com.ljyVoca.vocabularyapp.util.setOnSingleClickListener
-import com.ljyVoca.vocabularyapp.view.SaveWordActivity
 
 class MainActivity: BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +14,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>() {
 
     private fun initListener() {
         binding.run {
+            btnStart.setOnSingleClickListener {
+                val intent = Intent(this@MainActivity, CheckActivity::class.java)
+                startActivity(intent)
+            }
             btnInsert.setOnSingleClickListener {
                 val intent = Intent(this@MainActivity, SaveWordActivity::class.java)
                 startActivity(intent)

@@ -2,6 +2,7 @@ package com.ljyVoca.vocabularyapp.di
 
 import com.ljyVoca.vocabularyapp.db.VocabularyDatabase
 import com.ljyVoca.vocabularyapp.repository.SaveWordRepository
+import com.ljyVoca.vocabularyapp.repository.VocabularyRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +18,9 @@ class VocaRepositoryModule {
         return SaveWordRepository(vocaDatabase)
     }
 
+    @Singleton
+    @Provides
+    fun provideVocabularyRepository(vocaDatabase: VocabularyDatabase): VocabularyRepository {
+        return VocabularyRepository(vocaDatabase)
+    }
 }

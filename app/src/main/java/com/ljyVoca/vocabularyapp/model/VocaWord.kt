@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class VocaWord(
     @PrimaryKey
     val word: String,
-    val mean: String
+    val mean: String,
+    var ending: Boolean = false
 )

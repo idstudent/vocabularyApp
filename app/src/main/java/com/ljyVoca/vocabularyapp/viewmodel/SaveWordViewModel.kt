@@ -1,4 +1,4 @@
-package com.ljyVoca.vocabularyapp
+package com.ljyVoca.vocabularyapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

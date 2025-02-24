@@ -1,11 +1,8 @@
 package com.ljyVoca.vocabularyapp.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.ljyVoca.vocabularyapp.BaseActivity
-import com.ljyVoca.vocabularyapp.R
-import com.ljyVoca.vocabularyapp.SaveWordViewModel
+import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.databinding.ActivitySaveWordBinding
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.util.setOnSingleClickListener
@@ -24,7 +21,7 @@ class SaveWordActivity: BaseActivity<ActivitySaveWordBinding>() {
     private fun initListener() {
         binding.run {
             btnSave.setOnSingleClickListener {
-                saveWordViewModel.insertVoca(VocaWord(etWord.text.toString(), etMean.text.toString()))
+                saveWordViewModel.insertVoca(VocaWord(etWord.text.toString().lowercase(), etMean.text.toString()))
                 finish()
             }
         }

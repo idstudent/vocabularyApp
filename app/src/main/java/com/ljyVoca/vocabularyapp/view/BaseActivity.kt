@@ -1,4 +1,4 @@
-package com.ljyVoca.vocabularyapp
+package com.ljyVoca.vocabularyapp.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
