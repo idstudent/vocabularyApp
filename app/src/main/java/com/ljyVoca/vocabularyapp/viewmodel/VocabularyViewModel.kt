@@ -17,6 +17,9 @@ class VocabularyViewModel @Inject constructor(
     private val _wordList = MutableStateFlow<List<VocaWord>>(emptyList())
     val wordList = _wordList.asStateFlow()
 
+    private val _saveWordList = MutableStateFlow<List<VocaWord>>(emptyList())
+    val saveWordList = _saveWordList.asStateFlow()
+
     private val _currentWord = MutableStateFlow<VocaWord?>(null)
     val currentWord = _currentWord.asStateFlow()
 
@@ -32,6 +35,11 @@ class VocabularyViewModel @Inject constructor(
         }
     }
 
+    fun getAllWord() {
+        viewModelScope.launch {
+            _saveWordList.value = vocabularyRepository.getAllWord()
+        }
+    }
     fun nextGetWord() {
         currentIndex++
         if(currentIndex < _wordList.value.size) {

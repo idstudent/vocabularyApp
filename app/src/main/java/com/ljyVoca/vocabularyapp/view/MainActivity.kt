@@ -22,6 +22,10 @@ class MainActivity: BaseActivity<ActivityMainBinding>() {
                 val intent = Intent(this@MainActivity, SaveWordActivity::class.java)
                 startActivity(intent)
             }
+            btnList.setOnSingleClickListener {
+                val intent = Intent(this@MainActivity, WordListActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
     override fun getViewBinding(): ActivityMainBinding {
