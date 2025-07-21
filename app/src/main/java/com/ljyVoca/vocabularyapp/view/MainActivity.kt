@@ -1,34 +1,21 @@
 package com.ljyVoca.vocabularyapp.view
 
-import android.content.Intent
 import android.os.Bundle
-import com.ljyVoca.vocabularyapp.databinding.ActivityMainBinding
-import com.ljyVoca.vocabularyapp.util.setOnSingleClickListener
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
+import com.ljyVoca.vocabularyapp.screen.MainScreen
+import com.ljyVoca.vocabularyapp.ui.theme.LjyVocaTheme
 
-class MainActivity: BaseActivity<ActivityMainBinding>() {
+
+class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initListener()
-    }
-
-    private fun initListener() {
-        binding.run {
-            btnStart.setOnSingleClickListener {
-                val intent = Intent(this@MainActivity, CheckActivity::class.java)
-                startActivity(intent)
-            }
-            btnInsert.setOnSingleClickListener {
-                val intent = Intent(this@MainActivity, SaveWordActivity::class.java)
-                startActivity(intent)
-            }
-            btnList.setOnSingleClickListener {
-                val intent = Intent(this@MainActivity, WordListActivity::class.java)
-                startActivity(intent)
+        setContent {
+            LjyVocaTheme {
+                MainScreen(navController = rememberNavController())
             }
         }
-    }
-    override fun getViewBinding(): ActivityMainBinding {
-        return ActivityMainBinding.inflate(layoutInflater)
     }
 }

@@ -1,4 +1,4 @@
-package com.exam.compose_clone.navigation
+package com.ljyVoca.vocabularyapp.navigation
 
 object AppRoutes {
 }

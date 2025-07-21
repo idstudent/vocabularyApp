@@ -1,4 +1,4 @@
-package com.exam.compose_clone.navigation
+package com.ljyVoca.vocabularyapp.navigation
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,7 +31,7 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.exam.compose_clone.AppColors
+import com.exam.compose_clone.navigation.NaviItem
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
@@ -54,7 +55,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(AppColors.PrimaryColor)
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         Row(
             modifier = Modifier
@@ -108,14 +109,14 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
                         Icon(
                             imageVector = item.icon,
                             contentDescription = item.title,
-                            tint = AppColors.White,
+                            tint = MaterialTheme.colorScheme.primary,
                         )
 
                         if (isSelected) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = item.title,
-                                color = AppColors.White,
+                                color = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     }
@@ -130,7 +131,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
                     .clip(RoundedCornerShape(20.dp))
                     .border(
                         width = 1.dp,
-                        color = AppColors.White,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         shape = RoundedCornerShape(20.dp)
                     )
                     .size(width = animatedWidth.dp, height = 48.dp)
