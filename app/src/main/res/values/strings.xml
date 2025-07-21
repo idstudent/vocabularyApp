@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">vocabularyApp</string>
+    <string name="today_words">오늘의 단어</string>
+    <string name="more">더보기</string>
 </resources>

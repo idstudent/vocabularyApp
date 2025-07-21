@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,7 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ljyVoca.vocabularyapp.components.Divider
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
@@ -51,90 +53,93 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
         animationSpec = tween(durationMillis = 300)
     )
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.primary)
-    ) {
-        Row(
+    Column {
+        Divider(MaterialTheme.colorScheme.secondary)
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 12.dp),
-
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .background(MaterialTheme.colorScheme.onPrimary)
         ) {
-            items.forEachIndexed { index, item ->
-                val isSelected = currentRoute == item.route
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 12.dp),
 
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .clickable {
-                            if (!isSelected) {
-                                navController.navigate(item.route) {
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                items.forEachIndexed { index, item ->
+                    val isSelected = currentRoute == item.route
+
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(20.dp))
+                            .clickable {
+                                if (!isSelected) {
+                                    navController.navigate(item.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
                                     }
-                                    launchSingleTop = true
-                                    restoreState = true
                                 }
                             }
-                        }
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .onGloballyPositioned { coordinates ->
-                            with(density) {
-                                // 양옆 패딩 16dp씩해서 32dp 추가
-                                val totalWidth = coordinates.size.width.toDp() + 32.dp
-                                tabWidths = tabWidths.toMutableList().apply {
-                                    this[index] = totalWidth
-                                }
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .onGloballyPositioned { coordinates ->
+                                with(density) {
+                                    // 양옆 패딩 16dp씩해서 32dp 추가
+                                    val totalWidth = coordinates.size.width.toDp() + 32.dp
+                                    tabWidths = tabWidths.toMutableList().apply {
+                                        this[index] = totalWidth
+                                    }
 
-                                /*  positionInParent는 패딩적용 후 컨텐츠의 포지션을 줌 그래서 위에서 패딩 준 값부터
+                                    /*  positionInParent는 패딩적용 후 컨텐츠의 포지션을 줌 그래서 위에서 패딩 준 값부터
                                     시작해야되서 -16 해준거임
                                     24는 row 패딩
                                  */
-                                val absoluteX = coordinates.positionInParent().x - 16.dp.toPx()
-                                tabPositions = tabPositions.toMutableList().apply {
-                                    this[index] = (absoluteX + 24.dp.toPx()).toDp()
+                                    val absoluteX = coordinates.positionInParent().x - 16.dp.toPx()
+                                    tabPositions = tabPositions.toMutableList().apply {
+                                        this[index] = (absoluteX + 24.dp.toPx()).toDp()
+                                    }
                                 }
                             }
-                        }
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = item.title,
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                        )
-
-                        if (isSelected) {
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = item.title,
-                                color = MaterialTheme.colorScheme.onPrimary
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Icon(
+                                imageVector = item.icon,
+                                contentDescription = item.title,
+                                tint = MaterialTheme.colorScheme.secondary,
                             )
+
+                            if (isSelected) {
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = item.title,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (selectedIndex >= 0) {
-            Box(
-                modifier = Modifier
-                    .offset(x = animatedOffset.dp, y = 8.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        shape = RoundedCornerShape(20.dp)
-                    )
-                    .size(width = animatedWidth.dp, height = 48.dp)
-            )
+            if (selectedIndex >= 0) {
+                Box(
+                    modifier = Modifier
+                        .offset(x = animatedOffset.dp, y = 8.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.secondary,
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .size(width = animatedWidth.dp, height = 48.dp)
+                )
+            }
         }
     }
 }
