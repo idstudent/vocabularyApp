@@ -31,7 +31,6 @@ import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.exam.compose_clone.navigation.NaviItem
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
@@ -109,7 +108,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
                         Icon(
                             imageVector = item.icon,
                             contentDescription = item.title,
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                         )
 
                         if (isSelected) {

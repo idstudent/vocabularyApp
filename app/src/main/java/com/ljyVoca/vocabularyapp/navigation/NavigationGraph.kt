@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.exam.compose_clone.navigation.NaviItem
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 
 @Composable

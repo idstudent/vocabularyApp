@@ -1,4 +1,4 @@
-package com.exam.compose_clone.navigation
+package com.ljyVoca.vocabularyapp.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
