@@ -1,5 +1,6 @@
 package com.ljyVoca.vocabularyapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ljyVoca.vocabularyapp.model.VocaWord
@@ -27,7 +28,11 @@ class VocabularyViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            val words = vocabularyRepository.getAllWord()
+            Log.e("ljy", "단어 개수: ${words.size}")
+
             _wordList.value = vocabularyRepository.getAllWord().shuffled()
+
 
             if(_wordList.value.isNotEmpty()) {
                 _currentWord.value = _wordList.value[0]

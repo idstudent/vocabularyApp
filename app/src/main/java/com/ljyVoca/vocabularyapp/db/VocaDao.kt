@@ -13,4 +13,7 @@ interface VocaDao {
 
     @Query("SELECT * FROM voca")
     suspend fun getAllWords(): List<VocaWord>
+
+    @Query("SELECT * FROM voca WHERE DATE(createdDate/1000, 'unixepoch') = DATE('now') ORDER BY createdDate DESC")
+    suspend fun getTodayWords(): List<VocaWord>
 }

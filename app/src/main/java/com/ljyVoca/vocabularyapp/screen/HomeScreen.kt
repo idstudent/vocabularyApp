@@ -18,19 +18,26 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.Divider
+import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
+import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
+    val vocabularyViewModel: VocabularyViewModel = hiltViewModel()
+    val wordList by vocabularyViewModel.wordList.collectAsState()
+
     Scaffold(
         topBar = {
             Column {
@@ -40,7 +47,6 @@ fun HomeScreen() {
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.onPrimary,
-                        titleContentColor = MaterialTheme.colorScheme.onSecondary
                     )
                 )
                 Divider()
@@ -55,7 +61,7 @@ fun HomeScreen() {
                 .verticalScroll(rememberScrollState())
         ) {
             TodayWordTitleSection()
-            TodayCardSection()
+            TodayCardSection(wordList)
         }
     }
 }
@@ -70,9 +76,7 @@ private fun TodayWordTitleSection() {
     ) {
         Text(
             stringResource(R.string.today_words),
-            style = AppTypography.fontSize20Regular.copy(
-                color = MaterialTheme.colorScheme.onSecondary
-            ),
+            style = AppTypography.fontSize20SemiBold,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -80,7 +84,7 @@ private fun TodayWordTitleSection() {
         Text(
             stringResource(R.string.more),
             style = AppTypography.fontSize16Regular.copy(
-                color = MaterialTheme.colorScheme.secondary
+                color = MaterialTheme.colorScheme.primary
             ),
             modifier = Modifier.padding(16.dp)
         )
@@ -88,7 +92,7 @@ private fun TodayWordTitleSection() {
 }
 
 @Composable
-private fun TodayCardSection() {
+private fun TodayCardSection(wordList: List<VocaWord>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -96,15 +100,8 @@ private fun TodayCardSection() {
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        val test = listOf(
-            VocaWord(word = "name", "이름"),
-            VocaWord(word = "테스트1", "테스트1"),
-            VocaWord(word = "테스트2", "테스트2"),
-            VocaWord(word = "테스트3", "테스트3"),
-            VocaWord(word = "테스트4", "테스트4"),
-        )
-        repeat(4) {
-            // WordCard(word = test[index]
+        wordList.take(4).forEach { word ->
+            WordCard(word = word)
         }
     }
 }

@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.ljyVoca.vocabularyapp.model.VocaWord
 
-@Database(entities = [VocaWord::class], version = 1)
+@Database(entities = [VocaWord::class], version = 2, exportSchema = true)
 abstract class VocabularyDatabase: RoomDatabase() {
     abstract fun vocaDao(): VocaDao
 }

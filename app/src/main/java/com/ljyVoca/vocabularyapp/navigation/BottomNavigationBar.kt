@@ -54,7 +54,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     )
 
     Column {
-        Divider(MaterialTheme.colorScheme.secondary)
+        Divider(MaterialTheme.colorScheme.primary)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -112,14 +112,14 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
                             Icon(
                                 imageVector = item.icon,
                                 contentDescription = item.title,
-                                tint = MaterialTheme.colorScheme.secondary,
+                                tint = MaterialTheme.colorScheme.primary,
                             )
 
                             if (isSelected) {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = item.title,
-                                    color = MaterialTheme.colorScheme.secondary
+                                    color = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
@@ -134,7 +134,7 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
                         .clip(RoundedCornerShape(20.dp))
                         .border(
                             width = 1.dp,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.primary,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .size(width = animatedWidth.dp, height = 48.dp)

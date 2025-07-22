@@ -48,6 +48,9 @@ android {
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
 }
+tasks.withType(JavaCompile::class) {
+    options.encoding = "UTF-8"
+}
 
 dependencies {
 
@@ -78,4 +81,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("androidx.compose.material:material-icons-extended")
+
+    implementation("com.github.gerosyab:koroman:java-v1.0.12")
 }
