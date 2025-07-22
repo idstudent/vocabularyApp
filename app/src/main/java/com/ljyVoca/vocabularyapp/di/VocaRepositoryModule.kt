@@ -1,6 +1,7 @@
 package com.ljyVoca.vocabularyapp.di
 
 import com.ljyVoca.vocabularyapp.db.VocabularyDatabase
+import com.ljyVoca.vocabularyapp.db.WeeklyGoalDatabase
 import com.ljyVoca.vocabularyapp.repository.SaveWordRepository
 import com.ljyVoca.vocabularyapp.repository.VocabularyRepository
 import dagger.Module
@@ -20,7 +21,7 @@ class VocaRepositoryModule {
 
     @Singleton
     @Provides
-    fun provideVocabularyRepository(vocaDatabase: VocabularyDatabase): VocabularyRepository {
-        return VocabularyRepository(vocaDatabase)
+    fun provideVocabularyRepository(vocaDatabase: VocabularyDatabase, weeklyGoalDatabase: WeeklyGoalDatabase): VocabularyRepository {
+        return VocabularyRepository(vocaDatabase, weeklyGoalDatabase)
     }
 }

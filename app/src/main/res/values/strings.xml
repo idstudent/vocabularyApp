@@ -2,4 +2,19 @@
     <string name="app_name">vocabularyApp</string>
     <string name="today_words">오늘의 단어</string>
     <string name="more">더보기</string>
+    <string name="filter">필터</string>
+    <string name="study_mode_handwriting">손글씨 모드</string>
+    <string name="study_mode_input">입력 모드</string>
+    <string name="quiz_type_word_to_meaning">단어 맞추기</string>
+    <string name="quiz_type_meaning_to_word">뜻 맞추기</string>
+    <string name="word_filter_all">모든 단어</string>
+    <string name="word_filter_frequently_wrong">자주 틀린 단어</string>
+
+    <string name="study_settings">학습 설정</string>
+    <string name="mode_selection">모드 선택</string>
+    <string name="quiz_type">퀴즈 유형</string>
+    <string name="word_range">단어 범위</string>
+    <string name="ok">확인</string>
+    <string name="empty_filter">학습 설정을 선택하세요</string>
+    <string name="goal_setting">주간 목표 단어 갯수를 설정하세요</string>
 </resources>

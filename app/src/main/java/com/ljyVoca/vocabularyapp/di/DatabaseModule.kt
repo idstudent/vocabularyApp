@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ljyVoca.vocabularyapp.db.VocabularyDatabase
+import com.ljyVoca.vocabularyapp.db.WeeklyGoalDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,4 +36,10 @@ class DatabaseModule {
             }
         }
     }
+
+    @Singleton
+    @Provides
+    fun provideWeeklyGoalDatabase(app: Application) =
+        Room.databaseBuilder(app, WeeklyGoalDatabase::class.java, "weekly_goal_db")
+            .build()
 }

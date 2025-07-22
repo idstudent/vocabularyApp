@@ -3,4 +3,18 @@
     <string name="app_name">vocabularyApp</string>
     <string name="today_words">Today\'s Words</string>
     <string name="more">more</string>
+    <string name="filter">filter</string>
+    <string name="study_mode_handwriting">Handwriting Mode</string>
+    <string name="study_mode_input">Input Mode</string>
+    <string name="quiz_type_word_to_meaning">Word to Meaning</string>
+    <string name="quiz_type_meaning_to_word">Meaning to Word</string>
+    <string name="word_filter_all">All Words</string>
+    <string name="word_filter_frequently_wrong">Frequently Wrong</string>
+    <string name="study_settings">Study Settings</string>
+    <string name="mode_selection">Mode Selection</string>
+    <string name="quiz_type">Quiz Type</string>
+    <string name="word_range">Word Range</string>
+    <string name="ok">Apply</string>
+    <string name="empty_filter">Set your preferences</string>
+    <string name="goal_setting">Set your weekly word goal</string>
 </resources>
