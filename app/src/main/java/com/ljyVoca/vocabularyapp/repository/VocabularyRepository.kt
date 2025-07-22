@@ -15,6 +15,10 @@ class VocabularyRepository(
         return vocabularyDatabase.vocaDao().getAllWords()
     }
 
+    suspend fun getTodayWords(): List<VocaWord> {
+        return vocabularyDatabase.vocaDao().getTodayWords()
+    }
+
     // 이번주 실제 저장한 단어 갯수 (VocaWord에서)
     fun getThisWeekWordsCount(weekStart: Long): Flow<Int> {
         return vocabularyDatabase.vocaDao().getThisWeekWordsCount(weekStart)

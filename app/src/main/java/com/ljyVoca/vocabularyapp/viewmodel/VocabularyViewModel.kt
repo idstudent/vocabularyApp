@@ -20,6 +20,9 @@ import javax.inject.Inject
 class VocabularyViewModel @Inject constructor(
     private val vocabularyRepository: VocabularyRepository
 ): ViewModel() {
+    private val _todayWordList = MutableStateFlow<List<VocaWord>>(emptyList())
+    val todayWordList = _todayWordList.asStateFlow()
+
     private val _wordList = MutableStateFlow<List<VocaWord>>(emptyList())
     val wordList = _wordList.asStateFlow()
 
@@ -52,6 +55,7 @@ class VocabularyViewModel @Inject constructor(
 
     private var currentIndex = 0
 
+/*
     init {
         viewModelScope.launch {
             val words = vocabularyRepository.getAllWord()
@@ -65,7 +69,13 @@ class VocabularyViewModel @Inject constructor(
             }
         }
     }
+*/
 
+    fun getTodayWords() {
+        viewModelScope.launch {
+            _todayWordList.value = vocabularyRepository.getTodayWords()
+        }
+    }
     fun getAllWord() {
         viewModelScope.launch {
             _saveWordList.value = vocabularyRepository.getAllWord()

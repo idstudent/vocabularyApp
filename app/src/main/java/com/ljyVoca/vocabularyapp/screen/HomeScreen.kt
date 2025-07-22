@@ -61,6 +61,7 @@ import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
@@ -71,14 +72,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import kotlin.math.roundToInt
 import androidx.compose.material3.Slider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.draw.shadow
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
     val vocabularyViewModel: VocabularyViewModel = hiltViewModel()
-    val wordList by vocabularyViewModel.wordList.collectAsState()
+    val todayWordList by vocabularyViewModel.todayWordList.collectAsState()
 
     val weeklyGoal by vocabularyViewModel.weeklyGoal.collectAsState()
     val thisWeekWords by vocabularyViewModel.thisWeekNewWords.collectAsState()
@@ -95,6 +101,23 @@ fun HomeScreen() {
 
     var hasFilterSetting by remember { mutableStateOf(false) }
     var hasGoal by remember { mutableStateOf(false) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val currentOnResume by rememberUpdatedState(vocabularyViewModel::getTodayWords)
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                currentOnResume()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
 
     Scaffold(
         topBar = {
@@ -124,13 +147,40 @@ fun HomeScreen() {
                 goalWords = weeklyGoal,
                 onClick =  { showGoalBottomSheet = true }
             )
-            TodayWordTitleSection()
-            TodayCardSection(wordList)
+            TodayWordTitleSection(todayWordList)
+            TodayCardSection(todayWordList)
             WordFilterSection(
                 filterClick = { showFilterBottomSheet = true },
                 filterState = filterState,
                 hasFilterSetting = hasFilterSetting
             )
+            Spacer(Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    // TODO: 단어시작작업
+                },
+                enabled = hasFilterSetting,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                ),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.start),
+                    style = AppTypography.fontSize16Regular,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    textAlign = TextAlign.Center,
+                    color = if(hasFilterSetting) {
+                        MaterialTheme.colorScheme.onPrimary
+                    }else {
+                        MaterialTheme.colorScheme.onSecondary
+                    }
+                )
+            }
         }
 
         if(showGoalBottomSheet) {
@@ -271,7 +321,7 @@ private fun GoalSection(
     }
 }
 @Composable
-private fun TodayWordTitleSection() {
+private fun TodayWordTitleSection(todayWordList: List<VocaWord>) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -284,14 +334,15 @@ private fun TodayWordTitleSection() {
             modifier = Modifier.padding(16.dp)
         )
 
-        // TODO: 단어없으면 안보이게 처리작업 필요
-        Text(
-            stringResource(R.string.more),
-            style = AppTypography.fontSize16Regular.copy(
-                color = MaterialTheme.colorScheme.primary
-            ),
-            modifier = Modifier.padding(16.dp)
-        )
+        if(todayWordList.size > 4) {
+            Text(
+                stringResource(R.string.more),
+                style = AppTypography.fontSize16Regular.copy(
+                    color = MaterialTheme.colorScheme.primary
+                ),
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
 
@@ -361,7 +412,7 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
                     )
                 },
                 colors = AssistChipDefaults.assistChipColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
                     labelColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 shape = RoundedCornerShape(20.dp),
@@ -528,7 +579,7 @@ private fun GoalBottomSheet(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            
+
             Button(
                 onClick = {
                     onGoalChange(tempGoal)
@@ -641,7 +692,7 @@ private fun <T> FilterSection(
                             if (isSelected)
                                 MaterialTheme.colorScheme.primary
                             else
-                                MaterialTheme.colorScheme.outline.copy(alpha = 0.12f)
+                                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                         )
                         .clickable { onOptionSelected(enumValue) }
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -652,7 +703,7 @@ private fun <T> FilterSection(
                         color = if (isSelected)
                             MaterialTheme.colorScheme.onPrimary
                         else
-                            MaterialTheme.colorScheme.onSurface
+                            MaterialTheme.colorScheme.onSecondary
                     )
                 }
             }

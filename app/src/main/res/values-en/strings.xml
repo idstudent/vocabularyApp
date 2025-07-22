@@ -17,4 +17,5 @@
     <string name="ok">Apply</string>
     <string name="empty_filter">Set your preferences</string>
     <string name="goal_setting">Set your weekly word goal</string>
+    <string name="start">Start</string>
 </resources>
