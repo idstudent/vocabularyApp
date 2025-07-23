@@ -61,16 +61,21 @@ import androidx.compose.ui.draw.shadow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.components.FilterBottomSheet
 import com.ljyVoca.vocabularyapp.components.GoalBottomSheet
 import com.ljyVoca.vocabularyapp.components.getQuizTypeDisplayName
 import com.ljyVoca.vocabularyapp.components.getStudyModeDisplayName
 import com.ljyVoca.vocabularyapp.components.getWordFilterDisplayName
+import com.ljyVoca.vocabularyapp.model.StudyMode
+import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
-    val vocabularyViewModel: VocabularyViewModel = hiltViewModel()
+fun HomeScreen(
+    navController: NavHostController,
+    vocabularyViewModel: VocabularyViewModel
+) {
     val todayWordList by vocabularyViewModel.todayWordList.collectAsState()
 
     val weeklyGoal by vocabularyViewModel.weeklyGoal.collectAsState()
@@ -148,7 +153,9 @@ fun HomeScreen() {
             Spacer(Modifier.height(16.dp))
             Button(
                 onClick = {
-                    // TODO: 단어시작작업
+                    if(filterState.studyMode == StudyMode.HANDWRITING) {
+                        navController.navigate(AppRoutes.HANDLE_WRITE_MODE_SCREEN)
+                    }
                 },
                 enabled = hasFilterSetting,
                 modifier = Modifier
@@ -428,7 +435,7 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(start = 16.dp)
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {

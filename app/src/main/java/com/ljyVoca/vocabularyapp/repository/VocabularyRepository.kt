@@ -2,9 +2,11 @@ package com.ljyVoca.vocabularyapp.repository
 
 import com.ljyVoca.vocabularyapp.db.VocabularyDatabase
 import com.ljyVoca.vocabularyapp.db.WeeklyGoalDatabase
+import com.ljyVoca.vocabularyapp.model.FilterState
 import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.model.WeeklyGoal
+import com.ljyVoca.vocabularyapp.model.WordFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -50,5 +52,12 @@ class VocabularyRepository(
 
     fun hasFrequentlyWrongWords(): Flow<Boolean> {
         return vocabularyDatabase.vocaDao().hasFrequentlyWrongWords()
+    }
+
+    suspend fun getQuizWords(filterState: FilterState): List<VocaWord> {
+        val category = filterState.selectedLanguage?.code
+        val onlyFrequentlyWrong = filterState.wordFilter == WordFilter.FREQUENTLY_WRONG
+
+        return vocabularyDatabase.vocaDao().getQuizWords(category, onlyFrequentlyWrong)
     }
 }

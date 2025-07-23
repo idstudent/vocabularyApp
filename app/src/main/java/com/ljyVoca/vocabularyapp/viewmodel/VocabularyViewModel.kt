@@ -38,6 +38,18 @@ class VocabularyViewModel @Inject constructor(
 
     private val currentWeekStart = getStartOfThisWeek()
 
+    private val _quizWordList = MutableStateFlow<List<VocaWord>>(emptyList())
+    val quizWordList = _quizWordList.asStateFlow()
+
+    private val _currentQuizIndex = MutableStateFlow(0)
+    val currentQuizIndex = _currentQuizIndex.asStateFlow()
+
+    private val _currentQuizWord = MutableStateFlow<VocaWord?>(null)
+    val currentQuizWord = _currentQuizWord.asStateFlow()
+
+    private val _isQuizCompleted = MutableStateFlow(false)
+    val isQuizCompleted = _isQuizCompleted.asStateFlow()
+
     // 이번 주 목표
     val weeklyGoal: StateFlow<Int> = vocabularyRepository.getCurrentWeekGoal(currentWeekStart)
         .stateIn(
@@ -124,5 +136,42 @@ class VocabularyViewModel @Inject constructor(
             set(Calendar.MILLISECOND, 0)
         }
         return calendar.timeInMillis
+    }
+
+    fun startQuiz() {
+        viewModelScope.launch {
+            try {
+                val words = vocabularyRepository.getQuizWords(_filterState.value)
+
+                if (words.isNotEmpty()) {
+                    _quizWordList.value = words
+                    _currentQuizIndex.value = 0
+                    _currentQuizWord.value = words[0]
+                    _isQuizCompleted.value = false
+                } else {
+                    // 단어가 없는 경우
+                    _quizWordList.value = emptyList()
+                    _currentQuizWord.value = null
+                    _isQuizCompleted.value = false
+                }
+            } catch (e: Exception) {
+                Log.e("VocabularyViewModel", "퀴즈 시작 실패", e)
+            }
+        }
+    }
+
+    // 다음 문제
+    fun nextQuizWord() {
+        val currentIndex = _currentQuizIndex.value
+        val wordList = _quizWordList.value
+
+        if (currentIndex < wordList.size - 1) {
+            val nextIndex = currentIndex + 1
+            _currentQuizIndex.value = nextIndex
+            _currentQuizWord.value = wordList[nextIndex]
+        } else {
+            // 퀴즈 완료
+            _isQuizCompleted.value = true
+        }
     }
 }

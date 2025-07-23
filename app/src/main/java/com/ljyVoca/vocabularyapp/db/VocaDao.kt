@@ -29,4 +29,15 @@ interface VocaDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM voca WHERE totalAttempts >= 3 AND (totalAttempts - wrongCount) * 1.0 / totalAttempts < 0.5 LIMIT 1)")
     fun hasFrequentlyWrongWords(): Flow<Boolean>
+
+    @Query("""
+    SELECT * FROM voca 
+    WHERE (:category IS NULL OR category = :category)
+    AND (:onlyFrequentlyWrong = 0 OR (totalAttempts >= 3 AND (totalAttempts - wrongCount) * 1.0 / totalAttempts < 0.5))
+    ORDER BY RANDOM()
+""")
+    suspend fun getQuizWords(
+        category: String? = null,
+        onlyFrequentlyWrong: Boolean = false
+    ): List<VocaWord>
 }

@@ -28,21 +28,24 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.daissue.koroman.Koroman
 import com.ljyVoca.vocabularyapp.model.Language
+import com.ljyVoca.vocabularyapp.model.QuizType
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
 
 @Composable
-fun WordCard(word: VocaWord) {
+fun QuizWordCard(word: VocaWord, quizType: QuizType) {
     Card(
         modifier = Modifier
-            .width(240.dp)
-            .height(200.dp)
+            .fillMaxWidth()
+            .height(400.dp)
+            .padding(16.dp)
             .shadow(
                 elevation = 4.dp,
                 shape = RoundedCornerShape(12.dp),
                 clip = false
             ),
+
         elevation = CardDefaults.cardElevation(
             defaultElevation = 0.dp
         ),
@@ -68,7 +71,7 @@ fun WordCard(word: VocaWord) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = word.word,
+                    text = if(quizType == QuizType.MEANING_TO_WORD) word.word else word.mean,
                     style = AppTypography.fontSize20SemiBold,
                     modifier = Modifier
                         .padding(top = 8.dp)
