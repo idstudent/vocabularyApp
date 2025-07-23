@@ -47,4 +47,8 @@ class VocabularyRepository(
                 }
             }
     }
+
+    fun hasFrequentlyWrongWords(): Flow<Boolean> {
+        return vocabularyDatabase.vocaDao().hasFrequentlyWrongWords()
+    }
 }

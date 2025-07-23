@@ -23,4 +23,10 @@ interface VocaDao {
 
     @Query("SELECT DISTINCT category FROM voca ORDER BY category")
     fun getDistinctCategories(): Flow<List<String>>
+
+    @Query("SELECT COUNT(*) FROM voca WHERE totalAttempts >= 3 AND (totalAttempts - wrongCount) * 1.0 / totalAttempts < 0.5")
+    fun getFrequentlyWrongWordsCount(): Flow<Int>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM voca WHERE totalAttempts >= 3 AND (totalAttempts - wrongCount) * 1.0 / totalAttempts < 0.5 LIMIT 1)")
+    fun hasFrequentlyWrongWords(): Flow<Boolean>
 }

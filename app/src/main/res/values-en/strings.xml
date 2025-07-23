@@ -25,4 +25,5 @@
     <string name="language_chinese">Chinese</string>
     <string name="all_languages">All</string>
     <string name="language_title">Select Language</string>
+    <string name="no_frequently_wrong_words">No frequently wrong words available</string>
 </resources>

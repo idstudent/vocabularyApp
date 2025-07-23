@@ -61,6 +61,13 @@ class VocabularyViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
+    val hasFrequentlyWrongWords: StateFlow<Boolean> = vocabularyRepository.hasFrequentlyWrongWords()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false
+        )
+
     private var currentIndex = 0
 
 /*

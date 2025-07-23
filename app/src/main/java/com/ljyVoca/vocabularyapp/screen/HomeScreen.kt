@@ -1,6 +1,7 @@
 package com.ljyVoca.vocabularyapp.screen
 
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -76,6 +77,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -107,6 +109,8 @@ fun HomeScreen() {
     val currentOnResume by rememberUpdatedState(vocabularyViewModel::getTodayWords)
 
     val availableLanguages by vocabularyViewModel.availableLanguages.collectAsState()
+    val hasFrequentlyWrongWords by vocabularyViewModel.hasFrequentlyWrongWords.collectAsState()
+
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -202,6 +206,7 @@ fun HomeScreen() {
                 bottomSheetState = filterBottomSheetState,
                 filterState = filterState,
                 availableLanguages = availableLanguages,
+                hasFrequentlyWrongWords = hasFrequentlyWrongWords,
                 onDismiss = { showFilterBottomSheet = false },
                 filterChange = {
                     vocabularyViewModel.updateFilterState(it)
@@ -604,6 +609,7 @@ private fun FilterBottomSheet(
     bottomSheetState: SheetState,
     filterState: FilterState,
     availableLanguages: List<Language> = emptyList(),
+    hasFrequentlyWrongWords: Boolean = false,
     onDismiss: () -> Unit,
     filterChange: (FilterState) -> Unit
 ) {
@@ -619,6 +625,7 @@ private fun FilterBottomSheet(
             )
         )
     }
+    val context = LocalContext.current
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -671,8 +678,14 @@ private fun FilterBottomSheet(
                 title = stringResource(R.string.word_range),
                 options = FilterOptions.getWordFilters(),
                 selectedOption = tempFilterState.wordFilter,
+                disabledOptions = if (!hasFrequentlyWrongWords) setOf(WordFilter.FREQUENTLY_WRONG) else emptySet(),
                 onOptionSelected = { filter ->
                     tempFilterState = tempFilterState.copy(wordFilter = filter)
+                },
+                onDisabledOptionClicked = { filter ->  // 추가
+                    if (filter == WordFilter.FREQUENTLY_WRONG) {
+                        Toast.makeText(context, context.getString(R.string.no_frequently_wrong_words), Toast.LENGTH_SHORT).show()
+                    }
                 }
             )
 
@@ -696,7 +709,9 @@ private fun <T> FilterSection(
     title: String,
     options: List<Pair<T, String>>,
     selectedOption: T,
-    onOptionSelected: (T) -> Unit
+    disabledOptions: Set<T> = emptySet(),
+    onOptionSelected: (T) -> Unit,
+    onDisabledOptionClicked: (T) -> Unit = {}
 ) {
     Column {
         Text(
@@ -711,17 +726,25 @@ private fun <T> FilterSection(
         ) {
             options.forEach { (enumValue, displayName) ->
                 val isSelected = selectedOption == enumValue
+                val isDisabled = enumValue in disabledOptions
 
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp))
                         .background(
-                            if (isSelected)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                            when {
+                                isDisabled -> MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                                isSelected -> MaterialTheme.colorScheme.primary
+                                else -> MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                            }
                         )
-                        .clickable { onOptionSelected(enumValue) }
+                        .clickable {
+                            if (isDisabled) {
+                                onDisabledOptionClicked(enumValue)  // 비활성화된 옵션 클릭 시
+                            } else {
+                                onOptionSelected(enumValue)  // 정상 클릭
+                            }
+                        }
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                 ) {
                     Text(
