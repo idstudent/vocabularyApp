@@ -41,6 +41,7 @@ import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -312,6 +313,7 @@ private fun GoalSection(
         }
     }
 }
+
 @Composable
 private fun TodayWordTitleSection(todayWordList: List<VocaWord>) {
     Row(
@@ -340,19 +342,54 @@ private fun TodayWordTitleSection(todayWordList: List<VocaWord>) {
 
 @Composable
 private fun TodayCardSection(wordList: List<VocaWord>) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        wordList.take(4).forEach { word ->
-            WordCard(word = word)
+    if(wordList.isNotEmpty()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            wordList.take(4).forEach { word ->
+                WordCard(word = word)
+            }
         }
+    }else {
+        TodayCardEmptySection()
     }
 }
 
+@Composable
+private fun TodayCardEmptySection() {
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .height(60.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp),
+                clip = false
+            ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        shape = RoundedCornerShape(12.dp),
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.today_word_empty),
+                style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary),
+            )
+        }
+    }
+}
 @Composable
 private fun WordFilterSection(
     filterClick: () -> Unit,
