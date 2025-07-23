@@ -399,6 +399,26 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
                 onClick = { },
                 label = {
                     Text(
+                        text = if (filterState.selectedLanguage != null) {
+                            filterState.selectedLanguage.displayName()
+                        } else {
+                            stringResource(R.string.all_languages)
+                        },
+                        style = AppTypography.fontSize14Regular
+                    )
+                },
+                colors = AssistChipDefaults.assistChipColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary,
+                    labelColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                shape = RoundedCornerShape(20.dp),
+                border = null
+            )
+            
+            AssistChip(
+                onClick = { },
+                label = {
+                    Text(
                         text = getStudyModeDisplayName(filterState.studyMode),
                         style = AppTypography.fontSize14Regular
                     )

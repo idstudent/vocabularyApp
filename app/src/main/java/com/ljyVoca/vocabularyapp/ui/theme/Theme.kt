@@ -11,22 +11,22 @@ private val DarkColorScheme = darkColorScheme(
     primary = Color3D68D2,
     onPrimary = White,
     secondary = Black,
-    tertiary = Pink80,
     onSecondary = Color868686,
     primaryContainer = Color4CAF50,
     secondaryContainer = ColorFF5722,
-    tertiaryContainer = ColorF6447C
+    tertiaryContainer = ColorF6447C,
+    tertiary = ColorFFC107,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color3D68D2,
     onPrimary = White,
     secondary = Black,
-    tertiary = Pink40,
     onSecondary = Color868686,
     primaryContainer = Color4CAF50,
     secondaryContainer = ColorFF5722,
-    tertiaryContainer = ColorF6447C
+    tertiaryContainer = ColorF6447C,
+    tertiary = ColorFFC107,
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
