@@ -185,6 +185,10 @@ fun GoalBottomSheet(
 
             Button(
                 onClick = {
+                    if (isEditingText) {
+                        val newGoal = textFieldValue.toIntOrNull() ?: tempGoal
+                        tempGoal = newGoal.coerceIn(1, 300)
+                    }
                     onGoalChange(tempGoal)
                     onDismiss()
                 },
