@@ -93,15 +93,12 @@ fun HomeScreen(
     var showGoalBottomSheet by remember { mutableStateOf(false) }
 
     var hasFilterSetting by remember { mutableStateOf(false) }
-    var hasGoal by remember { mutableStateOf(false) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val currentOnResume by rememberUpdatedState(vocabularyViewModel::getTodayWords)
 
     val availableLanguages by vocabularyViewModel.availableLanguages.collectAsState()
     val hasFrequentlyWrongWords by vocabularyViewModel.hasFrequentlyWrongWords.collectAsState()
-
-    var currentGoal by remember { mutableIntStateOf(20) }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -115,7 +112,6 @@ fun HomeScreen(
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
-
 
     Scaffold(
         topBar = {
@@ -140,7 +136,7 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             GoalSection(
-                hasGoal = hasGoal,
+                hasGoal = weeklyGoal > 0,
                 thisWeekWords = thisWeekWords,
                 goalWords = weeklyGoal,
                 onClick =  { showGoalBottomSheet = true }
@@ -159,7 +155,7 @@ fun HomeScreen(
                         navController.navigate(AppRoutes.HANDLE_WRITE_MODE_SCREEN)
                     }
                 },
-                enabled = hasFilterSetting,
+                enabled = hasFilterSetting && availableLanguages.isNotEmpty(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
@@ -187,11 +183,9 @@ fun HomeScreen(
             GoalBottomSheet(
                 bottomSheetState = goalBottomSheetState,
                 onDismiss = { showGoalBottomSheet = false },
-                currentGoal = currentGoal,
+                currentGoal = weeklyGoal,
                 onGoalChange = {
                     vocabularyViewModel.updateWeeklyGoal(it)
-                    hasGoal = true
-                    currentGoal = it
                 }
             )
         }

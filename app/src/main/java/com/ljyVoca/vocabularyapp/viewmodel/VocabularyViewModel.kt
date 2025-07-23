@@ -41,8 +41,6 @@ class VocabularyViewModel @Inject constructor(
     private val _filterState = MutableStateFlow(FilterState())
     val filterState: StateFlow<FilterState> = _filterState.asStateFlow()
 
-    private val currentWeekStart = getStartOfThisWeek()
-
     private val _quizWordList = MutableStateFlow<List<VocaWord>>(emptyList())
     val quizWordList = _quizWordList.asStateFlow()
 
@@ -56,6 +54,7 @@ class VocabularyViewModel @Inject constructor(
     val isQuizCompleted = _isQuizCompleted.asStateFlow()
 
     private val ttsManager = TTSManager(context)
+    private val currentWeekStart = getStartOfThisWeek()
 
     // 이번 주 목표
     val weeklyGoal: StateFlow<Int> = vocabularyRepository.getCurrentWeekGoal(currentWeekStart)
