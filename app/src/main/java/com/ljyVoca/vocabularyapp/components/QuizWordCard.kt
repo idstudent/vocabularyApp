@@ -47,7 +47,8 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 fun QuizWordCard(
     word: VocaWord,
     quizType: QuizType,
-    onShowClick: () -> Unit
+    onShowClick: () -> Unit,
+    ttsClick: (VocaWord) -> Unit
 ) {
     var showAnswer by remember { mutableStateOf(false) }
 
@@ -123,7 +124,7 @@ fun QuizWordCard(
                     Spacer(Modifier.width(8.dp))
                     IconButton(
                         onClick = {
-                            // TODO: TTS
+                            ttsClick(word)
                         },
                         modifier = Modifier
                             .shadow(

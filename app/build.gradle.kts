@@ -83,4 +83,5 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     implementation("com.github.gerosyab:koroman:java-v1.0.12")
+    implementation("com.github.pemistahl:lingua:1.2.2")
 }

@@ -80,6 +80,9 @@ fun HandWriteModeScreen(
                     quizType = filterState.quizType,
                     onShowClick = {
                         showAnswer = !showAnswer
+                    },
+                    ttsClick = {
+                        vocabularyViewModel.speakWord(word)
                     }
                 )
             }

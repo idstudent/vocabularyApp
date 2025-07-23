@@ -1,13 +1,17 @@
 package com.ljyVoca.vocabularyapp.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ljyVoca.vocabularyapp.model.FilterState
 import com.ljyVoca.vocabularyapp.model.Language
+import com.ljyVoca.vocabularyapp.model.QuizType
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.repository.VocabularyRepository
+import com.ljyVoca.vocabularyapp.util.TTSManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VocabularyViewModel @Inject constructor(
-    private val vocabularyRepository: VocabularyRepository
+    private val vocabularyRepository: VocabularyRepository,
+    @ApplicationContext private val context: Context
 ): ViewModel() {
     private val _todayWordList = MutableStateFlow<List<VocaWord>>(emptyList())
     val todayWordList = _todayWordList.asStateFlow()
@@ -49,6 +54,8 @@ class VocabularyViewModel @Inject constructor(
 
     private val _isQuizCompleted = MutableStateFlow(false)
     val isQuizCompleted = _isQuizCompleted.asStateFlow()
+
+    private val ttsManager = TTSManager(context)
 
     // 이번 주 목표
     val weeklyGoal: StateFlow<Int> = vocabularyRepository.getCurrentWeekGoal(currentWeekStart)
@@ -82,21 +89,30 @@ class VocabularyViewModel @Inject constructor(
 
     private var currentIndex = 0
 
-/*
     init {
-        viewModelScope.launch {
-            val words = vocabularyRepository.getAllWord()
-            Log.e("ljy", "단어 개수: ${words.size}")
-
-            _wordList.value = vocabularyRepository.getAllWord().shuffled()
-
-
-            if(_wordList.value.isNotEmpty()) {
-                _currentWord.value = _wordList.value[0]
+        // TTS 초기화
+        ttsManager.initialize { success ->
+            if (success) {
+                Log.e("ljy", "TTS 초기화 성공")
+            } else {
+                Log.e("ljy", "TTS 초기화 실패")
             }
         }
     }
-*/
+    fun speakWord(word: VocaWord) {
+        // 현재 퀴즈 타입에 따라 읽을 텍스트 결정
+        val textToSpeak = when(_filterState.value.quizType) {
+            QuizType.WORD_TO_MEANING -> word.mean
+            QuizType.MEANING_TO_WORD -> word.word
+        }
+
+        ttsManager.speak(textToSpeak)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        ttsManager.shutdown()
+    }
 
     fun getTodayWords() {
         viewModelScope.launch {
