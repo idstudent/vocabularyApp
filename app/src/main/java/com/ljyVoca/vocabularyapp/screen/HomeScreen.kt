@@ -234,9 +234,14 @@ private fun GoalSection(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .fillMaxWidth()
+                    .shadow(
+                        elevation = 4.dp,
+                        shape = RoundedCornerShape(12.dp),
+                        clip = false
+                    )
                     .clickable { onClick() },
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    containerColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 shape = RoundedCornerShape(12.dp)
             ) {
@@ -269,7 +274,7 @@ private fun GoalSection(
 
                     LinearProgressIndicator(
                         progress = { progress },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().height(16.dp),
                         color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     )
@@ -293,7 +298,8 @@ private fun GoalSection(
                         elevation = 4.dp,
                         shape = RoundedCornerShape(12.dp),
                         clip = false
-                    ).clickable { onClick() },
+                    )
+                    .clickable { onClick() },
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 0.dp
                 ),
