@@ -211,7 +211,7 @@ fun HomeScreen(
 @Composable
 private fun GoalSection(
     hasGoal: Boolean,
-    thisWeekWords: Int = 0,    // 추가
+    thisWeekWords: Int = 0,
     goalWords: Int = 0,
     onClick: () -> Unit,
 ) {
@@ -221,7 +221,7 @@ private fun GoalSection(
             .padding(16.dp)
     ) {
         Text(
-            text = "이번주 목표", // 국제화 할 예정
+            text = stringResource(R.string.weekly_goal),
             style = AppTypography.fontSize20SemiBold
         )
 

@@ -27,4 +27,9 @@
     <string name="language_title">언어 선택</string>
     <string name="no_frequently_wrong_words">자주 틀린 단어가 없어요</string>
     <string name="today_word_empty">오늘 공부한 단어가 없어요</string>
+    <string name="next">다음</string>
+    <string name="complete">완료</string>
+    <string name="weekly_goal">이번주 목표</string>
+    <string name="show_answer">정답 보기</string>
+    <string name="answer">정답: </string>
 </resources>

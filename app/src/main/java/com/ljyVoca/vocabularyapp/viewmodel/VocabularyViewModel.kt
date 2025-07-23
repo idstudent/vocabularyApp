@@ -169,6 +169,10 @@ class VocabularyViewModel @Inject constructor(
             val nextIndex = currentIndex + 1
             _currentQuizIndex.value = nextIndex
             _currentQuizWord.value = wordList[nextIndex]
+
+            if (nextIndex == wordList.size - 1) {
+                _isQuizCompleted.value = true
+            }
         } else {
             // 퀴즈 완료
             _isQuizCompleted.value = true

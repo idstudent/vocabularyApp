@@ -26,5 +26,10 @@
     <string name="all_languages">All</string>
     <string name="language_title">Select Language</string>
     <string name="no_frequently_wrong_words">No frequently wrong words available</string>
-    <string name="today_word_empty">오늘 공부한 단어가 없어요. 추가해보세요</string>
+    <string name="today_word_empty">No word studies today</string>
+    <string name="next">Next</string>
+    <string name="complete">Complete</string>
+    <string name="weekly_goal">Weekly Goal</string>
+    <string name="show_answer">Show Answer</string>
+    <string name="answer">Answer: </string>
 </resources>
