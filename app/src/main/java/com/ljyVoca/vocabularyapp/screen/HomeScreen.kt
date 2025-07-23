@@ -79,6 +79,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.ljyVoca.vocabularyapp.model.Language
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -104,6 +105,8 @@ fun HomeScreen() {
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val currentOnResume by rememberUpdatedState(vocabularyViewModel::getTodayWords)
+
+    val availableLanguages by vocabularyViewModel.availableLanguages.collectAsState()
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -198,6 +201,7 @@ fun HomeScreen() {
             FilterBottomSheet(
                 bottomSheetState = filterBottomSheetState,
                 filterState = filterState,
+                availableLanguages = availableLanguages,
                 onDismiss = { showFilterBottomSheet = false },
                 filterChange = {
                     vocabularyViewModel.updateFilterState(it)
@@ -599,10 +603,22 @@ private fun GoalBottomSheet(
 private fun FilterBottomSheet(
     bottomSheetState: SheetState,
     filterState: FilterState,
+    availableLanguages: List<Language> = emptyList(),
     onDismiss: () -> Unit,
     filterChange: (FilterState) -> Unit
 ) {
-    var tempFilterState by remember { mutableStateOf(filterState) }
+    val initialLanguage = when {
+        availableLanguages.size == 1 -> availableLanguages.first()
+        else -> null  // 전체
+    }
+
+    var tempFilterState by remember {
+        mutableStateOf(
+            filterState.copy(
+                selectedLanguage = filterState.selectedLanguage ?: initialLanguage
+            )
+        )
+    }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -621,6 +637,17 @@ private fun FilterBottomSheet(
                 style = AppTypography.fontSize20SemiBold,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
+
+            if (availableLanguages.isNotEmpty()) {  // 언어가 하나라도 있으면 표시
+                FilterSection(
+                    title = stringResource(R.string.language_title),
+                    options = FilterOptions.getLanguages(availableLanguages),
+                    selectedOption = tempFilterState.selectedLanguage,
+                    onOptionSelected = { language ->
+                        tempFilterState = tempFilterState.copy(selectedLanguage = language)
+                    }
+                )
+            }
 
             FilterSection(
                 title = stringResource(R.string.mode_selection),
@@ -729,6 +756,18 @@ object FilterOptions {
         WordFilter.ALL_WORDS to stringResource(R.string.word_filter_all),
         WordFilter.FREQUENTLY_WRONG to stringResource(R.string.word_filter_frequently_wrong)
     )
+
+    @Composable
+    fun getLanguages(availableLanguages: List<Language>) = buildList {
+        if (availableLanguages.size > 1) {
+            add(null to stringResource(R.string.all_languages))
+        }
+
+        availableLanguages.forEach { language ->
+            add(language to language.displayName())
+        }
+    }
+
 }
 
 

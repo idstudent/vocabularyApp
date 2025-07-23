@@ -18,4 +18,11 @@
     <string name="empty_filter">Set your preferences</string>
     <string name="goal_setting">Set your weekly word goal</string>
     <string name="start">Start</string>
+    <string name="language_english">English</string>
+    <string name="language_korean">Korean</string>
+    <string name="language_spanish">Spanish</string>
+    <string name="language_japanese">Japanese</string>
+    <string name="language_chinese">Chinese</string>
+    <string name="all_languages">All</string>
+    <string name="language_title">Select Language</string>
 </resources>

@@ -15,5 +15,6 @@ enum class WordFilter {
 data class FilterState(
     val studyMode: StudyMode = StudyMode.HANDWRITING,
     val quizType: QuizType = QuizType.WORD_TO_MEANING,
-    val wordFilter: WordFilter = WordFilter.ALL_WORDS
+    val wordFilter: WordFilter = WordFilter.ALL_WORDS,
+    val selectedLanguage: Language? = null
 )

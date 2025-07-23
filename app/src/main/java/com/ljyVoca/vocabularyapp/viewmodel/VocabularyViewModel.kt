@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ljyVoca.vocabularyapp.model.FilterState
+import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.repository.VocabularyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,6 +52,13 @@ class VocabularyViewModel @Inject constructor(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = 0
+        )
+
+    val availableLanguages: StateFlow<List<Language>> = vocabularyRepository.getAvailableLanguages()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
         )
 
     private var currentIndex = 0

@@ -2,6 +2,7 @@ package com.ljyVoca.vocabularyapp.repository
 
 import com.ljyVoca.vocabularyapp.db.VocabularyDatabase
 import com.ljyVoca.vocabularyapp.db.WeeklyGoalDatabase
+import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.model.WeeklyGoal
 import kotlinx.coroutines.flow.Flow
@@ -35,5 +36,15 @@ class VocabularyRepository(
         weeklyGoalDatabase.weeklyGoalDao().insertGoal(
             WeeklyGoal(weekStart, goalCount)
         )
+    }
+
+
+    fun getAvailableLanguages(): Flow<List<Language>> {
+        return vocabularyDatabase.vocaDao().getDistinctCategories()
+            .map { codes ->
+                codes.mapNotNull { code ->
+                    Language.entries.find { it.code == code }
+                }
+            }
     }
 }

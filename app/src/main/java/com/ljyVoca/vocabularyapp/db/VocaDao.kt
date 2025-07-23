@@ -20,4 +20,7 @@ interface VocaDao {
 
     @Query("SELECT COUNT(*) FROM voca WHERE createdDate >= :weekStart")
     fun getThisWeekWordsCount(weekStart: Long): Flow<Int>
+
+    @Query("SELECT DISTINCT category FROM voca ORDER BY category")
+    fun getDistinctCategories(): Flow<List<String>>
 }

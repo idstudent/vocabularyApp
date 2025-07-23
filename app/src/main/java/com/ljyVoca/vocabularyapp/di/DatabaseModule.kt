@@ -19,7 +19,7 @@ class DatabaseModule {
     @Provides
     fun provideVocaDatabase(app: Application) =
         Room.databaseBuilder(app, VocabularyDatabase::class.java, "voca_db")
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
 
     companion object {
@@ -33,6 +33,12 @@ class DatabaseModule {
                 database.execSQL("ALTER TABLE voca ADD COLUMN category TEXT NOT NULL DEFAULT '영어'")
                 database.execSQL("ALTER TABLE voca ADD COLUMN isBookmarked INTEGER NOT NULL DEFAULT 0")
                 database.execSQL("ALTER TABLE voca ADD COLUMN createdDate INTEGER NOT NULL DEFAULT ${System.currentTimeMillis()}")
+            }
+        }
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // 기존 한글 카테고리를 언어 코드로 변경
+                database.execSQL("UPDATE voca SET category = 'en' WHERE category = '영어'")
             }
         }
     }
