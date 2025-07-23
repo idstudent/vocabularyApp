@@ -1,10 +1,7 @@
 package com.ljyVoca.vocabularyapp.screen
 
 
-import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,9 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -42,22 +37,14 @@ import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.model.FilterState
-import com.ljyVoca.vocabularyapp.model.QuizType
-import com.ljyVoca.vocabularyapp.model.StudyMode
 import com.ljyVoca.vocabularyapp.model.VocaWord
-import com.ljyVoca.vocabularyapp.model.WordFilter
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
@@ -66,22 +53,18 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import kotlin.math.roundToInt
-import androidx.compose.material3.Slider
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.ljyVoca.vocabularyapp.model.Language
+import com.ljyVoca.vocabularyapp.components.FilterBottomSheet
+import com.ljyVoca.vocabularyapp.components.GoalBottomSheet
+import com.ljyVoca.vocabularyapp.components.getQuizTypeDisplayName
+import com.ljyVoca.vocabularyapp.components.getStudyModeDisplayName
+import com.ljyVoca.vocabularyapp.components.getWordFilterDisplayName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -471,349 +454,4 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun GoalBottomSheet(
-    bottomSheetState: SheetState,
-    onDismiss: () -> Unit,
-    currentGoal: Int = 20,
-    onGoalChange: (Int) -> Unit = {}
-) {
-    var tempGoal by remember { mutableIntStateOf(currentGoal) }
-    var isEditingText by remember { mutableStateOf(false) }
-    var textFieldValue by remember { mutableStateOf("") }
 
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        sheetState = bottomSheetState,
-        containerColor = MaterialTheme.colorScheme.onPrimary,
-        contentWindowInsets = { WindowInsets(0) }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp)
-                .navigationBarsPadding()
-        ) {
-            Text(
-                text = "주간 학습 목표",
-                style = AppTypography.fontSize20SemiBold,
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
-
-            // 현재 목표 표시 (터치하면 직접 입력)
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        isEditingText = true
-                        textFieldValue = tempGoal.toString()
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                if (isEditingText) {
-                    OutlinedTextField(
-                        value = textFieldValue,
-                        onValueChange = { newValue ->
-                            // 숫자만 입력 가능, 최대 3자리
-                            if (newValue.all { char -> char.isDigit() } && newValue.length <= 3) {
-                                textFieldValue = newValue
-                            }
-                        },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                val newGoal = textFieldValue.toIntOrNull() ?: tempGoal
-                                tempGoal = newGoal.coerceIn(1, 300) // 1~300 범위로 제한
-                                isEditingText = false
-                            }
-                        ),
-                        modifier = Modifier.width(120.dp),
-                        textStyle = AppTypography.fontSize24ExtraBold.copy(
-                            textAlign = TextAlign.Center
-                        ),
-                        singleLine = true
-                    )
-                } else {
-                    Text(
-                        text = "${tempGoal}개",
-                        style = AppTypography.fontSize24ExtraBold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
-
-            if (!isEditingText) {
-                Text(
-                    text = "숫자를 터치하면 직접 입력할 수 있어요",
-                    style = AppTypography.fontSize14Regular,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // 슬라이더 (5~300, 5간격)
-            Slider(
-                value = tempGoal.toFloat(),
-                onValueChange = { newValue ->
-                    // 5의 배수로 반올림
-                    val roundedValue = (newValue / 5f).roundToInt() * 5
-                    tempGoal = roundedValue.coerceIn(5, 300)
-                    isEditingText = false // 슬라이더 조작시 텍스트 편집 모드 해제
-                },
-                valueRange = 5f..300f,
-                steps = 58, // (300-5)/5 = 59단계, steps = 단계수-1
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            // 범위 표시
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "5개",
-                    style = AppTypography.fontSize14Regular,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    text = "300개",
-                    style = AppTypography.fontSize14Regular,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
-            Button(
-                onClick = {
-                    onGoalChange(tempGoal)
-                    onDismiss()
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("설정 완료")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-    }
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun FilterBottomSheet(
-    bottomSheetState: SheetState,
-    filterState: FilterState,
-    availableLanguages: List<Language> = emptyList(),
-    hasFrequentlyWrongWords: Boolean = false,
-    onDismiss: () -> Unit,
-    filterChange: (FilterState) -> Unit
-) {
-    val initialLanguage = when {
-        availableLanguages.size == 1 -> availableLanguages.first()
-        else -> null  // 전체
-    }
-
-    var tempFilterState by remember {
-        mutableStateOf(
-            filterState.copy(
-                selectedLanguage = filterState.selectedLanguage ?: initialLanguage
-            )
-        )
-    }
-    val context = LocalContext.current
-
-    ModalBottomSheet(
-        onDismissRequest = onDismiss,
-        sheetState = bottomSheetState,
-        containerColor = MaterialTheme.colorScheme.onPrimary,
-        contentWindowInsets = { WindowInsets(0) }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .navigationBarsPadding()
-        ){
-            Text(
-                text = stringResource(R.string.study_settings),
-                style = AppTypography.fontSize20SemiBold,
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
-
-            if (availableLanguages.isNotEmpty()) {  // 언어가 하나라도 있으면 표시
-                FilterSection(
-                    title = stringResource(R.string.language_title),
-                    options = FilterOptions.getLanguages(availableLanguages),
-                    selectedOption = tempFilterState.selectedLanguage,
-                    onOptionSelected = { language ->
-                        tempFilterState = tempFilterState.copy(selectedLanguage = language)
-                    }
-                )
-            }
-
-            FilterSection(
-                title = stringResource(R.string.mode_selection),
-                options = FilterOptions.getStudyModes(),
-                selectedOption =  tempFilterState.studyMode,
-                onOptionSelected = { mode ->
-                    tempFilterState = tempFilterState.copy(studyMode = mode)
-                }
-            )
-
-            FilterSection(
-                title = stringResource(R.string.quiz_type),
-                options = FilterOptions.getQuizTypes(),
-                selectedOption = tempFilterState.quizType,
-                onOptionSelected = { type ->
-                    tempFilterState = tempFilterState.copy(quizType = type)
-                }
-            )
-
-            FilterSection(
-                title = stringResource(R.string.word_range),
-                options = FilterOptions.getWordFilters(),
-                selectedOption = tempFilterState.wordFilter,
-                disabledOptions = if (!hasFrequentlyWrongWords) setOf(WordFilter.FREQUENTLY_WRONG) else emptySet(),
-                onOptionSelected = { filter ->
-                    tempFilterState = tempFilterState.copy(wordFilter = filter)
-                },
-                onDisabledOptionClicked = { filter ->  // 추가
-                    if (filter == WordFilter.FREQUENTLY_WRONG) {
-                        Toast.makeText(context, context.getString(R.string.no_frequently_wrong_words), Toast.LENGTH_SHORT).show()
-                    }
-                }
-            )
-
-            Button(
-                onClick = {
-                    filterChange(tempFilterState)
-                    onDismiss()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Text(stringResource(R.string.ok))
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-    }
-}
-
-@Composable
-private fun <T> FilterSection(
-    title: String,
-    options: List<Pair<T, String>>,
-    selectedOption: T,
-    disabledOptions: Set<T> = emptySet(),
-    onOptionSelected: (T) -> Unit,
-    onDisabledOptionClicked: (T) -> Unit = {}
-) {
-    Column {
-        Text(
-            text = title,
-            style = AppTypography.fontSize16SemiBold,
-            modifier = Modifier.padding(bottom = 12.dp)
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            options.forEach { (enumValue, displayName) ->
-                val isSelected = selectedOption == enumValue
-                val isDisabled = enumValue in disabledOptions
-
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(
-                            when {
-                                isDisabled -> MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-                                isSelected -> MaterialTheme.colorScheme.primary
-                                else -> MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-                            }
-                        )
-                        .clickable {
-                            if (isDisabled) {
-                                onDisabledOptionClicked(enumValue)  // 비활성화된 옵션 클릭 시
-                            } else {
-                                onOptionSelected(enumValue)  // 정상 클릭
-                            }
-                        }
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Text(
-                        text = displayName,
-                        style = AppTypography.fontSize14Regular,
-                        color = if (isSelected)
-                            MaterialTheme.colorScheme.onPrimary
-                        else
-                            MaterialTheme.colorScheme.onSecondary
-                    )
-                }
-            }
-        }
-    }
-}
-
-object FilterOptions {
-    @Composable
-    fun getStudyModes() = listOf(
-        StudyMode.HANDWRITING to stringResource(R.string.study_mode_handwriting),
-        StudyMode.INPUT to stringResource(R.string.study_mode_input)
-    )
-
-    @Composable
-    fun getQuizTypes() = listOf(
-        QuizType.WORD_TO_MEANING to stringResource(R.string.quiz_type_word_to_meaning),
-        QuizType.MEANING_TO_WORD to stringResource(R.string.quiz_type_meaning_to_word)
-    )
-
-    @Composable
-    fun getWordFilters() = listOf(
-        WordFilter.ALL_WORDS to stringResource(R.string.word_filter_all),
-        WordFilter.FREQUENTLY_WRONG to stringResource(R.string.word_filter_frequently_wrong)
-    )
-
-    @Composable
-    fun getLanguages(availableLanguages: List<Language>) = buildList {
-        if (availableLanguages.size > 1) {
-            add(null to stringResource(R.string.all_languages))
-        }
-
-        availableLanguages.forEach { language ->
-            add(language to language.displayName())
-        }
-    }
-
-}
-
-
-@Composable
-private fun getStudyModeDisplayName(mode: StudyMode): String {
-    return when (mode) {
-        StudyMode.HANDWRITING -> stringResource(R.string.study_mode_handwriting)
-        StudyMode.INPUT -> stringResource(R.string.study_mode_input)
-    }
-}
-
-@Composable
-private fun getQuizTypeDisplayName(type: QuizType): String {
-    return when (type) {
-        QuizType.WORD_TO_MEANING -> stringResource(R.string.quiz_type_word_to_meaning)
-        QuizType.MEANING_TO_WORD -> stringResource(R.string.quiz_type_meaning_to_word)
-    }
-}
-
-@Composable
-private fun getWordFilterDisplayName(filter: WordFilter): String {
-    return when (filter) {
-        WordFilter.ALL_WORDS -> stringResource(R.string.word_filter_all)
-        WordFilter.FREQUENTLY_WRONG -> stringResource(R.string.word_filter_frequently_wrong)
-    }
-}
