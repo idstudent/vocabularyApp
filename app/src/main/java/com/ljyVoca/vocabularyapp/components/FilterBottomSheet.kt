@@ -143,7 +143,7 @@ fun FilterBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(stringResource(R.string.ok))
+                Text(stringResource(R.string.ok), style = AppTypography.fontSize16Regular)
             }
             Spacer(modifier = Modifier.height(16.dp))
         }

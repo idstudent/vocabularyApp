@@ -3,7 +3,6 @@ package com.ljyVoca.vocabularyapp.util
 import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.widget.Toast
 import com.github.pemistahl.lingua.api.Language
 import com.github.pemistahl.lingua.api.LanguageDetectorBuilder
 import java.util.Locale
@@ -62,20 +61,13 @@ class TTSManager(private val context: Context) {
         }
     }
 
-    fun stop() {
-        textToSpeech?.stop()
-    }
-
-    // README에 명시된 정확한 메모리 해제 방법
     fun shutdown() {
         // TTS 리소스 해제
         textToSpeech?.shutdown()
         textToSpeech = null
         isInitialized = false
 
-        // Lingua 리소스 해제 (README 9.1.7 섹션)
         detector.unloadLanguageModels()
-        // 참고: 이렇게 해도 thread pool은 계속 실행됨 (README에 명시됨)
     }
 
     companion object {

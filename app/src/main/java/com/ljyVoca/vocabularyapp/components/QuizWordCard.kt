@@ -90,7 +90,7 @@ fun QuizWordCard(
                     },
             ) {
                 Text(
-                    text = stringResource(R.string.show_answer),
+                    text = if(!showAnswer) stringResource(R.string.show_answer) else stringResource(R.string.hide_answer),
                     style = AppTypography.fontSize16Regular,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     textAlign = TextAlign.Center

@@ -31,5 +31,8 @@
     <string name="complete">완료</string>
     <string name="weekly_goal">이번주 목표</string>
     <string name="show_answer">정답 보기</string>
+    <string name="hide_answer">정답 숨기기</string>
     <string name="answer">정답: </string>
+    <string name="edit_goal">숫자를 터치하면 직접 입력할 수 있어요</string>
+    <string name="complete_setting">설정 완료</string>
 </resources>

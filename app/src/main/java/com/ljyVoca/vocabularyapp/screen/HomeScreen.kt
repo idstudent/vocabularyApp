@@ -56,6 +56,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.draw.shadow
 import androidx.lifecycle.Lifecycle
@@ -100,6 +101,7 @@ fun HomeScreen(
     val availableLanguages by vocabularyViewModel.availableLanguages.collectAsState()
     val hasFrequentlyWrongWords by vocabularyViewModel.hasFrequentlyWrongWords.collectAsState()
 
+    var currentGoal by remember { mutableIntStateOf(20) }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -185,9 +187,11 @@ fun HomeScreen(
             GoalBottomSheet(
                 bottomSheetState = goalBottomSheetState,
                 onDismiss = { showGoalBottomSheet = false },
+                currentGoal = currentGoal,
                 onGoalChange = {
                     vocabularyViewModel.updateWeeklyGoal(it)
                     hasGoal = true
+                    currentGoal = it
                 }
             )
         }

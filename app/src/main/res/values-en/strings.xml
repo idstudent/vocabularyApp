@@ -31,5 +31,8 @@
     <string name="complete">Complete</string>
     <string name="weekly_goal">Weekly Goal</string>
     <string name="show_answer">Show Answer</string>
+    <string name="hide_answer">Hide 숨기기</string>
     <string name="answer">Answer: </string>
+    <string name="edit_goal">You can tap the number to enter it manually</string>
+    <string name="complete_setting">Set Goal</string>
 </resources>
