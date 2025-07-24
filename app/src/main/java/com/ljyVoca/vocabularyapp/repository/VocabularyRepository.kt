@@ -1,5 +1,6 @@
 package com.ljyVoca.vocabularyapp.repository
 
+import android.content.Context
 import com.ljyVoca.vocabularyapp.db.VocabularyDatabase
 import com.ljyVoca.vocabularyapp.db.WeeklyGoalDatabase
 import com.ljyVoca.vocabularyapp.model.FilterState
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.map
 
 class VocabularyRepository(
     private val vocabularyDatabase: VocabularyDatabase,
-    private val weeklyGoalDatabase: WeeklyGoalDatabase
+    private val weeklyGoalDatabase: WeeklyGoalDatabase,
+    private val context: Context
 ) {
     suspend fun getAllWord(): List<VocaWord> {
         return vocabularyDatabase.vocaDao().getAllWords()
@@ -59,5 +61,12 @@ class VocabularyRepository(
         val onlyFrequentlyWrong = filterState.wordFilter == WordFilter.FREQUENTLY_WRONG
 
         return vocabularyDatabase.vocaDao().getQuizWords(category, onlyFrequentlyWrong)
+    }
+
+    suspend fun updateLastStudyDate() {
+        val sharedPrefs = context.getSharedPreferences("study_prefs", Context.MODE_PRIVATE)
+        sharedPrefs.edit()
+            .putLong("last_study_date", System.currentTimeMillis())
+            .apply()
     }
 }

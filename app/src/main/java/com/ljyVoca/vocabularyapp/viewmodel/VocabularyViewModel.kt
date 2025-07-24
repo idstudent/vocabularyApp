@@ -169,6 +169,8 @@ class VocabularyViewModel @Inject constructor(
                     _currentQuizWord.value = null
                     _isQuizCompleted.value = false
                 }
+
+                vocabularyRepository.updateLastStudyDate()
             } catch (e: Exception) {
                 Log.e("VocabularyViewModel", "퀴즈 시작 실패", e)
             }

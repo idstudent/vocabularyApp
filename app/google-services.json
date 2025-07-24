@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "622451603046",
+    "project_id": "vocaapp-56c48",
+    "storage_bucket": "vocaapp-56c48.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622451603046:android:6f56b35c9d1477a9761fa7",
+        "android_client_info": {
+          "package_name": "com.ljyVoca.vocabularyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-W7-wTDx7fD9-uybd366SxKhJTAk2X74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -156,6 +156,7 @@ fun HomeScreen(
                     }else {
                         navController.navigate(AppRoutes.QUIZ_MODE_SCREEN)
                     }
+
                 },
                 enabled = hasFilterSetting && availableLanguages.isNotEmpty(),
                 modifier = Modifier
