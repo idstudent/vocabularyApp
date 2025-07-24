@@ -72,7 +72,7 @@ fun GoalBottomSheet(
                 .navigationBarsPadding()
         ) {
             Text(
-                text = "주간 학습 목표",
+                text = stringResource(R.string.weekly_learning_goal),
                 style = AppTypography.fontSize20SemiBold,
                 modifier = Modifier.padding(bottom = 24.dp)
             )
@@ -121,7 +121,7 @@ fun GoalBottomSheet(
                     )
                 } else {
                     Text(
-                        text = "${tempGoal}개",
+                        text = stringResource(R.string.word_count_format, tempGoal),
                         style = AppTypography.fontSize24ExtraBold,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -172,16 +172,18 @@ fun GoalBottomSheet(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "0개",
+                    text = stringResource(R.string.word_count_format, 0),
                     style = AppTypography.fontSize14Regular,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "300개",
+                    text = stringResource(R.string.word_count_format, 300),
                     style = AppTypography.fontSize14Regular,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {

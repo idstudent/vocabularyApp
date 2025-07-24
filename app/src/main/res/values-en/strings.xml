@@ -15,6 +15,7 @@
     <string name="quiz_type">Quiz Type</string>
     <string name="word_range">Word Range</string>
     <string name="ok">Apply</string>
+    <string name="cancel">Cancel</string>
     <string name="empty_filter">Set your preferences</string>
     <string name="goal_setting">Set your weekly word goal</string>
     <string name="start">Start</string>
@@ -35,4 +36,13 @@
     <string name="answer">Answer: </string>
     <string name="edit_goal">You can tap the number to enter it manually</string>
     <string name="complete_setting">Set Goal</string>
+    <string name="correct">Correct! 🎉</string>
+    <string name="incorrect">Incorrect! ❌</string>
+    <string name="other_means">Other meanings</string>
+    <string name="weekly_learning_goal">Weekly Learning Goal</string>
+    <string name="word_count_format">%d</string>
+    <string name="new_words">New Words</string>
+    <string name="touch_to_change_goal">Touch to change your goal</string>
+    <string name="quiz_exit">Exit Quiz</string>
+    <string name="quiz_exit_confirmation">Are you sure you want to exit the quiz?</string>
 </resources>

@@ -252,7 +252,7 @@ private fun GoalSection(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "새 단어",
+                            text = stringResource(R.string.new_words),
                             style = AppTypography.fontSize16SemiBold
                         )
                         Text(
@@ -278,7 +278,7 @@ private fun GoalSection(
                     Spacer(modifier = Modifier.height(4.dp))
 
                     Text(
-                        text = "목표를 변경하려면 터치하세요",
+                        text = stringResource(R.string.touch_to_change_goal),
                         style = AppTypography.fontSize14Regular,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
