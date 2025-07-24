@@ -37,8 +37,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.daissue.koroman.Koroman
 import com.ljyVoca.vocabularyapp.R
+import com.ljyVoca.vocabularyapp.model.FilterState
 import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.QuizType
+import com.ljyVoca.vocabularyapp.model.StudyMode
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
@@ -47,6 +49,7 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 fun QuizWordCard(
     word: VocaWord,
     quizType: QuizType,
+    studyMode: StudyMode,
     onShowClick: () -> Unit,
     ttsClick: (VocaWord) -> Unit
 ) {
@@ -74,27 +77,31 @@ fun QuizWordCard(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(16.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.secondary,
-                        shape = RoundedCornerShape(20.dp)
+            if(studyMode == StudyMode.HANDWRITING) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(16.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.secondary,
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .clickable {
+                            showAnswer = !showAnswer
+                            onShowClick()
+                        },
+                ) {
+                    Text(
+                        text = if (!showAnswer) stringResource(R.string.show_answer) else stringResource(
+                            R.string.hide_answer
+                        ),
+                        style = AppTypography.fontSize16Regular,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        textAlign = TextAlign.Center
                     )
-                    .clickable {
-                        showAnswer = !showAnswer
-                        onShowClick()
-                    },
-            ) {
-                Text(
-                    text = if(!showAnswer) stringResource(R.string.show_answer) else stringResource(R.string.hide_answer),
-                    style = AppTypography.fontSize16Regular,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                    textAlign = TextAlign.Center
-                )
+                }
             }
 
             Column(

@@ -153,6 +153,8 @@ fun HomeScreen(
                 onClick = {
                     if(filterState.studyMode == StudyMode.HANDWRITING) {
                         navController.navigate(AppRoutes.HANDLE_WRITE_MODE_SCREEN)
+                    }else {
+                        navController.navigate(AppRoutes.QUIZ_MODE_SCREEN)
                     }
                 },
                 enabled = hasFilterSetting && availableLanguages.isNotEmpty(),

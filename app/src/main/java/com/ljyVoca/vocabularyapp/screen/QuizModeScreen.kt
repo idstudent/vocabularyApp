@@ -23,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -45,7 +46,7 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
 @Composable
-fun HandWriteModeScreen(
+fun QuizModeScreen(
     navController: NavHostController,
     vocabularyViewModel: VocabularyViewModel
 ) {
@@ -56,6 +57,8 @@ fun HandWriteModeScreen(
     val filterState by vocabularyViewModel.filterState.collectAsState()
 
     var showAnswer by remember { mutableStateOf(false) }
+
+    var answer by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         vocabularyViewModel.startQuiz()
@@ -79,7 +82,7 @@ fun HandWriteModeScreen(
                 QuizWordCard(
                     word = word,
                     quizType = filterState.quizType,
-                    studyMode= filterState.studyMode,
+                    studyMode = filterState.studyMode,
                     onShowClick = {
                         showAnswer = !showAnswer
                     },
@@ -99,12 +102,27 @@ fun HandWriteModeScreen(
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
+            TextField(
+                value = answer,
+                onValueChange = {
+                    answer = it.trim()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                maxLines = 2,
+                textStyle = AppTypography.fontSize16SemiBold.copy(
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            )
             Spacer(Modifier.weight(1f))
             Button(
                 onClick = {
                     if(isQuizCompleted) {
                         navController.popBackStack()
                     }else {
+                        // TODO: 여기서 정답체크해서 듀오링고처럼 정답인지, 틀렸는지 확인후 버튼 한번 더눌러야 다음으로 가는방식 아니면 다른방법없나
                         vocabularyViewModel.nextQuizWord()
                     }
                     showAnswer = false
@@ -124,3 +142,4 @@ fun HandWriteModeScreen(
         }
     }
 }
+
