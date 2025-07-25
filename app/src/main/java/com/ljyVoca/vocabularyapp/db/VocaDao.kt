@@ -40,4 +40,16 @@ interface VocaDao {
         category: String? = null,
         onlyFrequentlyWrong: Boolean = false
     ): List<VocaWord>
+
+    // 특정 단어장(폴더)의 단어들 조회
+    @Query("SELECT * FROM voca WHERE vocabularyId = :vocabularyId ORDER BY createdDate DESC")
+    suspend fun getWordsByVocabularyId(vocabularyId: String): List<VocaWord>
+
+    // 단어장 삭제시 해당 단어들도 삭제
+    @Query("DELETE FROM voca WHERE vocabularyId = :vocabularyId")
+    suspend fun deleteWordsByVocabularyId(vocabularyId: String)
+
+    // 단어장별 단어 개수
+    @Query("SELECT COUNT(*) FROM voca WHERE vocabularyId = :vocabularyId")
+    suspend fun getWordCountByVocabularyId(vocabularyId: String): Int
 }
