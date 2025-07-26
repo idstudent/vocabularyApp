@@ -30,13 +30,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ljyVoca.vocabularyapp.components.Divider
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
-    val items = listOf(NaviItem.Home, NaviItem.Search, NaviItem.Cart, NaviItem.Profile)
+    val items = listOf(NaviItem.Home, NaviItem.Voca, NaviItem.Voca)
     val selectedIndex = items.indexOfFirst { it.route == currentRoute }
 
     var tabWidths by remember { mutableStateOf(List(items.size) { 0.dp }) }
@@ -111,14 +112,14 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
                         ) {
                             Icon(
                                 imageVector = item.icon,
-                                contentDescription = item.title,
+                                contentDescription = "",
                                 tint = MaterialTheme.colorScheme.primary,
                             )
 
                             if (isSelected) {
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
-                                    text = item.title,
+                                    text = stringResource(item.title),
                                     color = MaterialTheme.colorScheme.primary
                                 )
                             }

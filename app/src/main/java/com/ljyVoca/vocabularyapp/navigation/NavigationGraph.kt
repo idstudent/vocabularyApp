@@ -8,11 +8,14 @@ import androidx.navigation.compose.composable
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
+import com.ljyVoca.vocabularyapp.screen.VocabularyListScreen
+import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
     val vocabularyViewModel: VocabularyViewModel = hiltViewModel()
+    val vocabularyFolderViewModel: VocabularyFolderViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -38,17 +41,11 @@ fun NavigationGraph(navController: NavHostController) {
             )
         }
 
-        composable(route = NaviItem.Search.route) {
-            HomeScreen(navController = navController,
-                vocabularyViewModel = vocabularyViewModel)
-        }
-        composable(route = NaviItem.Cart.route) {
-            HomeScreen(navController = navController,
-                vocabularyViewModel = vocabularyViewModel)
-        }
-        composable(route = NaviItem.Profile.route) {
-            HomeScreen(navController = navController,
-                vocabularyViewModel = vocabularyViewModel)
+        composable(route = NaviItem.Voca.route) {
+            VocabularyListScreen(
+                navController = navController,
+                vocabularyFolderViewModel = vocabularyFolderViewModel
+            )
         }
     }
 
