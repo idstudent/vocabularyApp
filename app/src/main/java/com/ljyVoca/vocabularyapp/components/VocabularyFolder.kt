@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ljyVoca.vocabularyapp.model.Vocabulary
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
@@ -89,6 +90,15 @@ fun VocabularyFolder(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp)
+            )
+
+            Text(
+                text = vocabulary.category,
+                style = AppTypography.fontSize14Regular,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                textAlign = TextAlign.End
             )
         }
     }

@@ -8,9 +8,9 @@ import com.ljyVoca.vocabularyapp.R
 enum class Language(val code: String, val displayNameRes: Int) {
     ENGLISH("en", R.string.language_english),
     KOREAN("ko", R.string.language_korean),
-    SPANISH("es", R.string.language_spanish),
     JAPANESE("ja", R.string.language_japanese),
-    CHINESE("zh", R.string.language_chinese);
+    CHINESE("zh", R.string.language_chinese),
+    SPANISH("es", R.string.language_spanish);
 
     @Composable
     fun displayName(): String = stringResource(displayNameRes)

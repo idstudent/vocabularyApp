@@ -11,6 +11,10 @@ class VocabularyFolderRepository(
         return vocabularyDatabase.vocabularyDao().getAllVocabularies()
     }
 
+    suspend fun insertVocabulary(vocabulary: Vocabulary) {
+        vocabularyDatabase.vocabularyDao().insertVocabulary(vocabulary)
+    }
+
     suspend fun deleteVocabulary(id: String) {
         vocabularyDatabase.vocabularyDao().deleteVocabularyById(id)
     }

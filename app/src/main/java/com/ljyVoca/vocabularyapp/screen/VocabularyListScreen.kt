@@ -2,7 +2,9 @@ package com.ljyVoca.vocabularyapp.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,10 +28,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.VocabularyFolder
+import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 
@@ -41,6 +45,7 @@ fun VocabularyListScreen(
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
     var deleteVocabularyId by remember { mutableStateOf<String?>(null) }
+    val vocabularyFolders by vocabularyFolderViewModel.vocabularyFolders.collectAsState()
 
     Scaffold(
         topBar = {
@@ -59,7 +64,7 @@ fun VocabularyListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO: 단어장 만드는 화면
+                    navController.navigate(AppRoutes.ADD_VOCABULARY_FOLDER_SCREEN)
                 },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -72,7 +77,7 @@ fun VocabularyListScreen(
             }
         }
     ) { innerPadding ->
-        val vocabularyFolders by vocabularyFolderViewModel.vocabularyFolders.collectAsState()
+
 
         Column(
             modifier = Modifier
@@ -96,6 +101,7 @@ fun VocabularyListScreen(
                     },
                 )
             }
+            Spacer(Modifier.height(48.dp))
         }
     }
 

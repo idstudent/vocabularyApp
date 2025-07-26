@@ -22,6 +22,14 @@ class VocabularyFolderViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
+    fun insertVocabulary(vocabulary: Vocabulary) {
+        viewModelScope.launch {
+            if (vocabularyFolders.value.size < 20) {
+                vocabularyFolderRepository.insertVocabulary(vocabulary)
+            }
+        }
+    }
+
     fun deleteVocabulary(id: String) {
         viewModelScope.launch {
             vocabularyFolderRepository.deleteVocabulary(id)
