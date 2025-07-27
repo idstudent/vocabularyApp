@@ -8,12 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ljyVoca.vocabularyapp.screen.AddVocabularyFolderScreen
+import com.ljyVoca.vocabularyapp.screen.AddWordScreen
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
 import com.ljyVoca.vocabularyapp.screen.UpdateVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyDetailScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyListScreen
+import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
@@ -21,6 +23,7 @@ import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 fun NavigationGraph(navController: NavHostController) {
     val vocabularyViewModel: VocabularyViewModel = hiltViewModel()
     val vocabularyFolderViewModel: VocabularyFolderViewModel = hiltViewModel()
+    val saveWordViewModel: SaveWordViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -68,17 +71,39 @@ fun NavigationGraph(navController: NavHostController) {
         }
 
         composable(
-            route = "${AppRoutes.VOCABULARY_DETAIL_SCREEN}/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.StringType },)
+            route = "${AppRoutes.VOCABULARY_DETAIL_SCREEN}/{id}/{category}",
+            arguments = listOf(
+                navArgument("id") { type = NavType.StringType },
+                navArgument("category") { type = NavType.StringType }
+            )
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id") ?: ""
+            val category = backStackEntry.arguments?.getString("category") ?: "en"
             val title = navController.previousBackStackEntry?.savedStateHandle?.get<String>("title") ?: ""
 
             VocabularyDetailScreen(
                 navController = navController,
                 id = id,
+                category = category,
                 title = title,
                 vocabularyFolderViewModel = vocabularyFolderViewModel
+            )
+        }
+
+        composable(
+            route = "${AppRoutes.ADD_WORD_SCREEN}/{category}/{vocaId}",
+            arguments = listOf(
+                navArgument("category") { type = NavType.StringType },
+                navArgument("vocaId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: "en"
+            val vocaId = backStackEntry.arguments?.getString("vocaId") ?: ""
+
+            AddWordScreen(
+                category = category,
+                vocaId = vocaId,
+                saveWordViewModel = saveWordViewModel
             )
         }
     }

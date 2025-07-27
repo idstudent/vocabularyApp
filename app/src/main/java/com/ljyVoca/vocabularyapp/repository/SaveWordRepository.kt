@@ -6,7 +6,7 @@ import com.ljyVoca.vocabularyapp.model.VocaWord
 class SaveWordRepository(
     private val vocabularyDatabase: VocabularyDatabase
 ){
-    suspend fun insertVoca(voca: VocaWord) {
+    suspend fun insertWord(voca: VocaWord) {
         return vocabularyDatabase.vocaDao().insertWord(voca)
     }
 }

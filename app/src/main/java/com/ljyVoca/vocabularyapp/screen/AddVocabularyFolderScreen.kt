@@ -15,13 +15,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -46,7 +42,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.Divider
+import com.ljyVoca.vocabularyapp.components.InputTextFieldSection
 import com.ljyVoca.vocabularyapp.components.LanguageSelectBottomSheet
+import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.Vocabulary
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
@@ -67,7 +65,8 @@ fun AddVocabularyFolderScreen(
     var descriptionTextFieldValue by remember { mutableStateOf("") }
 
     val defaultLanguageText = stringResource(R.string.select_language)
-    var languageType by remember { mutableStateOf(defaultLanguageText) }
+    var selectedLanguage by remember { mutableStateOf<Language?>(null) }
+
     val context = LocalContext.current
 
     val toastLanguageMsg = stringResource(R.string.toast_select_language)
@@ -98,54 +97,22 @@ fun AddVocabularyFolderScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
-            Text(
-                text = stringResource(R.string.title),
-                style = AppTypography.fontSize20SemiBold,
-                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
-            )
-            TextField(
+            InputTextFieldSection(
+                title = stringResource(R.string.title),
                 value = titleTextFieldValue,
-                onValueChange = {
-                    titleTextFieldValue = it
-                },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
-                    unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
-                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                textStyle = AppTypography.fontSize16Regular
+                onValueChange = { titleTextFieldValue = it },
+                placeholder = stringResource(R.string.hint_word)
             )
 
             Spacer(Modifier.height(36.dp))
-            Text(
-                text = stringResource(R.string.description_optional),
-                style = AppTypography.fontSize20SemiBold,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            TextField(
+
+            InputTextFieldSection(
+                title = stringResource(R.string.title_description),
                 value = descriptionTextFieldValue,
-                onValueChange = {
-                    descriptionTextFieldValue = it
-                },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
-                    unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
-                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                textStyle = AppTypography.fontSize16Regular
+                onValueChange = { descriptionTextFieldValue = it },
+                placeholder = stringResource(R.string.hint_word)
             )
+
             Spacer(Modifier.height(36.dp))
             Text(
                 text = stringResource(R.string.select_language),
@@ -164,7 +131,7 @@ fun AddVocabularyFolderScreen(
                     )
             ) {
                 Text(
-                    text = languageType,
+                    text = selectedLanguage?.displayName() ?: defaultLanguageText,
                     style = AppTypography.fontSize16Regular,
                     modifier = Modifier
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -178,8 +145,8 @@ fun AddVocabularyFolderScreen(
                 onClick = {
                    if(titleTextFieldValue == "") {
                        Toast.makeText(context, toastTitleMsg, Toast.LENGTH_SHORT).show()
-                    } else if(languageType == defaultLanguageText) {
-                        Toast.makeText(context, toastLanguageMsg, Toast.LENGTH_SHORT).show()
+                    } else if(selectedLanguage == null) {
+                       Toast.makeText(context, toastLanguageMsg, Toast.LENGTH_SHORT).show()
                     } else if(vocabularyFolders.size >= 20) {
                        Toast.makeText(context, toastMaxMsg, Toast.LENGTH_SHORT).show()
                    } else {
@@ -187,7 +154,7 @@ fun AddVocabularyFolderScreen(
                            vocabulary = Vocabulary(
                                title = titleTextFieldValue,
                                description = descriptionTextFieldValue,
-                               category = languageType
+                               category = selectedLanguage!!.code
                            )
                        )
                        navController.popBackStack()
@@ -217,7 +184,7 @@ fun AddVocabularyFolderScreen(
                 bottomSheetState = selectLanguageBottomSheetState,
                 onDismiss = { showSelectLanguageBottomSheet = false },
                 onSelect = {
-                    languageType = it
+                    selectedLanguage = it
                 }
             )
         }

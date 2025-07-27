@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -46,18 +44,21 @@ import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
-import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VocabularyDetailScreen(
     navController: NavHostController,
     id: String,
+    category: String,
     title: String,
     vocabularyFolderViewModel: VocabularyFolderViewModel
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
+    LaunchedEffect(id) {
+        vocabularyFolderViewModel.clearWords()
+    }
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
@@ -111,8 +112,7 @@ fun VocabularyDetailScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    // TODO: 단어추가 화면으로
-//                    navController.navigate(AppRoutes.ADD_VOCABULARY_FOLDER_SCREEN)
+                    navController.navigate("${AppRoutes.ADD_WORD_SCREEN}/$category/$id")
                 },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -139,20 +139,31 @@ fun VocabularyDetailScreen(
                     .padding(vertical = 16.dp, horizontal = 16.dp),
                 textAlign = TextAlign.End
             )
-            LazyColumn(
-                state = listState,
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(words) {
-                    WordCard(
-                        word = it,
-                        ttsClick = { word ->
-                            vocabularyFolderViewModel.speakWord(word)
-                        }
+            if (isLoading && words.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary
                     )
+                }
+            } else {
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(words) {
+                        WordCard(
+                            word = it,
+                            ttsClick = { word ->
+                                vocabularyFolderViewModel.speakWord(word)
+                            }
+                        )
+                    }
                 }
             }
         }

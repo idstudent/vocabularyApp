@@ -52,11 +52,19 @@
     <string name="delete_vocabulary">정말로 단어장을 삭제하시겠습니까?</string>
     <string name="select_language">언어 선택</string>
     <string name="title">제목</string>
-    <string name="description_optional">"설명 (선택 사항)"</string>
     <string name="category">카테고리</string>
     <string name="toast_select_language">언어를 선택해주세요</string>
     <string name="toast_input_title">제목을 입력해주세요</string>
     <string name="toast_max_vocabularies">단어장은 최대 20개까지 만들 수 있어요</string>
+    <string name="toast_save">단어 저장을 했어요</string>
 
     <string name="word_count">단어 갯수 : </string>
+    <string name="hint_title">제목을 입력하세요</string>
+    <string name="hint_description">설명을 입력하세요(선택 사항)</string>
+    <string name="hint_word">단어를 입력하세요</string>
+    <string name="hint_mean">뜻을 입력하세요</string>
+    <string name="title_word">단어</string>
+    <string name="title_mean">뜻</string>
+    <string name="title_description">"설명"</string>
+
 </resources>

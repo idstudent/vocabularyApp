@@ -10,11 +10,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SaveWordViewModel @Inject constructor(
-    private val wordSaveRepository: SaveWordRepository
+    private val wordSaveRepository: SaveWordRepository,
 ): ViewModel() {
-    fun insertVoca(voca: VocaWord) {
+    fun insertWord(voca: VocaWord, onComplete: () -> Unit) {
         viewModelScope.launch {
-            wordSaveRepository.insertVoca(voca)
+            wordSaveRepository.insertWord(voca)
+            onComplete()
         }
     }
 }

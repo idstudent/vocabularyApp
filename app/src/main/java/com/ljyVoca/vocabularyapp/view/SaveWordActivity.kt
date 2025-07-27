@@ -21,7 +21,7 @@ class SaveWordActivity: BaseActivity<ActivitySaveWordBinding>() {
     private fun initListener() {
         binding.run {
             btnSave.setOnSingleClickListener {
-                saveWordViewModel.insertVoca(VocaWord(etWord.text.toString().lowercase(), etMean.text.toString()))
+//                saveWordViewModel.insertVoca(VocaWord(etWord.text.toString().lowercase(), etMean.text.toString()))
                 finish()
             }
         }

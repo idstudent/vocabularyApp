@@ -51,12 +51,19 @@
     <string name="delete">delete</string>
     <string name="delete_vocabulary">Are you sure you want to delete this vocabulary?</string>
     <string name="select_language">Select Language</string>
-    <string name="title">제목</string>
-    <string name="description_optional">"Description (optional)"</string>
+    <string name="title">Title</string>
     <string name="category">Category</string>
     <string name="toast_select_language">Please select a language</string>
     <string name="toast_input_title">Please enter a title</string>
     <string name="toast_max_vocabularies">You can create up to 20 vocabularies</string>
+    <string name="toast_save">Word saved</string>
 
     <string name="word_count">Words Count: </string>
+    <string name="hint_title">Enter title</string>
+    <string name="hint_description">Description (optional)</string>
+    <string name="hint_word">Enter Word</string>
+    <string name="hint_mean">Enter Meaning</string>
+    <string name="title_word">Word</string>
+    <string name="title_mean">Meaning</string>
+    <string name="title_description">"설명"</string>
 </resources>

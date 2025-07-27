@@ -25,7 +25,7 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 fun LanguageSelectBottomSheet(
     bottomSheetState: SheetState,
     onDismiss: () -> Unit,
-    onSelect: (String) -> Unit
+    onSelect: (Language) -> Unit
 ) {
 
     ModalBottomSheet(
@@ -56,7 +56,7 @@ fun LanguageSelectBottomSheet(
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
                         .clickable {
-                            onSelect(displayName)
+                            onSelect(language)
                             onDismiss()
                         }
                 )

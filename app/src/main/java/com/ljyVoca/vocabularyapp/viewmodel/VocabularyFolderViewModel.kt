@@ -59,6 +59,12 @@ class VocabularyFolderViewModel @Inject constructor(
     private var currentVocabularyId: String? = null
     private var hasMoreData = true
 
+    fun clearWords() {
+        _wordsCount.value = 0
+        _words.value = emptyList()
+        _isLoading.value = true
+    }
+
     fun getSaveWordsCount(id: String) {
         viewModelScope.launch {
             val count = vocabularyFolderRepository.getSaveWordsCount(id)
@@ -66,12 +72,9 @@ class VocabularyFolderViewModel @Inject constructor(
         }
     }
     fun selectVocabularyFolder(id: String) {
-        if (currentVocabularyId == id) return
-
         currentVocabularyId = id
         currentPage = 0
         hasMoreData = true
-        _words.value = emptyList()
 
         loadFirstPage()
     }

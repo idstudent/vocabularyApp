@@ -47,6 +47,7 @@ import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.LanguageSelectBottomSheet
+import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.Vocabulary
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
@@ -71,8 +72,15 @@ fun UpdateVocabularyFolderScreen(
     val vocabulary = navController.previousBackStackEntry?.savedStateHandle?.get<Vocabulary>("vocabulary")
     var titleTextFieldValue by remember { mutableStateOf(vocabulary?.title ?: "") }
     var descriptionTextFieldValue by remember { mutableStateOf(vocabulary?.description ?: "") }
+    var selectedLanguage by remember {
+        mutableStateOf(
+            vocabulary?.category?.let { categoryCode ->
+                Language.entries.find { it.code == categoryCode }
+            }
+        )
+    }
     val defaultLanguageText = stringResource(R.string.select_language)
-    var languageType by remember { mutableStateOf(vocabulary?.category ?: defaultLanguageText) }
+
 
     Scaffold(
         topBar = {
@@ -122,7 +130,7 @@ fun UpdateVocabularyFolderScreen(
 
             Spacer(Modifier.height(36.dp))
             Text(
-                text = stringResource(R.string.description_optional),
+                text = stringResource(R.string.title_description),
                 style = AppTypography.fontSize20SemiBold,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
@@ -162,7 +170,7 @@ fun UpdateVocabularyFolderScreen(
                     )
             ) {
                 Text(
-                    text = languageType,
+                    text = selectedLanguage?.displayName() ?: defaultLanguageText,
                     style = AppTypography.fontSize16Regular,
                     modifier = Modifier
                         .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -176,7 +184,7 @@ fun UpdateVocabularyFolderScreen(
                 onClick = {
                    if(titleTextFieldValue == "") {
                        Toast.makeText(context, toastTitleMsg, Toast.LENGTH_SHORT).show()
-                    } else if(languageType == defaultLanguageText) {
+                    } else if(selectedLanguage == null) {
                         Toast.makeText(context, toastLanguageMsg, Toast.LENGTH_SHORT).show()
                     } else {
                         vocabulary?.let {
@@ -184,7 +192,7 @@ fun UpdateVocabularyFolderScreen(
                                 vocabulary = it.copy(
                                     title = titleTextFieldValue,
                                     description = descriptionTextFieldValue,
-                                    category = languageType
+                                    category = selectedLanguage!!.code
                                 )
                             )
                         }
@@ -215,7 +223,7 @@ fun UpdateVocabularyFolderScreen(
                 bottomSheetState = selectLanguageBottomSheetState,
                 onDismiss = { showSelectLanguageBottomSheet = false },
                 onSelect = {
-                    languageType = it
+                    selectedLanguage = it
                 }
             )
         }

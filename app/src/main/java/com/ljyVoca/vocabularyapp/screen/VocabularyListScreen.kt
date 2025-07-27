@@ -90,7 +90,7 @@ fun VocabularyListScreen(
                     onClick = {
                         // 한글제목으로 인해 title은 따로 넘김
                         navController.currentBackStackEntry?.savedStateHandle?.set("title", it.title)
-                        navController.navigate("${AppRoutes.VOCABULARY_DETAIL_SCREEN}/${it.id}")
+                        navController.navigate("${AppRoutes.VOCABULARY_DETAIL_SCREEN}/${it.id}/${it.category}")
                     },
                     onUpdate = {
                         navController.currentBackStackEntry?.savedStateHandle?.set("vocabulary", it)
