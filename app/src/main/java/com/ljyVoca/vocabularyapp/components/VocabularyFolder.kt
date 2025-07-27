@@ -1,5 +1,6 @@
 package com.ljyVoca.vocabularyapp.components
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.Vocabulary
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
@@ -30,6 +32,9 @@ fun VocabularyFolder(
     onUpdate: (Vocabulary) -> Unit,
     onDelete: (String) -> Unit
 ) {
+    val language = Language.entries.find { it.code == vocabulary.category }
+    val displayCategory = language?.displayName() ?: vocabulary.category
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -92,7 +97,7 @@ fun VocabularyFolder(
             )
 
             Text(
-                text = vocabulary.category,
+                text = displayCategory,
                 style = AppTypography.fontSize14Regular,
                 modifier = Modifier
                     .fillMaxWidth()
