@@ -33,7 +33,10 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
 
 @Composable
-fun TodayWordCard(word: VocaWord) {
+fun TodayWordCard(
+    word: VocaWord,
+    ttsClick: (VocaWord) -> Unit,
+) {
     Card(
         modifier = Modifier
             .width(240.dp)
@@ -77,7 +80,7 @@ fun TodayWordCard(word: VocaWord) {
                 Spacer(Modifier.width(8.dp))
                 IconButton(
                     onClick = {
-                        // TODO: TTS
+                        ttsClick(word)
                     },
                     modifier = Modifier
                         .shadow(

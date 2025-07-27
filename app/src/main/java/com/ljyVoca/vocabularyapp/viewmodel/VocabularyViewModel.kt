@@ -98,14 +98,18 @@ class VocabularyViewModel @Inject constructor(
             }
         }
     }
-    fun speakWord(word: VocaWord) {
+    fun speakWord(word: VocaWord, quiz: Boolean = true) {
         // 현재 퀴즈 타입에 따라 읽을 텍스트 결정
         val textToSpeak = when(_filterState.value.quizType) {
             QuizType.WORD_TO_MEANING -> word.mean
             QuizType.MEANING_TO_WORD -> word.word
         }
 
-        ttsManager.speak(textToSpeak)
+        if(quiz) {
+            ttsManager.speak(textToSpeak)
+        }else {
+            ttsManager.speak(word.word)
+        }
     }
 
     override fun onCleared() {

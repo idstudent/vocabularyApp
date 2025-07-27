@@ -140,7 +140,7 @@ fun HomeScreen(
                 onClick =  { showGoalBottomSheet = true }
             )
             TodayWordTitleSection(todayWordList)
-            TodayCardSection(todayWordList)
+            TodayCardSection(todayWordList, vocabularyViewModel)
             WordFilterSection(
                 filterClick = { showFilterBottomSheet = true },
                 filterState = filterState,
@@ -346,14 +346,18 @@ private fun TodayWordTitleSection(todayWordList: List<VocaWord>) {
                 style = AppTypography.fontSize16Regular.copy(
                     color = MaterialTheme.colorScheme.primary
                 ),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable {
+                        //TODO: 더보기 리스트작업
+                    }
             )
         }
     }
 }
 
 @Composable
-private fun TodayCardSection(wordList: List<VocaWord>) {
+private fun TodayCardSection(wordList: List<VocaWord>, vocabularyViewModel: VocabularyViewModel) {
     if(wordList.isNotEmpty()) {
         Row(
             modifier = Modifier
@@ -363,7 +367,12 @@ private fun TodayCardSection(wordList: List<VocaWord>) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             wordList.take(4).forEach { word ->
-                TodayWordCard(word = word)
+                TodayWordCard(
+                    word = word,
+                    ttsClick = {
+                        vocabularyViewModel.speakWord(word)
+                    }
+                )
             }
         }
     }else {
