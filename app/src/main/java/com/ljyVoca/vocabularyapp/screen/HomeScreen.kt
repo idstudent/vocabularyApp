@@ -32,10 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.Divider
-import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.model.FilterState
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
@@ -56,7 +54,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.draw.shadow
 import androidx.lifecycle.Lifecycle
@@ -65,6 +62,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.components.FilterBottomSheet
 import com.ljyVoca.vocabularyapp.components.GoalBottomSheet
+import com.ljyVoca.vocabularyapp.components.TodayWordCard
 import com.ljyVoca.vocabularyapp.components.getQuizTypeDisplayName
 import com.ljyVoca.vocabularyapp.components.getStudyModeDisplayName
 import com.ljyVoca.vocabularyapp.components.getWordFilterDisplayName
@@ -365,7 +363,7 @@ private fun TodayCardSection(wordList: List<VocaWord>) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             wordList.take(4).forEach { word ->
-                WordCard(word = word)
+                TodayWordCard(word = word)
             }
         }
     }else {

@@ -12,7 +12,7 @@ import com.ljyVoca.vocabularyapp.model.WeeklyGoal
 @TypeConverters(Converters::class)
 abstract class VocabularyDatabase: RoomDatabase() {
     abstract fun vocaDao(): VocaDao
-    abstract fun vocabularyDao(): VocabularyDao  // 추가
+    abstract fun vocabularyDao(): VocabularyDao
 }
 
 @Database(entities = [WeeklyGoal::class], version = 1, exportSchema = true)

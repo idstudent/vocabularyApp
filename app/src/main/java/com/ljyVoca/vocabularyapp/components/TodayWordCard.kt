@@ -33,13 +33,11 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
 
 @Composable
-fun WordCard(
-    word: VocaWord,
-    ttsClick: (VocaWord) -> Unit
-) {
+fun TodayWordCard(word: VocaWord) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
+            .width(240.dp)
+            .height(200.dp)
             .shadow(
                 elevation = 4.dp,
                 shape = RoundedCornerShape(12.dp),
@@ -79,7 +77,7 @@ fun WordCard(
                 Spacer(Modifier.width(8.dp))
                 IconButton(
                     onClick = {
-                        ttsClick(word)
+                        // TODO: TTS
                     },
                     modifier = Modifier
                         .shadow(
@@ -104,7 +102,6 @@ fun WordCard(
                 style = AppTypography.fontSize16SemiBold
             )
             Spacer(Modifier.width(8.dp))
-
             // description이 있을 때만 나머지 내용 표시
             if(word.description.isNotBlank()) {
                 Spacer(Modifier.height(16.dp))

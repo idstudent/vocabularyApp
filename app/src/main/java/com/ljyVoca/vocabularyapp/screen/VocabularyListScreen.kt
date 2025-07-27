@@ -52,7 +52,7 @@ fun VocabularyListScreen(
             Column {
                 TopAppBar(
                     title = {
-                        Text("단어장", style = AppTypography.fontSize20Regular)
+                        Text(stringResource(R.string.vocabulary), style = AppTypography.fontSize20Regular)
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -77,8 +77,6 @@ fun VocabularyListScreen(
             }
         }
     ) { innerPadding ->
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,7 +88,9 @@ fun VocabularyListScreen(
                 VocabularyFolder(
                     vocabulary = it,
                     onClick = {
-                        // TODO: 단어장 상세
+                        // 한글제목으로 인해 title은 따로 넘김
+                        navController.currentBackStackEntry?.savedStateHandle?.set("title", it.title)
+                        navController.navigate("${AppRoutes.VOCABULARY_DETAIL_SCREEN}/${it.id}")
                     },
                     onUpdate = {
                         navController.currentBackStackEntry?.savedStateHandle?.set("vocabulary", it)
