@@ -63,7 +63,7 @@ class VocabularyRepository(
         return vocabularyDatabase.vocaDao().getQuizWords(category, onlyFrequentlyWrong)
     }
 
-    suspend fun updateLastStudyDate() {
+    fun updateLastStudyDate() {
         val sharedPrefs = context.getSharedPreferences("study_prefs", Context.MODE_PRIVATE)
         sharedPrefs.edit()
             .putLong("last_study_date", System.currentTimeMillis())

@@ -1,6 +1,7 @@
 package com.ljyVoca.vocabularyapp.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BorderColor
 import androidx.compose.material.icons.filled.Campaign
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -35,7 +38,9 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 @Composable
 fun WordCard(
     word: VocaWord,
-    ttsClick: (VocaWord) -> Unit
+    ttsClick: (VocaWord) -> Unit,
+    onUpdate: (VocaWord) -> Unit,
+    onDelete: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -107,27 +112,73 @@ fun WordCard(
 
             // description이 있을 때만 나머지 내용 표시
             if(word.description.isNotBlank()) {
-                Spacer(Modifier.height(16.dp))
+                Spacer(Modifier.height(8.dp))
                 if(word.category == Language.KOREAN.code) {
                     Text(
                         Koroman.romanize(word.mean),
                         style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
                     )
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(8.dp))
                 }
-                Text(
-                    word.description,
-                    style = AppTypography.fontSize16Regular,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        word.description,
+                        style = AppTypography.fontSize16Regular,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.BorderColor,
+                        contentDescription = "insert",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable { onUpdate(word) }
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "delete",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable { onDelete(word.vocabularyId) }
+                    )
+                }
             } else if(word.category == Language.KOREAN.code) {
                 // description 없고 한국어인 경우 로마자만 표시
                 Spacer(Modifier.height(8.dp))
-                Text(
-                    Koroman.romanize(word.mean),
-                    style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        Koroman.romanize(word.mean),
+                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.BorderColor,
+                        contentDescription = "insert",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable { onUpdate(word) }
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "delete",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable { onDelete(word.vocabularyId) }
+                    )
+                }
             }
         }
     }

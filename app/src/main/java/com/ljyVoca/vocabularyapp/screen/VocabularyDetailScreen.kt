@@ -161,6 +161,12 @@ fun VocabularyDetailScreen(
                             word = it,
                             ttsClick = { word ->
                                 vocabularyFolderViewModel.speakWord(word)
+                            },
+                            onUpdate =  {
+                                // TODO: 수정페이지
+                            },
+                            onDelete = {
+                                // TODO:  삭제 다이얼로그
                             }
                         )
                     }

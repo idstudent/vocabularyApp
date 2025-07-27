@@ -144,6 +144,7 @@ class VocabularyViewModel @Inject constructor(
 
     private fun getStartOfThisWeek(): Long {
         val calendar = Calendar.getInstance().apply {
+            firstDayOfWeek = Calendar.MONDAY
             set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
@@ -152,7 +153,6 @@ class VocabularyViewModel @Inject constructor(
         }
         return calendar.timeInMillis
     }
-
     fun startQuiz() {
         viewModelScope.launch {
             try {
