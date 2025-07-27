@@ -1,7 +1,6 @@
 package com.ljyVoca.vocabularyapp.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +27,7 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 fun VocabularyFolder(
     vocabulary: Vocabulary,
     onClick: () -> Unit,
-    onInsert: () -> Unit,
+    onUpdate: (Vocabulary) -> Unit,
     onDelete: (String) -> Unit
 ) {
     Card(
@@ -72,7 +71,7 @@ fun VocabularyFolder(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(8.dp)
-                        .clickable { onInsert() }
+                        .clickable { onUpdate(vocabulary) }
                 )
                 Icon(
                     imageVector = Icons.Default.Delete,

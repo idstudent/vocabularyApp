@@ -9,6 +9,7 @@ import com.ljyVoca.vocabularyapp.screen.AddVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
+import com.ljyVoca.vocabularyapp.screen.UpdateVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyListScreen
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
@@ -51,6 +52,13 @@ fun NavigationGraph(navController: NavHostController) {
 
         composable(route = AppRoutes.ADD_VOCABULARY_FOLDER_SCREEN) {
             AddVocabularyFolderScreen(
+                navController = navController,
+                vocabularyFolderViewModel = vocabularyFolderViewModel
+            )
+        }
+
+        composable(route = AppRoutes.UPDATE_VOCABULARY_FOLDER_SCREEN) {
+            UpdateVocabularyFolderScreen(
                 navController = navController,
                 vocabularyFolderViewModel = vocabularyFolderViewModel
             )

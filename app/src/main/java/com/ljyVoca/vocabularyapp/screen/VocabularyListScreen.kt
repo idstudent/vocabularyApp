@@ -92,8 +92,9 @@ fun VocabularyListScreen(
                     onClick = {
                         // TODO: 단어장 상세
                     },
-                    onInsert = {
-                        // TODO: 단어장 수정
+                    onUpdate = {
+                        navController.currentBackStackEntry?.savedStateHandle?.set("vocabulary", it)
+                        navController.navigate(AppRoutes.UPDATE_VOCABULARY_FOLDER_SCREEN)
                     },
                     onDelete = { id ->
                         showDeleteDialog = true
