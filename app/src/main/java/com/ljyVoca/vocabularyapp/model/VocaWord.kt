@@ -1,11 +1,16 @@
 package com.ljyVoca.vocabularyapp.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
 @Entity(tableName = "voca")
+@Parcelize
 data class VocaWord(
     @PrimaryKey
+    val id: String = UUID.randomUUID().toString(),
     val word: String,
     val mean: String,
     val phonetic: String = "",           // 발음기호
@@ -17,9 +22,8 @@ data class VocaWord(
     var vocabularyId: String = "",
     var isBookmarked: Boolean = false,   // 즐겨찾기
     val createdDate: Long = System.currentTimeMillis(),
-    var ending: Boolean = false          // 마지막 단어 여부
 
-) {
+):Parcelable {
     // 정답률 계산
     val accuracy: Float get() = if (totalAttempts > 0) {
         (totalAttempts - wrongCount).toFloat() / totalAttempts

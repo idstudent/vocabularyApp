@@ -56,8 +56,8 @@
     <string name="toast_select_language">언어를 선택해주세요</string>
     <string name="toast_input_title">제목을 입력해주세요</string>
     <string name="toast_max_vocabularies">단어장은 최대 20개까지 만들 수 있어요</string>
-    <string name="toast_save">단어 저장을 했어요</string>
-
+    <string name="toast_save">단어를 저장 했어요</string>
+    <string name="toast_update_folder_complete">수정이 완료되었어요</string>
     <string name="word_count">단어 갯수 : </string>
     <string name="hint_title">제목을 입력하세요</string>
     <string name="hint_description">설명을 입력하세요(선택 사항)</string>

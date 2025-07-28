@@ -8,7 +8,7 @@ import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.model.Vocabulary
 import com.ljyVoca.vocabularyapp.model.WeeklyGoal
 
-@Database(entities = [VocaWord::class, Vocabulary::class], version = 4, exportSchema = true)
+@Database(entities = [VocaWord::class, Vocabulary::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class VocabularyDatabase: RoomDatabase() {
     abstract fun vocaDao(): VocaDao

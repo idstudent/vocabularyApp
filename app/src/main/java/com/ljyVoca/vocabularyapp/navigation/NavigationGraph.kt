@@ -13,6 +13,7 @@ import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
 import com.ljyVoca.vocabularyapp.screen.UpdateVocabularyFolderScreen
+import com.ljyVoca.vocabularyapp.screen.UpdateWordScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyDetailScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyListScreen
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
@@ -106,6 +107,14 @@ fun NavigationGraph(navController: NavHostController) {
                 saveWordViewModel = saveWordViewModel
             )
         }
+
+        composable(route = AppRoutes.UPDATE_WORD_SCREEN) {
+            UpdateWordScreen(
+                navController = navController,
+                saveWordViewModel = saveWordViewModel
+            )
+        }
+
     }
 
 }

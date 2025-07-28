@@ -136,9 +136,10 @@ class VocabularyFolderViewModel @Inject constructor(
         }
     }
 
-    fun updateVocabulary(vocabulary: Vocabulary) {
+    fun updateVocabulary(vocabulary: Vocabulary, onComplete: () -> Unit) {
         viewModelScope.launch {
             vocabularyFolderRepository.updateVocabulary(vocabulary)
+            onComplete()
         }
     }
     fun deleteVocabulary(id: String) {

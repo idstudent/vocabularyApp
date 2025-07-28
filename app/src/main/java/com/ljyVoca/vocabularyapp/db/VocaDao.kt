@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.ljyVoca.vocabularyapp.model.VocaWord
+import com.ljyVoca.vocabularyapp.model.Vocabulary
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,6 +16,9 @@ interface VocaDao {
 
     @Query("SELECT * FROM voca")
     suspend fun getAllWords(): List<VocaWord>
+
+    @Update
+    suspend fun updateWord(vocaWord: VocaWord)
 
     @Query("SELECT * FROM voca WHERE DATE(createdDate/1000, 'unixepoch') = DATE('now') ORDER BY createdDate DESC")
     suspend fun getTodayWords(): List<VocaWord>

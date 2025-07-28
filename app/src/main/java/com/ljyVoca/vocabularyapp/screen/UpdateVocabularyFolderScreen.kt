@@ -68,6 +68,7 @@ fun UpdateVocabularyFolderScreen(
 
     val toastLanguageMsg = stringResource(R.string.toast_select_language)
     val toastTitleMsg = stringResource(R.string.toast_input_title)
+    val toastCompleted = stringResource(R.string.toast_update_folder_complete)
 
     val vocabulary = navController.previousBackStackEntry?.savedStateHandle?.get<Vocabulary>("vocabulary")
     var titleTextFieldValue by remember { mutableStateOf(vocabulary?.title ?: "") }
@@ -193,10 +194,13 @@ fun UpdateVocabularyFolderScreen(
                                     title = titleTextFieldValue,
                                     description = descriptionTextFieldValue,
                                     category = selectedLanguage!!.code
-                                )
+                                ),
+                                onComplete = {
+                                    navController.popBackStack()
+                                    Toast.makeText(context, toastCompleted, Toast.LENGTH_SHORT).show()
+                                }
                             )
                         }
-                       navController.popBackStack()
                    }
                 },
                 modifier = Modifier

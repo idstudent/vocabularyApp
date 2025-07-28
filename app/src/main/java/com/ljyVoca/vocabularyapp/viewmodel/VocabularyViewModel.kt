@@ -131,8 +131,6 @@ class VocabularyViewModel @Inject constructor(
         currentIndex++
         if(currentIndex < _wordList.value.size) {
             _currentWord.value = _wordList.value[currentIndex]
-        }else {
-            _currentWord.value?.ending = true
         }
     }
 

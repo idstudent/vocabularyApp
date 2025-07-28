@@ -163,7 +163,8 @@ fun VocabularyDetailScreen(
                                 vocabularyFolderViewModel.speakWord(word)
                             },
                             onUpdate =  {
-                                // TODO: 수정페이지
+                                navController.currentBackStackEntry?.savedStateHandle?.set("word", it)
+                                navController.navigate(AppRoutes.UPDATE_WORD_SCREEN)
                             },
                             onDelete = {
                                 // TODO:  삭제 다이얼로그

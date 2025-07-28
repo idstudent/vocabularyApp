@@ -66,4 +66,5 @@
     <string name="title_word">Word</string>
     <string name="title_mean">Meaning</string>
     <string name="title_description">"설명"</string>
+    <string name="toast_update_folder_complete">Updated</string>
 </resources>
