@@ -61,7 +61,7 @@
     <string name="toast_update_folder_complete">수정이 완료되었어요</string>
     <string name="word_count">단어 갯수 : </string>
     <string name="hint_title">제목을 입력하세요</string>
-    <string name="hint_description">설명을 입력하세요(선택 사항)</string>
+    <string name="hint_description">설명을 입력하세요 (선택 사항)</string>
     <string name="hint_word">단어를 입력하세요</string>
     <string name="hint_mean">뜻을 입력하세요</string>
     <string name="title_word">단어</string>

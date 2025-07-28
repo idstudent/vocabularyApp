@@ -17,7 +17,7 @@ private val WantedSemiBold = FontFamily(Font(R.font.wanted_semi_bold))
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = WantedRegular,  // 👈 변경
+        fontFamily = WantedRegular,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,

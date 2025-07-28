@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import app.daissue.koroman.Koroman
 import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.VocaWord
@@ -36,11 +37,10 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 fun TodayWordCard(
     word: VocaWord,
     ttsClick: (VocaWord) -> Unit,
+    modifier: Modifier
 ) {
     Card(
-        modifier = Modifier
-            .width(240.dp)
-            .height(200.dp)
+        modifier = modifier
             .shadow(
                 elevation = 4.dp,
                 shape = RoundedCornerShape(12.dp),
@@ -56,7 +56,7 @@ fun TodayWordCard(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
             verticalArrangement = if(word.description.isBlank()) {
                 Arrangement.Center // description 없으면 중앙 정렬
@@ -111,15 +111,16 @@ fun TodayWordCard(
                 if(word.category == Language.KOREAN.code) {
                     Text(
                         Koroman.romanize(word.mean),
-                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
+                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary),
                     )
                     Spacer(Modifier.height(16.dp))
                 }
                 Text(
                     word.description,
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(lineHeight = 20.sp),
                     maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = true
                 )
             } else if(word.category == Language.KOREAN.code) {
                 // description 없고 한국어인 경우 로마자만 표시

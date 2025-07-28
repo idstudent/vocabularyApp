@@ -97,7 +97,8 @@ fun AddWordScreen(
                 title = stringResource(R.string.title_description),
                 value = descriptionTextFieldValue,
                 onValueChange = { descriptionTextFieldValue = it },
-                placeholder = stringResource(R.string.hint_description)
+                placeholder = stringResource(R.string.hint_description),
+                maxLines = 3
             )
 
             Spacer(Modifier.height(36.dp))

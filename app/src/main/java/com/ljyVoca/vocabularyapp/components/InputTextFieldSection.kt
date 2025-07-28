@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
 @Composable
@@ -18,7 +19,8 @@ fun InputTextFieldSection(
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String
+    placeholder: String,
+    maxLines: Int = 1
 ) {
     Text(
         text = title,
@@ -44,10 +46,10 @@ fun InputTextFieldSection(
         textStyle = AppTypography.fontSize16Regular,
         placeholder = {
             Text(
-                text = "단어를 입력하세요",
-                style = AppTypography.fontSize16Regular,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                text = placeholder,
+                style = AppTypography.fontSize16Regular
             )
-        }
+        },
+        maxLines = maxLines
     )
 }

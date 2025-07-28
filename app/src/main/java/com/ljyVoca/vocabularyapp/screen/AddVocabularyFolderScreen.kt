@@ -110,7 +110,7 @@ fun AddVocabularyFolderScreen(
                 title = stringResource(R.string.title_description),
                 value = descriptionTextFieldValue,
                 onValueChange = { descriptionTextFieldValue = it },
-                placeholder = stringResource(R.string.hint_word)
+                placeholder = stringResource(R.string.hint_description)
             )
 
             Spacer(Modifier.height(36.dp))

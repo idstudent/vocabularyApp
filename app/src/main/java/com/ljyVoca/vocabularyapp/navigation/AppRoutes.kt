@@ -8,4 +8,5 @@ object AppRoutes {
     const val VOCABULARY_DETAIL_SCREEN = "vocabulary_detail"
     const val ADD_WORD_SCREEN = "add_word"
     const val UPDATE_WORD_SCREEN = "update_word"
+    const val TODAY_ALL_WORD_SCREEN = "today_all_word"
 }

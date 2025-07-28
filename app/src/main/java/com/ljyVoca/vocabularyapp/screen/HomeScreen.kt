@@ -139,7 +139,7 @@ fun HomeScreen(
                 goalWords = weeklyGoal,
                 onClick =  { showGoalBottomSheet = true }
             )
-            TodayWordTitleSection(todayWordList)
+            TodayWordTitleSection(navController, todayWordList)
             TodayCardSection(todayWordList, vocabularyViewModel)
             WordFilterSection(
                 filterClick = { showFilterBottomSheet = true },
@@ -327,7 +327,10 @@ private fun GoalSection(
 }
 
 @Composable
-private fun TodayWordTitleSection(todayWordList: List<VocaWord>) {
+private fun TodayWordTitleSection(
+    navController: NavHostController,
+    todayWordList: List<VocaWord>
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -349,7 +352,7 @@ private fun TodayWordTitleSection(todayWordList: List<VocaWord>) {
                 modifier = Modifier
                     .padding(16.dp)
                     .clickable {
-                        //TODO: 더보기 리스트작업
+                        navController.navigate(AppRoutes.TODAY_ALL_WORD_SCREEN)
                     }
             )
         }
@@ -371,7 +374,10 @@ private fun TodayCardSection(wordList: List<VocaWord>, vocabularyViewModel: Voca
                     word = word,
                     ttsClick = {
                         vocabularyViewModel.speakWord(word)
-                    }
+                    },
+                    modifier = Modifier
+                        .width(240.dp)
+                        .height(200.dp)
                 )
             }
         }
@@ -421,7 +427,7 @@ private fun WordFilterSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                .padding(start = 16.dp, end = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

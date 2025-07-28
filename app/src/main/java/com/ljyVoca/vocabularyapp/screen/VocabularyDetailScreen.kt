@@ -68,7 +68,7 @@ fun VocabularyDetailScreen(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
-    
+
     LaunchedEffect(id) {
         vocabularyFolderViewModel.clearWords()
     }
