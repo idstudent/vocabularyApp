@@ -14,6 +14,9 @@ interface VocaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: VocaWord)
 
+    @Query("SELECT EXISTS(SELECT 1 FROM voca WHERE word = :word)")
+    suspend fun isWordExists(word: String): Boolean
+
     @Query("SELECT * FROM voca")
     suspend fun getAllWords(): List<VocaWord>
 

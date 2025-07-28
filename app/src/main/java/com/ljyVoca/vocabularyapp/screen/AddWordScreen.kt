@@ -52,7 +52,7 @@ fun AddWordScreen(
     val toastEmptyWord = stringResource(R.string.hint_word)
     val toastEmptyMean = stringResource(R.string.hint_mean)
     val toastComplete = stringResource(R.string.toast_save)
-
+    val toastError = stringResource(R.string.toast_word_exists)
     Scaffold(
         topBar = {
             Column {
@@ -117,11 +117,15 @@ fun AddWordScreen(
                                 category = category,
                                 vocabularyId = vocaId
                             ),
-                            onComplete = {
-                                Toast.makeText(context, toastComplete, Toast.LENGTH_SHORT).show()
-                                wordTextFieldValue = ""
-                                meanTextFieldValue = ""
-                                descriptionTextFieldValue = ""
+                            onComplete = { success ->
+                                if (success) {
+                                    Toast.makeText(context, toastComplete, Toast.LENGTH_SHORT).show()
+                                    wordTextFieldValue = ""
+                                    meanTextFieldValue = ""
+                                    descriptionTextFieldValue = ""
+                                } else {
+                                    Toast.makeText(context, toastError, Toast.LENGTH_SHORT).show()
+                                }
                             }
                         )
                     }

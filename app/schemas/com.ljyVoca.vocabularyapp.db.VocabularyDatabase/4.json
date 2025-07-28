@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "b5ec32134b9eebb476577c6896ca7ff0",
+    "identityHash": "4020140cfc8fea61a16955f25b3f4503",
     "entities": [
       {
         "tableName": "voca",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`word` TEXT NOT NULL, `mean` TEXT NOT NULL, `phonetic` TEXT NOT NULL, `description` TEXT NOT NULL, `wrongCount` INTEGER NOT NULL, `totalAttempts` INTEGER NOT NULL, `lastStudiedDate` INTEGER NOT NULL, `category` TEXT NOT NULL, `vocabularyId` TEXT NOT NULL, `isBookmarked` INTEGER NOT NULL, `createdDate` INTEGER NOT NULL, `ending` INTEGER NOT NULL, PRIMARY KEY(`word`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `word` TEXT NOT NULL, `mean` TEXT NOT NULL, `phonetic` TEXT NOT NULL, `description` TEXT NOT NULL, `wrongCount` INTEGER NOT NULL, `totalAttempts` INTEGER NOT NULL, `lastStudiedDate` INTEGER NOT NULL, `category` TEXT NOT NULL, `vocabularyId` TEXT NOT NULL, `isBookmarked` INTEGER NOT NULL, `createdDate` INTEGER NOT NULL, `ending` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "word",
             "columnName": "word",
@@ -84,7 +90,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "word"
+            "id"
           ]
         },
         "indices": [],
@@ -132,7 +138,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b5ec32134b9eebb476577c6896ca7ff0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4020140cfc8fea61a16955f25b3f4503')"
     ]
   }
 }

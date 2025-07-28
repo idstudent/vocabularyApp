@@ -56,6 +56,7 @@ fun UpdateWordScreen(
     val toastEmptyWord = stringResource(R.string.hint_word)
     val toastEmptyMean = stringResource(R.string.hint_mean)
     val toastComplete = stringResource(R.string.toast_save)
+    val toastError = stringResource(R.string.toast_word_exists)
 
     Scaffold(
         topBar = {
@@ -120,9 +121,13 @@ fun UpdateWordScreen(
                                     mean = meanTextFieldValue,
                                     description = descriptionTextFieldValue
                                 ),
-                                onComplete = {
-                                    Toast.makeText(context, toastComplete, Toast.LENGTH_SHORT).show()
-                                    navController.popBackStack()
+                                onComplete = { success ->
+                                    if (success) {
+                                        Toast.makeText(context, toastComplete, Toast.LENGTH_SHORT).show()
+                                        navController.popBackStack()
+                                    } else {
+                                        Toast.makeText(context, toastError, Toast.LENGTH_SHORT).show()
+                                    }
                                 }
                             )
                         }

@@ -67,4 +67,5 @@
     <string name="title_mean">Meaning</string>
     <string name="title_description">"설명"</string>
     <string name="toast_update_folder_complete">Updated</string>
+    <string name="toast_word_exists">Word already exists</string>
 </resources>

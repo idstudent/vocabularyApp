@@ -12,18 +12,10 @@ import javax.inject.Inject
 class SaveWordViewModel @Inject constructor(
     private val wordSaveRepository: SaveWordRepository,
 ): ViewModel() {
-    fun insertWord(word: VocaWord, onComplete: () -> Unit) {
+    fun insertWord(word: VocaWord, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch {
-            wordSaveRepository.insertWord(word)
-            onComplete()
+            val success = wordSaveRepository.insertWord(word)
+            onComplete(success)
         }
-    }
-
-    fun updateWord(word: VocaWord, onComplete: () -> Unit) {
-        viewModelScope.launch {
-            wordSaveRepository.updateWord(word)
-            onComplete()
-        }
-
     }
 }
