@@ -18,4 +18,11 @@ class SaveWordViewModel @Inject constructor(
             onComplete(success)
         }
     }
+    fun deleteWord(id: String, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            wordSaveRepository.deleteWord(id)
+            onComplete()
+        }
+    }
+
 }

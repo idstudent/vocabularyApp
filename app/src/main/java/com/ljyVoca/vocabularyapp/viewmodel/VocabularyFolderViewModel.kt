@@ -142,6 +142,7 @@ class VocabularyFolderViewModel @Inject constructor(
             onComplete()
         }
     }
+
     fun deleteVocabulary(id: String) {
         viewModelScope.launch {
             vocabularyFolderRepository.deleteWordsByVocabularyId(id)

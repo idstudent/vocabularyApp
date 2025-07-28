@@ -1,5 +1,6 @@
 package com.ljyVoca.vocabularyapp.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -20,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -28,9 +31,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -43,8 +49,8 @@ import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
+import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VocabularyDetailScreen(
@@ -52,10 +58,17 @@ fun VocabularyDetailScreen(
     id: String,
     category: String,
     title: String,
+    saveWordViewModel: SaveWordViewModel,
     vocabularyFolderViewModel: VocabularyFolderViewModel
 ) {
-    val lifecycleOwner = LocalLifecycleOwner.current
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var deleteWordId by remember { mutableStateOf<String?>(null) }
 
+    val toastDelete = stringResource(R.string.toast_delete_word)
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+    
     LaunchedEffect(id) {
         vocabularyFolderViewModel.clearWords()
     }
@@ -166,14 +179,64 @@ fun VocabularyDetailScreen(
                                 navController.currentBackStackEntry?.savedStateHandle?.set("word", it)
                                 navController.navigate(AppRoutes.UPDATE_WORD_SCREEN)
                             },
-                            onDelete = {
-                                // TODO:  삭제 다이얼로그
+                            onDelete = { id ->
+                                showDeleteDialog = true
+                                deleteWordId = id
                             }
                         )
                     }
                 }
             }
         }
+    }
+    if(showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = {
+                Text(
+                    text = stringResource(R.string.delete),
+                    style = AppTypography.fontSize16SemiBold
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.delete_word),
+                    style = AppTypography.fontSize16Regular
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        deleteWordId?.let {
+                            saveWordViewModel.deleteWord(it) {
+                                vocabularyFolderViewModel.selectVocabularyFolder(id)
+                                vocabularyFolderViewModel.getSaveWordsCount(id)
+                                Toast.makeText(context, toastDelete, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.ok),
+                        style = AppTypography.fontSize16SemiBold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showDeleteDialog = false }
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        style = AppTypography.fontSize16Regular,
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.onPrimary
+        )
     }
 
 }

@@ -49,7 +49,8 @@
     <string name="home">홈</string>
     <string name="vocabulary">단어장</string>
     <string name="delete">삭제</string>
-    <string name="delete_vocabulary">정말로 단어장을 삭제하시겠습니까?</string>
+    <string name="delete_vocabulary">정말 단어장을 삭제하시겠습니까?</string>
+    <string name="delete_word">정말 단어를 삭제하시겠습니까?</string>
     <string name="select_language">언어 선택</string>
     <string name="title">제목</string>
     <string name="category">카테고리</string>
@@ -67,5 +68,6 @@
     <string name="title_mean">뜻</string>
     <string name="title_description">"설명"</string>
     <string name="toast_word_exists">이미 존재하는 단어입니다</string>
+    <string name="toast_delete_word">단어를 삭제했어요</string>
 
 </resources>

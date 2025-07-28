@@ -87,6 +87,7 @@ fun NavigationGraph(navController: NavHostController) {
                 id = id,
                 category = category,
                 title = title,
+                saveWordViewModel = saveWordViewModel,
                 vocabularyFolderViewModel = vocabularyFolderViewModel
             )
         }

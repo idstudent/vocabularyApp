@@ -16,4 +16,7 @@ class SaveWordRepository(
             true // 저장 성공
         }
     }
+    suspend fun deleteWord(id: String) {
+        vocabularyDatabase.vocabularyDao().deleteWordById(id)
+    }
 }

@@ -146,7 +146,7 @@ fun WordCard(
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .padding(8.dp)
-                            .clickable { onDelete(word.vocabularyId) }
+                            .clickable { onDelete(word.id) }
                     )
                 }
             } else if(word.category == Language.KOREAN.code) {

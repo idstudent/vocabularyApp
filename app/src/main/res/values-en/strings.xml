@@ -50,6 +50,7 @@
     <string name="vocabulary">Vocabulary</string>
     <string name="delete">delete</string>
     <string name="delete_vocabulary">Are you sure you want to delete this vocabulary?</string>
+    <string name="delete_word">Are you sure you want to delete this word?</string>
     <string name="select_language">Select Language</string>
     <string name="title">Title</string>
     <string name="category">Category</string>
@@ -68,4 +69,5 @@
     <string name="title_description">"설명"</string>
     <string name="toast_update_folder_complete">Updated</string>
     <string name="toast_word_exists">Word already exists</string>
+    <string name="toast_delete_word">Word deleted</string>
 </resources>

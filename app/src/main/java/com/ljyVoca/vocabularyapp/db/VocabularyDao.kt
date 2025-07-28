@@ -34,4 +34,8 @@ interface VocabularyDao {
     // 단어장별 단어 개수
     @Query("SELECT COUNT(*) FROM voca WHERE vocabularyId = :vocabularyId")
     suspend fun getWordCountByVocabularyId(vocabularyId: String): Int
+
+    // 단어 하나만 삭제
+    @Query("DELETE FROM voca WHERE id = :wordId")
+    suspend fun deleteWordById(wordId: String)
 }
