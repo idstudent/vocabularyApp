@@ -373,7 +373,7 @@ private fun TodayCardSection(wordList: List<VocaWord>, vocabularyViewModel: Voca
                 TodayWordCard(
                     word = word,
                     ttsClick = {
-                        vocabularyViewModel.speakWord(word)
+                        vocabularyViewModel.speakOnlyWord(word)
                     },
                     modifier = Modifier
                         .width(240.dp)

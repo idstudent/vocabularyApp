@@ -60,7 +60,7 @@ fun TodayWordAllScreen(
                 TodayWordCard(
                     word = word,
                     ttsClick =  {
-                        vocabularyViewModel.speakWord(word)
+                        vocabularyViewModel.speakOnlyWord(word)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
