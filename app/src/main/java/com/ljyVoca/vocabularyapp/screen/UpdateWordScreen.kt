@@ -115,7 +115,7 @@ fun UpdateWordScreen(
                         Toast.makeText(context, toastEmptyMean, Toast.LENGTH_SHORT).show()
                     } else {
                         word?.let {
-                            saveWordViewModel.insertWord(
+                            saveWordViewModel.updateWord(
                                 it.copy(
                                     word = wordTextFieldValue,
                                     mean = meanTextFieldValue,

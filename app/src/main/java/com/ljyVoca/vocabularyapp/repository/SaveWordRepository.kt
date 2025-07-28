@@ -16,6 +16,23 @@ class SaveWordRepository(
             true // 저장 성공
         }
     }
+
+    suspend fun updateWord(word: VocaWord): Boolean {
+        val exists = vocabularyDatabase.vocaDao().isWordExistsExcluding(word.word, word.id)
+        println("수정 시 중복 체크: $exists, 단어: '${word.word}', ID: '${word.id}'")
+        return if (exists) {
+            false // 다른 단어와 중복이면 수정 안 함
+        } else {
+            try {
+                vocabularyDatabase.vocaDao().updateWord(word)
+                true // 수정 성공
+            } catch (e: Exception) {
+                println("단어 수정 실패: ${e.message}")
+                false // 수정 실패
+            }
+        }
+    }
+
     suspend fun deleteWord(id: String) {
         vocabularyDatabase.vocabularyDao().deleteWordById(id)
     }

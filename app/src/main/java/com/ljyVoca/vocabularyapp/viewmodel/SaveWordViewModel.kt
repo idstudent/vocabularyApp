@@ -18,6 +18,12 @@ class SaveWordViewModel @Inject constructor(
             onComplete(success)
         }
     }
+    fun updateWord(word: VocaWord, onComplete: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val success = wordSaveRepository.updateWord(word)
+            onComplete(success)
+        }
+    }
     fun deleteWord(id: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             wordSaveRepository.deleteWord(id)

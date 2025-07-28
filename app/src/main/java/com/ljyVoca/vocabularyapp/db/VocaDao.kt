@@ -17,6 +17,9 @@ interface VocaDao {
     @Query("SELECT EXISTS(SELECT 1 FROM voca WHERE word = :word)")
     suspend fun isWordExists(word: String): Boolean
 
+    @Query("SELECT EXISTS(SELECT 1 FROM voca WHERE word = :word AND id != :excludeId)")
+    suspend fun isWordExistsExcluding(word: String, excludeId: String): Boolean
+
     @Query("SELECT * FROM voca")
     suspend fun getAllWords(): List<VocaWord>
 
