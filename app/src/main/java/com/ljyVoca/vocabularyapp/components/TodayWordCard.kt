@@ -76,6 +76,9 @@ fun TodayWordCard(
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .weight(1f),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = true
                 )
                 Spacer(Modifier.width(8.dp))
                 IconButton(
@@ -102,7 +105,10 @@ fun TodayWordCard(
             }
             Text(
                 text= word.mean,
-                style = AppTypography.fontSize16SemiBold
+                style = AppTypography.fontSize16SemiBold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                softWrap = true
             )
             Spacer(Modifier.width(8.dp))
             // description이 있을 때만 나머지 내용 표시
@@ -117,7 +123,7 @@ fun TodayWordCard(
                 }
                 Text(
                     word.description,
-                    style = AppTypography.fontSize16Regular.copy(lineHeight = 20.sp),
+                    style = AppTypography.fontSize16Regular,
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
                     softWrap = true

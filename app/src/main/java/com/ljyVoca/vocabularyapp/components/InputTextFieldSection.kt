@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
 @Composable
@@ -19,8 +18,7 @@ fun InputTextFieldSection(
     title: String,
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String,
-    maxLines: Int = 1
+    placeholder: String
 ) {
     Text(
         text = title,
@@ -50,6 +48,5 @@ fun InputTextFieldSection(
                 style = AppTypography.fontSize16Regular
             )
         },
-        maxLines = maxLines
     )
 }
