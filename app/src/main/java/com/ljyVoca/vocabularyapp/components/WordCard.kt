@@ -150,7 +150,7 @@ fun WordCard(
                     )
                 }
             } else if(word.category == Language.KOREAN.code) {
-                // description 없고 한국어인 경우 로마자만 표시
+                // description 없고 한국어인 경우 로마자만 표시 + 아이콘 Row 추가
                 Spacer(Modifier.height(8.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth()
@@ -176,7 +176,31 @@ fun WordCard(
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .padding(8.dp)
-                            .clickable { onDelete(word.vocabularyId) }
+                            .clickable { onDelete(word.id) }
+                    )
+                }
+            } else {
+                // description 없고 category가 한국어가 아닌 경우 (icon만 오른쪽에 표시)
+                Spacer(Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.BorderColor,
+                        contentDescription = "insert",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable { onUpdate(word) }
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "delete",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .clickable { onDelete(word.id) }
                     )
                 }
             }
