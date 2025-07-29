@@ -10,6 +10,7 @@ import com.ljyVoca.vocabularyapp.model.WeeklyGoal
 import com.ljyVoca.vocabularyapp.model.WordFilter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import androidx.core.content.edit
 
 class VocabularyRepository(
     private val vocabularyDatabase: VocabularyDatabase,
@@ -65,8 +66,8 @@ class VocabularyRepository(
 
     fun updateLastStudyDate() {
         val sharedPrefs = context.getSharedPreferences("study_prefs", Context.MODE_PRIVATE)
-        sharedPrefs.edit()
-            .putLong("last_study_date", System.currentTimeMillis())
-            .apply()
+        sharedPrefs.edit {
+            putLong("last_study_date", System.currentTimeMillis())
+        }
     }
 }

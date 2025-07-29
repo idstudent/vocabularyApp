@@ -53,7 +53,7 @@ fun QuizWordCard(
     onShowClick: () -> Unit,
     ttsClick: (VocaWord) -> Unit
 ) {
-    var showAnswer by remember { mutableStateOf(false) }
+    var showAnswer by remember(word.id) { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -108,11 +108,13 @@ fun QuizWordCard(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
-                verticalArrangement = if (word.description.isBlank()) {
-                    Arrangement.Center // description 없으면 중앙 정렬
-                } else {
-                    Arrangement.Top // description 있으면 위부터 정렬
-                }
+                verticalArrangement = Arrangement.Center
+
+//                    if (word.description.isBlank()) {
+//                    Arrangement.Center // description 없으면 중앙 정렬
+//                } else {
+//                    Arrangement.Top // description 있으면 위부터 정렬
+//                }
             ) {
                 Row(
                     modifier = Modifier

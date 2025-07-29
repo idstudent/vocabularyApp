@@ -165,7 +165,7 @@ fun QuizModeScreen(
                     },
                     ttsClick = {
                         vocabularyViewModel.speakWord(word)
-                    }
+                    },
                 )
             }
             if(showAnswer) {

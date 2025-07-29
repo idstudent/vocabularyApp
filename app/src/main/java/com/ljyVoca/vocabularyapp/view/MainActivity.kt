@@ -4,15 +4,18 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.ljyVoca.vocabularyapp.StudyReminderWorker
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ljyVoca.vocabularyapp.screen.MainScreen
 import com.ljyVoca.vocabularyapp.ui.theme.LjyVocaTheme
 import com.ljyVoca.vocabularyapp.ui.theme.SetStatusBarColor
@@ -25,7 +28,7 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         requestNotificationPermission()
-
+        
         enableEdgeToEdge()
 
         setContent {
