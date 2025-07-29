@@ -15,15 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyApp"
         tools:targetApi="31">
-        <activity
-            android:name=".view.WordListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.CheckActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.SaveWordActivity"
-            android:exported="false" />
+
         <activity
             android:name=".view.MainActivity"
             android:exported="true">
