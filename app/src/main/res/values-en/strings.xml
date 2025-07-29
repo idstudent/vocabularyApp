@@ -72,4 +72,6 @@
     <string name="toast_delete_word">Word deleted</string>
     <string name="calendar">Calendar</string>
     <string name="empty_save_word">No saved words</string>
+    <string name="search_result">Search results: </string>
+    <string name="hint_search">Search words or meanings</string>
 </resources>

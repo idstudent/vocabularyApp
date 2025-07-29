@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,6 +25,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -69,6 +73,14 @@ fun VocabularyDetailScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
 
+    val words by vocabularyFolderViewModel.vocabularyWords.collectAsState()
+    val count by vocabularyFolderViewModel.wordsCount.collectAsState()
+
+    val isLoading by vocabularyFolderViewModel.isLoading.collectAsState()
+    val listState = rememberLazyListState()
+
+    var searchQuery by remember { mutableStateOf("") }
+
     LaunchedEffect(id) {
         vocabularyFolderViewModel.clearWords()
     }
@@ -86,11 +98,16 @@ fun VocabularyDetailScreen(
         }
     }
 
-    val words by vocabularyFolderViewModel.vocabularyWords.collectAsState()
-    val count by vocabularyFolderViewModel.wordsCount.collectAsState()
-
-    val isLoading by vocabularyFolderViewModel.isLoading.collectAsState()
-    val listState = rememberLazyListState()
+    val filteredWords = remember(words, searchQuery) {
+        if (searchQuery.isEmpty()) {
+            words
+        } else {
+            words.filter { word ->
+                word.word.contains(searchQuery, ignoreCase = true) ||
+                        word.mean.contains(searchQuery, ignoreCase = true)
+            }
+        }
+    }
 
     // 스크롤 하단 감지
     val reachedBottom: Boolean by remember {
@@ -103,25 +120,12 @@ fun VocabularyDetailScreen(
 
     // 하단 도달 시 더 로드
     LaunchedEffect(reachedBottom) {
-        if (reachedBottom && !isLoading) {
+        if (reachedBottom && !isLoading && searchQuery.isEmpty()) {
             vocabularyFolderViewModel.loadMoreWords()
         }
     }
 
     Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(title, style = AppTypography.fontSize20Regular)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -144,14 +148,55 @@ fun VocabularyDetailScreen(
                 .background(MaterialTheme.colorScheme.onPrimary)
                 .padding(innerPadding)
         ) {
+            Spacer(Modifier.height(24.dp))
             Text(
-                text = "${stringResource(R.string.word_count)} $count",
-                style = AppTypography.fontSize16Regular,
+                text = title,
+                style = AppTypography.fontSize20SemiBold,
+                modifier = Modifier.padding(16.dp)
+            )
+
+            TextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.hint_search),
+                        style = AppTypography.fontSize16Regular
+                    )
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 16.dp),
-                textAlign = TextAlign.End
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                singleLine = true,
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
+                    unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
+                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
+                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
+                )
             )
+
+            if (searchQuery.isNotEmpty()) {
+                Text(
+                    text = "${stringResource(R.string.search_result)} ${filteredWords.size}",
+                    style = AppTypography.fontSize14Regular,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp)
+                )
+            } else {
+                Text(
+                    text = "${stringResource(R.string.word_count)} $count",
+                    style = AppTypography.fontSize16Regular,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    textAlign = TextAlign.End
+                )
+            }
+
             if (isLoading && words.isEmpty()) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -169,7 +214,7 @@ fun VocabularyDetailScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(words) {
+                    items(filteredWords) {
                         WordCard(
                             word = it,
                             ttsClick = { word ->

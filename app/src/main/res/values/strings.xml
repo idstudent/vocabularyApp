@@ -71,5 +71,6 @@
     <string name="toast_delete_word">단어를 삭제했어요</string>
     <string name="calendar">캘린더</string>
     <string name="empty_save_word">저장한 단어가 없어요</string>
-
+    <string name="search_result">검색 결과: </string>
+    <string name="hint_search">단어 또는 뜻을 검색하세요</string>
 </resources>
