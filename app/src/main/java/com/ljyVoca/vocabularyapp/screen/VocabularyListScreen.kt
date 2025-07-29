@@ -37,7 +37,6 @@ import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VocabularyListScreen(
     navController: NavHostController,

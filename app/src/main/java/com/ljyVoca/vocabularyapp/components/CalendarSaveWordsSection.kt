@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.model.VocaWord
+import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.CalendarViewModel
 
@@ -60,9 +61,11 @@ fun CalendarSaveWordSection(
                     style = AppTypography.fontSize16Regular.copy(
                         color = MaterialTheme.colorScheme.primary
                     ),
-                    modifier = Modifier.clickable {
-                        // TODO: 리스트작업
-                    }
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(AppRoutes.CALENDAR_SAVE_WORDS_MORE_SCREEN)
+                        }
+                        .padding(8.dp)
                 )
             }
         }

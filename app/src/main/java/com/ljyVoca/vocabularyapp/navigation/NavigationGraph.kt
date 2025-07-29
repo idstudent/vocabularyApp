@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ljyVoca.vocabularyapp.screen.AddVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.AddWordScreen
+import com.ljyVoca.vocabularyapp.screen.CalendarSaveWordsMoreScreen
 import com.ljyVoca.vocabularyapp.screen.CalendarScreen
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
@@ -133,6 +134,12 @@ fun NavigationGraph(navController: NavHostController) {
             CalendarScreen(
                 navController = navController,
                 calendarViewModel =  calendarViewModel
+            )
+        }
+
+        composable(route = AppRoutes.CALENDAR_SAVE_WORDS_MORE_SCREEN) {
+            CalendarSaveWordsMoreScreen(
+                calendarViewModel = calendarViewModel
             )
         }
     }
