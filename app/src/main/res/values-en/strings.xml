@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">vocabularyApp</string>
-    <string name="today_words">Today\'s Words</string>
+    <string name="today_words">Today\'s studied words</string>
     <string name="more">more</string>
     <string name="filter">filter</string>
     <string name="study_mode_handwriting">Handwriting Mode</string>
@@ -71,4 +71,5 @@
     <string name="toast_word_exists">Word already exists</string>
     <string name="toast_delete_word">Word deleted</string>
     <string name="calendar">Calendar</string>
+    <string name="empty_save_word">No saved words</string>
 </resources>

@@ -48,19 +48,6 @@ fun VocabularyListScreen(
     val vocabularyFolders by vocabularyFolderViewModel.vocabularyFolders.collectAsState()
 
     Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.vocabulary), style = AppTypography.fontSize20Regular)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -84,6 +71,13 @@ fun VocabularyListScreen(
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(Modifier.height(24.dp))
+            Text(
+                text = stringResource(R.string.vocabulary),
+                style = AppTypography.fontSize20SemiBold,
+                modifier = Modifier.padding(16.dp)
+            )
+
             vocabularyFolders.map {
                 VocabularyFolder(
                     vocabulary = it,

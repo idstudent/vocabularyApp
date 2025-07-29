@@ -25,6 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.kizitonwose.calendar.compose.HorizontalCalendar
 import com.kizitonwose.calendar.compose.rememberCalendarState
 import com.kizitonwose.calendar.core.DayPosition
@@ -32,6 +34,7 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.CalendarDay
 import com.ljyVoca.vocabularyapp.components.CalendarHeader
+import com.ljyVoca.vocabularyapp.components.CalendarSaveWordSection
 import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.WeekDaysHeader
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
@@ -47,6 +50,7 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarScreen(
+    navController: NavHostController,
     calendarViewModel: CalendarViewModel
 ) {
     val firstWordMonth by calendarViewModel.firstWordMonth.collectAsState()
@@ -92,24 +96,7 @@ fun CalendarScreen(
         }.mapValues { it.value.size }
     }
 
-    Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(
-                            stringResource(R.string.calendar),
-                            style = AppTypography.fontSize20Regular
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        }
-    ) { innerPadding ->
+    Scaffold{ innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -164,6 +151,12 @@ fun CalendarScreen(
                     )
                 },
                 modifier = Modifier.padding(16.dp)
+            )
+
+            CalendarSaveWordSection(
+                navController = navController,
+                vocaWord = selectedDateWords,
+                calendarViewModel = calendarViewModel
             )
         }
     }

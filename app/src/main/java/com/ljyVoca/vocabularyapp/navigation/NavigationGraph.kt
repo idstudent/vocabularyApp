@@ -131,6 +131,7 @@ fun NavigationGraph(navController: NavHostController) {
 
         composable(route = NaviItem.Calendar.route) {
             CalendarScreen(
+                navController = navController,
                 calendarViewModel =  calendarViewModel
             )
         }

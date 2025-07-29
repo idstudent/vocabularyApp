@@ -33,14 +33,17 @@ class TTSManager(private val context: Context) {
             return
         }
 
-        val detectedLanguage = detector.detectLanguageOf(text)
-        val languageCode = when(detectedLanguage) {
-            Language.KOREAN -> "ko"
-            Language.JAPANESE -> "ja"
-            Language.CHINESE -> "zh"
-            Language.SPANISH -> "es"
-            Language.ENGLISH -> "en"
-            else -> "en"
+        val hasKorean = text.any { it in '\uAC00'..'\uD7AF' }
+        val hasJapanese = text.any { it in '\u3040'..'\u30FF' }
+        val hasChinese = text.any { it in '\u4E00'..'\u9FFF' }
+        val hasSpanishChars = text.any { it in "áéíóúüñ¿¡ÁÉÍÓÚÜÑ" }
+
+        val languageCode = when {
+            hasKorean -> "ko"          // 한글 있으면 무조건 한국어
+            hasJapanese -> "ja"        // 일본어 문자 있으면 무조건 일본어
+            hasChinese -> "zh"         // 한자 있으면 무조건 중국어
+            hasSpanishChars -> "es"    // 스페인어 특수문자 있으면 무조건 스페인어
+            else -> "en"               // 나머지는 영어로 통일
         }
 
         setLanguage(languageCode)
