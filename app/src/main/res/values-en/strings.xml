@@ -70,4 +70,5 @@
     <string name="toast_update_folder_complete">Updated</string>
     <string name="toast_word_exists">Word already exists</string>
     <string name="toast_delete_word">Word deleted</string>
+    <string name="calendar">Calendar</string>
 </resources>

@@ -69,5 +69,6 @@
     <string name="title_description">"설명"</string>
     <string name="toast_word_exists">이미 존재하는 단어입니다</string>
     <string name="toast_delete_word">단어를 삭제했어요</string>
+    <string name="calendar">캘린더</string>
 
 </resources>

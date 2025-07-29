@@ -1,5 +1,7 @@
 package com.ljyVoca.vocabularyapp.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -9,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ljyVoca.vocabularyapp.screen.AddVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.AddWordScreen
+import com.ljyVoca.vocabularyapp.screen.CalendarScreen
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
@@ -17,15 +20,18 @@ import com.ljyVoca.vocabularyapp.screen.UpdateVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.UpdateWordScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyDetailScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyListScreen
+import com.ljyVoca.vocabularyapp.viewmodel.CalendarViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph(navController: NavHostController) {
     val vocabularyViewModel: VocabularyViewModel = hiltViewModel()
     val vocabularyFolderViewModel: VocabularyFolderViewModel = hiltViewModel()
     val saveWordViewModel: SaveWordViewModel = hiltViewModel()
+    val calendarViewModel: CalendarViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -123,6 +129,11 @@ fun NavigationGraph(navController: NavHostController) {
             )
         }
 
+        composable(route = NaviItem.Calendar.route) {
+            CalendarScreen(
+                calendarViewModel =  calendarViewModel
+            )
+        }
     }
 
 }

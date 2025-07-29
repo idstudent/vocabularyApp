@@ -41,6 +41,9 @@ interface VocaDao {
     @Query("SELECT EXISTS(SELECT 1 FROM voca WHERE totalAttempts >= 3 AND (totalAttempts - wrongCount) * 1.0 / totalAttempts < 0.5 LIMIT 1)")
     fun hasFrequentlyWrongWords(): Flow<Boolean>
 
+    @Query("SELECT MIN(createdDate) FROM voca")
+    suspend fun getFirstWordDate(): Long?
+
     @Query("""
     SELECT * FROM voca 
     WHERE (:category IS NULL OR category = :category)
@@ -51,4 +54,20 @@ interface VocaDao {
         category: String? = null,
         onlyFrequentlyWrong: Boolean = false
     ): List<VocaWord>
+
+    // 특정 월의 단어들만 가져오기 (yyyy-MM 형식)
+    @Query("""
+        SELECT * FROM voca 
+        WHERE strftime('%Y-%m', datetime(createdDate/1000, 'unixepoch')) = :yearMonth
+        ORDER BY createdDate DESC
+    """)
+    suspend fun getWordsByMonth(yearMonth: String): List<VocaWord>
+
+    // 특정 날짜의 단어들만 가져오기
+    @Query("""
+        SELECT * FROM voca 
+        WHERE DATE(createdDate/1000, 'unixepoch') = :targetDate
+        ORDER BY createdDate DESC
+    """)
+    suspend fun getWordsByDay(targetDate: String): List<VocaWord>
 }

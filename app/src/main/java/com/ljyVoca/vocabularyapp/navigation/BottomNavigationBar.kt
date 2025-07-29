@@ -37,7 +37,7 @@ import com.ljyVoca.vocabularyapp.components.Divider
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
-    val items = listOf(NaviItem.Home, NaviItem.Voca, NaviItem.Voca)
+    val items = listOf(NaviItem.Home, NaviItem.Voca, NaviItem.Calendar)
     val selectedIndex = items.indexOfFirst { it.route == currentRoute }
 
     var tabWidths by remember { mutableStateOf(List(items.size) { 0.dp }) }

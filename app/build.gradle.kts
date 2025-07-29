@@ -91,4 +91,5 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-messaging") // FCM
     implementation("androidx.work:work-runtime-ktx:2.9.0") // WorkManager
+    implementation("com.kizitonwose.calendar:compose:2.6.1")
 }
