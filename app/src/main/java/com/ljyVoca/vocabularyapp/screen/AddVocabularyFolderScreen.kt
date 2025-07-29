@@ -1,0 +1,192 @@
+package com.ljyVoca.vocabularyapp.screen
+
+import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.ljyVoca.vocabularyapp.R
+import com.ljyVoca.vocabularyapp.components.Divider
+import com.ljyVoca.vocabularyapp.components.InputTextFieldSection
+import com.ljyVoca.vocabularyapp.components.LanguageSelectBottomSheet
+import com.ljyVoca.vocabularyapp.model.Language
+import com.ljyVoca.vocabularyapp.model.Vocabulary
+import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
+import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddVocabularyFolderScreen(
+    navController: NavHostController,
+    vocabularyFolderViewModel: VocabularyFolderViewModel
+) {
+    val selectLanguageBottomSheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+
+    var showSelectLanguageBottomSheet by remember { mutableStateOf(false) }
+
+    var titleTextFieldValue by remember { mutableStateOf("") }
+    var descriptionTextFieldValue by remember { mutableStateOf("") }
+
+    val defaultLanguageText = stringResource(R.string.select_language)
+    var selectedLanguage by remember { mutableStateOf<Language?>(null) }
+
+    val context = LocalContext.current
+
+    val toastLanguageMsg = stringResource(R.string.toast_select_language)
+    val toastTitleMsg = stringResource(R.string.toast_input_title)
+    val toastMaxMsg = stringResource(R.string.toast_max_vocabularies)
+
+    val vocabularyFolders by vocabularyFolderViewModel.vocabularyFolders.collectAsState()
+
+    Scaffold(
+        topBar = {
+            Column {
+                TopAppBar(
+                    title = {
+                        Text(stringResource(R.string.vocabulary), style = AppTypography.fontSize20Regular)
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.onPrimary,
+                    )
+                )
+                Divider()
+            }
+        },
+    ) { innerPadding ->
+        Column(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.onPrimary)
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+        ) {
+            InputTextFieldSection(
+                title = stringResource(R.string.title),
+                value = titleTextFieldValue,
+                onValueChange = { titleTextFieldValue = it },
+                placeholder = stringResource(R.string.hint_word)
+            )
+
+            Spacer(Modifier.height(36.dp))
+
+            InputTextFieldSection(
+                title = stringResource(R.string.title_description),
+                value = descriptionTextFieldValue,
+                onValueChange = { descriptionTextFieldValue = it },
+                placeholder = stringResource(R.string.hint_description)
+            )
+
+            Spacer(Modifier.height(36.dp))
+            Text(
+                text = stringResource(R.string.select_language),
+                style = AppTypography.fontSize20SemiBold,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+
+            Box(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(20.dp)
+                    )
+            ) {
+                Text(
+                    text = selectedLanguage?.displayName() ?: defaultLanguageText,
+                    style = AppTypography.fontSize16Regular,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .clickable {
+                            showSelectLanguageBottomSheet = true
+                        }
+                )
+            }
+            Spacer(Modifier.height(24.dp))
+            Button(
+                onClick = {
+                   if(titleTextFieldValue == "") {
+                       Toast.makeText(context, toastTitleMsg, Toast.LENGTH_SHORT).show()
+                    } else if(selectedLanguage == null) {
+                       Toast.makeText(context, toastLanguageMsg, Toast.LENGTH_SHORT).show()
+                    } else if(vocabularyFolders.size >= 20) {
+                       Toast.makeText(context, toastMaxMsg, Toast.LENGTH_SHORT).show()
+                   } else {
+                       vocabularyFolderViewModel.insertVocabulary(
+                           vocabulary = Vocabulary(
+                               title = titleTextFieldValue,
+                               description = descriptionTextFieldValue,
+                               category = selectedLanguage!!.code
+                           )
+                       )
+                       navController.popBackStack()
+                   }
+                },
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.ok),
+                    style = AppTypography.fontSize16Regular,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+
+        if(showSelectLanguageBottomSheet) {
+            LanguageSelectBottomSheet(
+                bottomSheetState = selectLanguageBottomSheetState,
+                onDismiss = { showSelectLanguageBottomSheet = false },
+                onSelect = {
+                    selectedLanguage = it
+                }
+            )
+        }
+    }
+}

@@ -1,34 +1,55 @@
 package com.ljyVoca.vocabularyapp.view
 
-import android.content.Intent
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import com.ljyVoca.vocabularyapp.databinding.ActivityMainBinding
-import com.ljyVoca.vocabularyapp.util.setOnSingleClickListener
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.navigation.compose.rememberNavController
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.google.firebase.messaging.FirebaseMessaging
+import com.ljyVoca.vocabularyapp.screen.MainScreen
+import com.ljyVoca.vocabularyapp.ui.theme.LjyVocaTheme
+import com.ljyVoca.vocabularyapp.ui.theme.SetStatusBarColor
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
-class MainActivity: BaseActivity<ActivityMainBinding>() {
+@AndroidEntryPoint
+class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initListener()
-    }
+        requestNotificationPermission()
 
-    private fun initListener() {
-        binding.run {
-            btnStart.setOnSingleClickListener {
-                val intent = Intent(this@MainActivity, CheckActivity::class.java)
-                startActivity(intent)
-            }
-            btnInsert.setOnSingleClickListener {
-                val intent = Intent(this@MainActivity, SaveWordActivity::class.java)
-                startActivity(intent)
-            }
-            btnList.setOnSingleClickListener {
-                val intent = Intent(this@MainActivity, WordListActivity::class.java)
-                startActivity(intent)
+        enableEdgeToEdge()
+
+        setContent {
+            LjyVocaTheme {
+                SetStatusBarColor()
+                MainScreen(navController = rememberNavController())
             }
         }
     }
-    override fun getViewBinding(): ActivityMainBinding {
-        return ActivityMainBinding.inflate(layoutInflater)
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    1
+                )
+            }
+        }
     }
 }
+
+

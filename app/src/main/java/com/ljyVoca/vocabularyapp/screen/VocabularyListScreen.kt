@@ -1,0 +1,145 @@
+package com.ljyVoca.vocabularyapp.screen
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.ljyVoca.vocabularyapp.R
+import com.ljyVoca.vocabularyapp.components.Divider
+import com.ljyVoca.vocabularyapp.components.VocabularyFolder
+import com.ljyVoca.vocabularyapp.navigation.AppRoutes
+import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
+import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
+
+@Composable
+fun VocabularyListScreen(
+    navController: NavHostController,
+    vocabularyFolderViewModel: VocabularyFolderViewModel
+) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var deleteVocabularyId by remember { mutableStateOf<String?>(null) }
+    val vocabularyFolders by vocabularyFolderViewModel.vocabularyFolders.collectAsState()
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(AppRoutes.ADD_VOCABULARY_FOLDER_SCREEN)
+                },
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                shape = androidx.compose.foundation.shape.CircleShape
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "add",
+                )
+            }
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.onPrimary)
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+        ) {
+            Spacer(Modifier.height(24.dp))
+            Text(
+                text = stringResource(R.string.vocabulary),
+                style = AppTypography.fontSize20SemiBold,
+                modifier = Modifier.padding(16.dp)
+            )
+
+            vocabularyFolders.map {
+                VocabularyFolder(
+                    vocabulary = it,
+                    onClick = {
+                        // 한글제목으로 인해 title은 따로 넘김
+                        navController.currentBackStackEntry?.savedStateHandle?.set("title", it.title)
+                        navController.navigate("${AppRoutes.VOCABULARY_DETAIL_SCREEN}/${it.id}/${it.category}")
+                    },
+                    onUpdate = {
+                        navController.currentBackStackEntry?.savedStateHandle?.set("vocabulary", it)
+                        navController.navigate(AppRoutes.UPDATE_VOCABULARY_FOLDER_SCREEN)
+                    },
+                    onDelete = { id ->
+                        showDeleteDialog = true
+                        deleteVocabularyId = id
+                    },
+                )
+            }
+            Spacer(Modifier.height(48.dp))
+        }
+    }
+
+    if(showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = {
+                Text(
+                    text = stringResource(R.string.delete),
+                    style = AppTypography.fontSize16SemiBold
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.delete_vocabulary),
+                    style = AppTypography.fontSize16Regular
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteDialog = false
+                        deleteVocabularyId?.let { vocabularyFolderViewModel.deleteVocabulary(it) }
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.ok),
+                        style = AppTypography.fontSize16SemiBold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { showDeleteDialog = false }
+                ) {
+                    Text(
+                        text = stringResource(R.string.cancel),
+                        style = AppTypography.fontSize16Regular,
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}

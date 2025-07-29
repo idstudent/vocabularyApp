@@ -1,0 +1,85 @@
+package com.ljyVoca.vocabularyapp.util
+
+import android.content.Context
+import android.speech.tts.TextToSpeech
+import android.util.Log
+import com.github.pemistahl.lingua.api.Language
+import com.github.pemistahl.lingua.api.LanguageDetectorBuilder
+import java.util.Locale
+
+class TTSManager(private val context: Context) {
+    private var textToSpeech: TextToSpeech? = null
+    private var isInitialized = false
+
+    // Lingua 감지기
+    private val detector = LanguageDetectorBuilder.fromLanguages(
+        Language.ENGLISH,
+        Language.SPANISH,
+        Language.JAPANESE,
+        Language.CHINESE,
+        Language.KOREAN
+    ).build()
+
+    fun initialize(onInitComplete: (Boolean) -> Unit = {}) {
+        textToSpeech = TextToSpeech(context) { status ->
+            isInitialized = status == TextToSpeech.SUCCESS
+            onInitComplete(isInitialized)
+        }
+    }
+
+    fun speak(text: String) {
+        if (!isInitialized) {
+            Log.w("TTSManager", "TTS not initialized")
+            return
+        }
+
+        val hasKorean = text.any { it in '\uAC00'..'\uD7AF' }
+        val hasJapanese = text.any { it in '\u3040'..'\u30FF' }
+        val hasChinese = text.any { it in '\u4E00'..'\u9FFF' }
+        val hasSpanishChars = text.any { it in "áéíóúüñ¿¡ÁÉÍÓÚÜÑ" }
+
+        val languageCode = when {
+            hasKorean -> "ko"          // 한글 있으면 무조건 한국어
+            hasJapanese -> "ja"        // 일본어 문자 있으면 무조건 일본어
+            hasChinese -> "zh"         // 한자 있으면 무조건 중국어
+            hasSpanishChars -> "es"    // 스페인어 특수문자 있으면 무조건 스페인어
+            else -> "en"               // 나머지는 영어로 통일
+        }
+
+        setLanguage(languageCode)
+        textToSpeech?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
+    private fun setLanguage(languageCode: String) {
+        val locale = LANGUAGE_LOCALES[languageCode] ?: Locale.US
+        val result = textToSpeech?.setLanguage(locale)
+
+        when (result) {
+            TextToSpeech.LANG_MISSING_DATA -> {
+                return
+            }
+            TextToSpeech.LANG_NOT_SUPPORTED -> {
+                return
+            }
+        }
+    }
+
+    fun shutdown() {
+        // TTS 리소스 해제
+        textToSpeech?.shutdown()
+        textToSpeech = null
+        isInitialized = false
+
+        detector.unloadLanguageModels()
+    }
+
+    companion object {
+        private val LANGUAGE_LOCALES = mapOf(
+            "ko" to Locale.KOREAN,
+            "en" to Locale.US,
+            "ja" to Locale.JAPANESE,
+            "zh" to Locale.CHINESE,
+            "es" to Locale("es", "ES")
+        )
+    }
+}
