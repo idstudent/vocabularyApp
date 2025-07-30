@@ -239,10 +239,15 @@ fun QuizModeScreen(
                     answerResult = answerResult!!,
                     onDismiss = { showResultBottomSheet = false },
                     onNext = {
-                        vocabularyViewModel.nextQuizWord()
-                        answer = ""
-                        answerResult = null
-                    }
+                        if (currentIndex == quizWordList.size - 1) {
+                            navController.popBackStack()
+                        } else {
+                            vocabularyViewModel.nextQuizWord()
+                            answer = ""
+                            answerResult = null
+                        }
+                    },
+                    isLastQuestion = currentIndex == quizWordList.size - 1
                 )
             }
         }

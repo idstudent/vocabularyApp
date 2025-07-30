@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import com.ljyVoca.vocabularyapp.model.AnswerResult
 import com.ljyVoca.vocabularyapp.ui.theme.Color4CAF50
@@ -37,8 +38,17 @@ fun QuizResultBottomSheet(
     answerResult: AnswerResult,
     onDismiss: () -> Unit,
     onNext: () -> Unit,
+    isLastQuestion: Boolean = false
 ) {
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(isLastQuestion) {
+        if (isLastQuestion) {
+            bottomSheetState.hide()
+            onNext()
+            onDismiss()
+        }
+    }
 
     ModalBottomSheet(
         onDismissRequest = {
@@ -110,7 +120,7 @@ fun QuizResultBottomSheet(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
-                    text= stringResource(R.string.next),
+                    text = if (isLastQuestion) stringResource(R.string.complete) else stringResource(R.string.next),
                     style = AppTypography.fontSize20SemiBold
                 )
             }

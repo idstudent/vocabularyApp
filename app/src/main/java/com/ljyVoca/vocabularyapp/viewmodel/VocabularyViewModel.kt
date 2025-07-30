@@ -172,7 +172,6 @@ class VocabularyViewModel @Inject constructor(
         }
     }
 
-    // 다음 문제
     fun nextQuizWord() {
         val currentIndex = _currentQuizIndex.value
         val wordList = _quizWordList.value
@@ -181,12 +180,7 @@ class VocabularyViewModel @Inject constructor(
             val nextIndex = currentIndex + 1
             _currentQuizIndex.value = nextIndex
             _currentQuizWord.value = wordList[nextIndex]
-
-            if (nextIndex == wordList.size - 1) {
-                _isQuizCompleted.value = true
-            }
         } else {
-            // 퀴즈 완료
             _isQuizCompleted.value = true
         }
     }
