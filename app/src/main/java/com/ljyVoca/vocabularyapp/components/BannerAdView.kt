@@ -10,6 +10,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.ljyVoca.vocabularyapp.BuildConfig
 
 @Composable
 fun BannerAdView(
@@ -21,7 +22,7 @@ fun BannerAdView(
         factory = { context ->
             AdView(context).apply {
                 setAdSize(AdSize.BANNER)
-                adUnitId = "ca-app-pub-3940256099942544/6300978111" // 테스트 배너 ID
+                adUnitId = BuildConfig.ADMOB_BANNER_ID
                 loadAd(AdRequest.Builder().build())
             }
         },

@@ -23,7 +23,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders["ADMOB_APP_ID"] = "ca-app-pub-3940256099942544~3347511713"
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-3940256099942544~3347511713\"")
+            buildConfigField("String", "ADMOB_BANNER_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+        }
         release {
+            manifestPlaceholders["ADMOB_APP_ID"] = "ca-app-pub-4898701894570667~6380252033"
+            buildConfigField("String", "ADMOB_APP_ID", "\"ca-app-pub-4898701894570667~6380252033\"")
+            buildConfigField("String", "ADMOB_BANNER_ID", "\"ca-app-pub-4898701894570667/4819758359\"")
+
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
