@@ -105,7 +105,11 @@ fun HandWriteModeScreen(
                     if(isQuizCompleted) {
                         navController.popBackStack()
                     }else {
-                        vocabularyViewModel.nextQuizWord()
+                        if (currentIndex == quizWordList.size - 1) {
+                            navController.popBackStack()
+                        } else {
+                            vocabularyViewModel.nextQuizWord()
+                        }
                     }
                     showAnswer = false
                 },
