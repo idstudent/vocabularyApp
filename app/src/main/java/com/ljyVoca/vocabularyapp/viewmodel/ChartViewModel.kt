@@ -53,7 +53,7 @@ class ChartViewModel @Inject constructor(
             val accuracyByDate = words
                 .filter { it.totalAttempts > 0 }
                 .groupBy { word ->
-                    formatter.format(Date(word.lastStudiedDate)) 
+                    formatter.format(Date(word.lastStudiedDate))
                 }
                 .mapValues { entry ->
                     val wordsOnDate = entry.value

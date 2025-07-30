@@ -212,6 +212,8 @@ fun QuizModeScreen(
                             checkAnswer(answer, currentQuizWord?.mean ?: "")
                         }
 
+                        vocabularyViewModel.processQuizResult(result.isCorrect)
+
                         answerResult = result
                         showResultBottomSheet = true
                     }

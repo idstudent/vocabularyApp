@@ -17,10 +17,6 @@ class VocabularyRepository(
     private val weeklyGoalDatabase: WeeklyGoalDatabase,
     private val context: Context
 ) {
-    suspend fun getAllWord(): List<VocaWord> {
-        return vocabularyDatabase.vocaDao().getAllWords()
-    }
-
     suspend fun getTodayWords(): List<VocaWord> {
         return vocabularyDatabase.vocaDao().getTodayWords()
     }
@@ -69,5 +65,9 @@ class VocabularyRepository(
         sharedPrefs.edit {
             putLong("last_study_date", System.currentTimeMillis())
         }
+    }
+
+    suspend fun updateWord(word: VocaWord) {
+        vocabularyDatabase.vocaDao().updateWord(word)
     }
 }

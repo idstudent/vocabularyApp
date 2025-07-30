@@ -126,17 +126,6 @@ class VocabularyViewModel @Inject constructor(
             _todayWordList.value = vocabularyRepository.getTodayWords()
         }
     }
-    fun getAllWord() {
-        viewModelScope.launch {
-            _saveWordList.value = vocabularyRepository.getAllWord()
-        }
-    }
-    fun nextGetWord() {
-        currentIndex++
-        if(currentIndex < _wordList.value.size) {
-            _currentWord.value = _wordList.value[currentIndex]
-        }
-    }
 
     fun updateFilterState(newState: FilterState) {
         _filterState.value = newState
@@ -199,6 +188,26 @@ class VocabularyViewModel @Inject constructor(
         } else {
             // 퀴즈 완료
             _isQuizCompleted.value = true
+        }
+    }
+
+    fun processQuizResult(isCorrect: Boolean) {
+        viewModelScope.launch {
+            _currentQuizWord.value?.let { word ->
+                // 시도 횟수 증가
+                word.totalAttempts++
+
+                // 틀렸으면 틀린 횟수도 증가
+                if (!isCorrect) {
+                    word.wrongCount++
+                }
+
+                // 마지막 학습 날짜 업데이트
+                word.lastStudiedDate = System.currentTimeMillis()
+
+                // DB 업데이트
+                vocabularyRepository.updateWord(word)
+            }
         }
     }
 }
