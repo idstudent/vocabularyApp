@@ -70,4 +70,11 @@ interface VocaDao {
         ORDER BY createdDate DESC
     """)
     suspend fun getWordsByDay(targetDate: String): List<VocaWord>
+
+    @Query("""
+    SELECT * FROM voca 
+    WHERE createdDate >= :startDate
+    ORDER BY createdDate
+""")
+    suspend fun getWordsFromDate(startDate: Long): List<VocaWord>
 }

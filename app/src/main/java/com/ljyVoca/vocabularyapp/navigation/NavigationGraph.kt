@@ -13,6 +13,7 @@ import com.ljyVoca.vocabularyapp.screen.AddVocabularyFolderScreen
 import com.ljyVoca.vocabularyapp.screen.AddWordScreen
 import com.ljyVoca.vocabularyapp.screen.CalendarSaveWordsMoreScreen
 import com.ljyVoca.vocabularyapp.screen.CalendarScreen
+import com.ljyVoca.vocabularyapp.screen.ChartScreen
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
@@ -22,6 +23,7 @@ import com.ljyVoca.vocabularyapp.screen.UpdateWordScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyDetailScreen
 import com.ljyVoca.vocabularyapp.screen.VocabularyListScreen
 import com.ljyVoca.vocabularyapp.viewmodel.CalendarViewModel
+import com.ljyVoca.vocabularyapp.viewmodel.ChartViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
@@ -33,6 +35,7 @@ fun NavigationGraph(navController: NavHostController) {
     val vocabularyFolderViewModel: VocabularyFolderViewModel = hiltViewModel()
     val saveWordViewModel: SaveWordViewModel = hiltViewModel()
     val calendarViewModel: CalendarViewModel = hiltViewModel()
+    val chartViewModel: ChartViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -140,6 +143,18 @@ fun NavigationGraph(navController: NavHostController) {
         composable(route = AppRoutes.CALENDAR_SAVE_WORDS_MORE_SCREEN) {
             CalendarSaveWordsMoreScreen(
                 calendarViewModel = calendarViewModel
+            )
+        }
+
+        composable(route = AppRoutes.CALENDAR_SAVE_WORDS_MORE_SCREEN) {
+            CalendarSaveWordsMoreScreen(
+                calendarViewModel = calendarViewModel
+            )
+        }
+
+        composable(route = NaviItem.Chart.route) {
+            ChartScreen(
+                chartViewModel = chartViewModel
             )
         }
     }

@@ -73,4 +73,5 @@
     <string name="empty_save_word">저장한 단어가 없어요</string>
     <string name="search_result">검색 결과: </string>
     <string name="hint_search">단어 또는 뜻을 검색하세요</string>
+    <string name="chart">차트</string>
 </resources>
