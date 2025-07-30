@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
@@ -16,8 +15,6 @@ import com.ljyVoca.vocabularyapp.BuildConfig
 fun BannerAdView(
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-
     AndroidView(
         factory = { context ->
             AdView(context).apply {
