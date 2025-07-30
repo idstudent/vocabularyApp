@@ -20,6 +20,9 @@ class ChartViewModel @Inject constructor(
     private val _dailyWordCounts = MutableStateFlow<List<Pair<String, Int>>>(emptyList())
     val dailyWordCounts = _dailyWordCounts.asStateFlow()
 
+    private val _dailyAccuracy = MutableStateFlow<List<Pair<String, Float>>>(emptyList())
+    val dailyAccuracy = _dailyAccuracy.asStateFlow()
+
     fun loadDailyWordCounts() {
         viewModelScope.launch {
             val sevenDaysAgo = System.currentTimeMillis() - (7 * 24 * 60 * 60 * 1000L)
@@ -37,6 +40,35 @@ class ChartViewModel @Inject constructor(
             }
 
             _dailyWordCounts.value = result
+        }
+    }
+
+    fun loadDailyAccuracy() {
+        viewModelScope.launch {
+            val sevenDaysAgo = System.currentTimeMillis() - (7 * 24 * 60 * 60 * 1000L)
+            val words = chartRepository.getWordsFromDate(sevenDaysAgo)
+
+            val formatter = SimpleDateFormat("MM.dd", Locale.getDefault())
+
+            val accuracyByDate = words
+                .filter { it.totalAttempts > 0 }
+                .groupBy { word ->
+                    formatter.format(Date(word.lastStudiedDate)) 
+                }
+                .mapValues { entry ->
+                    val wordsOnDate = entry.value
+                    if (wordsOnDate.isNotEmpty()) {
+                        wordsOnDate.map { it.accuracy }.average().toFloat()
+                    } else 0f
+                }
+
+            val result = (6 downTo 0).map { daysAgo ->
+                val date = Date(System.currentTimeMillis() - (daysAgo * 24 * 60 * 60 * 1000L))
+                val dateString = formatter.format(date)
+                dateString to (accuracyByDate[dateString] ?: 0f)
+            }
+
+            _dailyAccuracy.value = result
         }
     }
 }
