@@ -99,4 +99,6 @@ dependencies {
 
     implementation("com.patrykandpatrick.vico:compose:2.1.0")
     implementation("com.patrykandpatrick.vico:compose-m3:2.1.0")
+
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 }

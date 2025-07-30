@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.ads.MobileAds
 import com.ljyVoca.vocabularyapp.screen.MainScreen
 import com.ljyVoca.vocabularyapp.ui.theme.LjyVocaTheme
 import com.ljyVoca.vocabularyapp.ui.theme.SetStatusBarColor
@@ -19,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MobileAds.initialize(this) {}
 
         requestNotificationPermission()
 

@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ljyVoca.vocabularyapp.R
+import com.ljyVoca.vocabularyapp.components.BannerAdView
 import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.InputTextFieldSection
 import com.ljyVoca.vocabularyapp.model.VocaWord
@@ -149,6 +150,11 @@ fun AddWordScreen(
                     textAlign = TextAlign.Center,
                 )
             }
+            Spacer(Modifier.weight(1f))
+            BannerAdView(
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+            Spacer(Modifier.height(32.dp))
         }
 
     }

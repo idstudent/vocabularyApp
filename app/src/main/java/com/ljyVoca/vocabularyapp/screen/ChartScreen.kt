@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ljyVoca.vocabularyapp.components.BannerAdView
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.ChartViewModel
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
@@ -140,10 +141,16 @@ fun ChartScreen(
 
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
+                    .height(200.dp)
                     .padding(horizontal = 16.dp)
             )
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(16.dp))
+
+            BannerAdView(
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+
+            Spacer(Modifier.height(16.dp))
 
             Text(
                 text = "최근 1주일간 정답률",
@@ -179,7 +186,7 @@ fun ChartScreen(
                 modelProducer = accuracyModelProducer,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(250.dp)
+                    .height(200.dp)
                     .padding(horizontal = 16.dp)
             )
 
