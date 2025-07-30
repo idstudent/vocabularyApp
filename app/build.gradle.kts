@@ -5,7 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
     id("kotlin-parcelize")
-    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.compose")  // 이 줄 추가
 }
 
 android {
@@ -59,7 +59,6 @@ tasks.withType(JavaCompile::class) {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
@@ -94,7 +93,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-messaging") // FCM
+    implementation("com.google.firebase:firebase-messaging")
     implementation("com.kizitonwose.calendar:compose:2.6.1")
 
     implementation("com.patrykandpatrick.vico:compose:2.1.0")

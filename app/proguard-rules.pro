@@ -1,21 +1,90 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+#####################
+# HILT (DI 관련)
+#####################
+-keep class dagger.hilt.** { *; }
+-keep interface dagger.hilt.** { *; }
+-keep class javax.inject.** { *; }
+-keep class dagger.** { *; }
+-keep class * extends dagger.hilt.android.internal.lifecycle.HiltViewModelFactory { *; }
+-keep class androidx.hilt.** { *; }
+-dontwarn dagger.hilt.**
+-dontwarn javax.inject.**
+-dontwarn dagger.**
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+#####################
+# ROOM (DB 관련)
+#####################
+-keep class androidx.room.** { *; }
+-keepclassmembers class * {
+    @androidx.room.* <methods>;
+}
+-keepattributes *Annotation*
+-dontwarn androidx.room.**
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+#####################
+# JETPACK COMPOSE
+#####################
+-keep class androidx.compose.** { *; }
+-keepclassmembers class androidx.compose.** { *; }
+-dontwarn androidx.compose.**
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+#####################
+# FIREBASE (Analytics, FCM)
+#####################
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**
+
+#####################
+# KOROMAN (외부 한글 로마자화 라이브러리)
+#####################
+-keep class com.gerosyab.koroman.** { *; }
+-dontwarn com.gerosyab.koroman.**
+
+#####################
+# LINGUA (언어 감지)
+#####################
+-keep class com.github.pemistahl.lingua.** { *; }
+-dontwarn com.github.pemistahl.lingua.**
+
+#####################
+# GOOGLE ADS (AdMob)
+#####################
+-keep public class com.google.android.gms.ads.** { public *; }
+-dontwarn com.google.android.gms.ads.**
+
+#####################
+# KOTLIN
+#####################
+-keep class kotlin.Metadata { *; }
+-keepclassmembers class ** {
+    @kotlin.Metadata *;
+}
+-dontwarn kotlin.**
+-keep class kotlinx.** { *; }
+-dontwarn kotlinx.**
+
+#####################
+# VIEWBINDING
+#####################
+-keep class **.databinding.*Binding { *; }
+-keepclassmembers class **.databinding.*Binding {
+    public static <fields>;
+    public <init>(...);
+}
+
+#####################
+# ACTIVITY / FRAGMENT / COMPOSABLE ENTRY POINTS
+#####################
+-keep class * extends android.app.Activity
+-keep class * extends androidx.activity.ComponentActivity
+-keep class * extends androidx.fragment.app.Fragment
+
+#####################
+# REFLECTION, KEEP ALL ANNOTATIONS
+#####################
+-keepattributes *Annotation*,InnerClasses,EnclosingMethod
+
+#####################
+# DEBUGGING TIP (선택)
+#####################
+# -printmapping mapping.txt
