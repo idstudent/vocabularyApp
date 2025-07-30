@@ -1,6 +1,5 @@
 package com.ljyVoca.vocabularyapp.components
 
-import android.provider.CalendarContract
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -22,12 +21,14 @@ import androidx.compose.ui.unit.dp
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import androidx.compose.material3.Text
+import androidx.compose.runtime.rememberCoroutineScope
 import com.ljyVoca.vocabularyapp.model.AnswerResult
 import com.ljyVoca.vocabularyapp.ui.theme.Color4CAF50
 import com.ljyVoca.vocabularyapp.ui.theme.Color8BC34A
 import com.ljyVoca.vocabularyapp.ui.theme.ColorCD4869
 import com.ljyVoca.vocabularyapp.ui.theme.ColorF6447C
 import com.ljyVoca.vocabularyapp.ui.theme.White
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +38,8 @@ fun QuizResultBottomSheet(
     onDismiss: () -> Unit,
     onNext: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     ModalBottomSheet(
         onDismissRequest = {
             onNext()
@@ -91,8 +94,11 @@ fun QuizResultBottomSheet(
             Spacer(Modifier.height(16.dp))
             Button(
                 onClick = {
-                    onNext()
-                    onDismiss()
+                    coroutineScope.launch {
+                        bottomSheetState.hide()
+                        onNext()
+                        onDismiss()
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
