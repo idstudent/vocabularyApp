@@ -7,6 +7,7 @@ plugins {
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.firebase.crashlytics")
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
@@ -111,4 +112,5 @@ dependencies {
     implementation("com.patrykandpatrick.vico:compose-m3:2.1.0")
 
     implementation("com.google.android.gms:play-services-ads:23.3.0")
+    implementation("com.google.android.gms:play-services-oss-licenses:17.1.0")
 }

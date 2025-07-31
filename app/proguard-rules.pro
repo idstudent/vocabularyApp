@@ -88,3 +88,14 @@
 # DEBUGGING TIP (선택)
 #####################
 # -printmapping mapping.txt
+#####################
+# OSS LICENSES
+#####################
+-keep class com.google.android.gms.oss.licenses.** { *; }
+-dontwarn com.google.android.gms.oss.licenses.**
+
+-keep class com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+-keep class com.google.android.gms.oss.licenses.OssLicensesActivity
+
+-keep class com.google.android.gms.internal.oss_licenses.** { *; }
+-dontwarn com.google.android.gms.internal.oss_licenses.**

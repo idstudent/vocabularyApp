@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Button
@@ -117,6 +118,22 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(Modifier.height(24.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    tint = Color.Gray,
+                    contentDescription = "info",
+                    modifier = Modifier.clickable {
+                        navController.navigate(AppRoutes.INFO_SCREEN)
+                    }
+                )
+            }
+            Spacer(Modifier.height(16.dp))
             GoalSection(
                 hasGoal = weeklyGoal > 0,
                 thisWeekWords = thisWeekWords,

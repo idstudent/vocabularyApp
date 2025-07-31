@@ -10,4 +10,6 @@ object AppRoutes {
     const val UPDATE_WORD_SCREEN = "update_word"
     const val TODAY_ALL_WORD_SCREEN = "today_all_word"
     const val CALENDAR_SAVE_WORDS_MORE_SCREEN = "calendar_save_words_more"
+    const val INFO_SCREEN = "info"
+    const val PRIVACY_SCREEN = "privacy"
 }

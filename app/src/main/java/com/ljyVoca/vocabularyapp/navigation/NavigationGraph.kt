@@ -16,6 +16,8 @@ import com.ljyVoca.vocabularyapp.screen.CalendarScreen
 import com.ljyVoca.vocabularyapp.screen.ChartScreen
 import com.ljyVoca.vocabularyapp.screen.HandWriteModeScreen
 import com.ljyVoca.vocabularyapp.screen.HomeScreen
+import com.ljyVoca.vocabularyapp.screen.InfoScreen
+import com.ljyVoca.vocabularyapp.screen.PrivacyScreen
 import com.ljyVoca.vocabularyapp.screen.QuizModeScreen
 import com.ljyVoca.vocabularyapp.screen.TodayWordAllScreen
 import com.ljyVoca.vocabularyapp.screen.UpdateVocabularyFolderScreen
@@ -156,6 +158,16 @@ fun NavigationGraph(navController: NavHostController) {
             ChartScreen(
                 chartViewModel = chartViewModel
             )
+        }
+
+        composable(route = AppRoutes.INFO_SCREEN) {
+            InfoScreen(
+                navController = navController
+            )
+        }
+
+        composable(route = AppRoutes.PRIVACY_SCREEN) {
+            PrivacyScreen()
         }
     }
 

@@ -75,4 +75,7 @@
     <string name="search_result">Search results: </string>
     <string name="hint_search">Search words or meanings</string>
     <string name="chart">Chart</string>
+    <string name="info">Info</string>
+    <string name="privacy">Privacy Policy</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
 </resources>

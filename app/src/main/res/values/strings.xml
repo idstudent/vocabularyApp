@@ -74,4 +74,7 @@
     <string name="search_result">검색 결과: </string>
     <string name="hint_search">단어 또는 뜻을 검색하세요</string>
     <string name="chart">차트</string>
+    <string name="info">정보</string>
+    <string name="privacy">개인정보 처리방침</string>
+    <string name="open_source_licenses">오픈소스 라이브러리 고지</string>
 </resources>
