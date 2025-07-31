@@ -133,7 +133,6 @@ fun HomeScreen(
                     }
                 )
             }
-            Spacer(Modifier.height(16.dp))
             GoalSection(
                 hasGoal = weeklyGoal > 0,
                 thisWeekWords = thisWeekWords,
