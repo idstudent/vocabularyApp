@@ -10,12 +10,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,12 +22,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.BannerAdView
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.TodayWordCard
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodayWordAllScreen(
     vocabularyViewModel: VocabularyViewModel
@@ -46,14 +41,16 @@ fun TodayWordAllScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .background(MaterialTheme.colorScheme.onBackground)
                     .padding(bottom = 66.dp)
                     .verticalScroll(rememberScrollState())
             ) {
                 Spacer(Modifier.height(24.dp))
                 Text(
                     text = stringResource(R.string.today_words),
-                    style = AppTypography.fontSize20SemiBold,
+                    style = AppTypography.fontSize20SemiBold.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier.padding(16.dp)
                 )
 

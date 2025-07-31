@@ -44,14 +44,16 @@ fun CalendarSaveWordsMoreScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.onPrimary)
+                    .background(MaterialTheme.colorScheme.onBackground)
                     .padding(bottom = 66.dp)
                     .verticalScroll(rememberScrollState())
             ) {
                 Spacer(Modifier.height(24.dp))
                 Text(
                     text = stringResource(R.string.vocabulary),
-                    style = AppTypography.fontSize20SemiBold,
+                    style = AppTypography.fontSize20SemiBold.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier.padding(16.dp)
                 )
 

@@ -18,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -49,13 +47,12 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun VocabularyDetailScreen(
     navController: NavHostController,
@@ -132,7 +129,7 @@ fun VocabularyDetailScreen(
                     navController.navigate("${AppRoutes.ADD_WORD_SCREEN}/$category/$id")
                 },
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
+                contentColor = Color.White,
                 shape = androidx.compose.foundation.shape.CircleShape
             ) {
                 Icon(
@@ -145,13 +142,15 @@ fun VocabularyDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
         ) {
             Spacer(Modifier.height(24.dp))
             Text(
                 text = title,
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(16.dp)
             )
 
@@ -161,7 +160,9 @@ fun VocabularyDetailScreen(
                 placeholder = {
                     Text(
                         text = stringResource(R.string.hint_search),
-                        style = AppTypography.fontSize16Regular
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        )
                     )
                 },
                 modifier = Modifier
@@ -171,9 +172,9 @@ fun VocabularyDetailScreen(
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
-                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
+                    focusedContainerColor = MaterialTheme.colorScheme.onBackground,     // 포커스된 배경
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onBackground,   // 일반 배경
+                    disabledContainerColor = MaterialTheme.colorScheme.onBackground // 비활성 배경
                 )
             )
 
@@ -189,7 +190,9 @@ fun VocabularyDetailScreen(
             } else {
                 Text(
                     text = "${stringResource(R.string.word_count)} $count",
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),

@@ -22,7 +22,9 @@ fun InputTextFieldSection(
 ) {
     Text(
         text = title,
-        style = AppTypography.fontSize20SemiBold,
+        style = AppTypography.fontSize20SemiBold.copy(
+            color = MaterialTheme.colorScheme.secondary
+        ),
         modifier = Modifier.padding(top = 16.dp, start = 16.dp)
     )
     TextField(
@@ -34,14 +36,16 @@ fun InputTextFieldSection(
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
             unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-            focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-            unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
+            focusedContainerColor = MaterialTheme.colorScheme.onBackground,     // 포커스된 배경
+            unfocusedContainerColor = MaterialTheme.colorScheme.onBackground,   // 일반 배경
             disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
         ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        textStyle = AppTypography.fontSize16Regular,
+        textStyle = AppTypography.fontSize16Regular.copy(
+            color = MaterialTheme.colorScheme.secondary
+        ),
         placeholder = {
             Text(
                 text = placeholder,

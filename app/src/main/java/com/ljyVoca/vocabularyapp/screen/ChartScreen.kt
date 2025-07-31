@@ -108,14 +108,16 @@ fun ChartScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(Modifier.height(24.dp))
             Text(
                 text = "최근 1주일간 저장한 단어",
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(16.dp)
             )
 
@@ -154,7 +156,9 @@ fun ChartScreen(
 
             Text(
                 text = "최근 1주일간 정답률",
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(16.dp)
             )
 

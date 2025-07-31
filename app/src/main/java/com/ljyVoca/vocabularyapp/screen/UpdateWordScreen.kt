@@ -2,9 +2,6 @@ package com.ljyVoca.vocabularyapp.screen
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,31 +13,27 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.InputTextFieldSection
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateWordScreen(
     navController: NavHostController,
@@ -58,28 +51,26 @@ fun UpdateWordScreen(
     val toastComplete = stringResource(R.string.toast_save)
     val toastError = stringResource(R.string.toast_word_exists)
 
-    Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.title_word), style = AppTypography.fontSize20Regular)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        },
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         Column(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                text = stringResource(R.string.vocabulary),
+                style = AppTypography.fontSize20Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+            )
+
+            Spacer(Modifier.height(16.dp))
+
             InputTextFieldSection(
                 title = stringResource(R.string.title_word),
                 value = wordTextFieldValue,
@@ -139,7 +130,7 @@ fun UpdateWordScreen(
                     .padding(horizontal = 16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
+                    contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(20.dp)
             ) {

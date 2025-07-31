@@ -10,10 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,12 +19,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
 @Composable
 fun QuizProgressSection(
-    navController: NavHostController,
     currentIndex: Int,
     totalCount: Int
 ) {
@@ -43,24 +37,15 @@ fun QuizProgressSection(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+                .padding(top = 40.dp, end = 16.dp),
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(
-                onClick = {
-                    navController.popBackStack()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "back"
-                )
-            }
-
             Text(
                 text = "$currentIndex / $totalCount",
-                style = AppTypography.fontSize16Regular,
+                style = AppTypography.fontSize16Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.End

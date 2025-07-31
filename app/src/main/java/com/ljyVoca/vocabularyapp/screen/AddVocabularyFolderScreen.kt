@@ -34,14 +34,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.InputTextFieldSection
 import com.ljyVoca.vocabularyapp.components.LanguageSelectBottomSheet
 import com.ljyVoca.vocabularyapp.model.Language
@@ -75,28 +74,23 @@ fun AddVocabularyFolderScreen(
 
     val vocabularyFolders by vocabularyFolderViewModel.vocabularyFolders.collectAsState()
 
-    Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.vocabulary), style = AppTypography.fontSize20Regular)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        },
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         Column(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(Modifier.height(24.dp))
+            Text(
+                text = stringResource(R.string.vocabulary),
+                style = AppTypography.fontSize20Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+            )
+            Spacer(Modifier.height(16.dp))
             InputTextFieldSection(
                 title = stringResource(R.string.title),
                 value = titleTextFieldValue,
@@ -116,7 +110,9 @@ fun AddVocabularyFolderScreen(
             Spacer(Modifier.height(36.dp))
             Text(
                 text = stringResource(R.string.select_language),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
 
@@ -132,7 +128,9 @@ fun AddVocabularyFolderScreen(
             ) {
                 Text(
                     text = selectedLanguage?.displayName() ?: defaultLanguageText,
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = MaterialTheme.colorScheme.onSurface
+                    ),
                     modifier = Modifier
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .clickable {
@@ -172,7 +170,9 @@ fun AddVocabularyFolderScreen(
             ) {
                 Text(
                     text = stringResource(R.string.ok),
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = Color.White
+                    ),
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                     textAlign = TextAlign.Center,
                 )

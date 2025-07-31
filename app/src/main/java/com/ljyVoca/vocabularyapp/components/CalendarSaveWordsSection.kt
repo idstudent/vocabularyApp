@@ -53,7 +53,9 @@ fun CalendarSaveWordSection(
         ) {
             Text(
                 text = "저장한 단어",
-                style = AppTypography.fontSize20SemiBold
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                )
             )
             if(vocaWord.size > 4) {
                 Text(

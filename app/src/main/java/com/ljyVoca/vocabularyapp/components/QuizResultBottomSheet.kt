@@ -23,6 +23,7 @@ import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
 import com.ljyVoca.vocabularyapp.model.AnswerResult
 import com.ljyVoca.vocabularyapp.ui.theme.Color4CAF50
 import com.ljyVoca.vocabularyapp.ui.theme.Color8BC34A
@@ -71,7 +72,9 @@ fun QuizResultBottomSheet(
         ) {
             Text(
                 text = if(answerResult.isCorrect) stringResource(R.string.correct) else stringResource(R.string.incorrect),
-                style = AppTypography.fontSize20SemiBold.copy(White),
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = Color.White
+                ),
             )
 
             if(answerResult.isCorrect) {
@@ -83,22 +86,29 @@ fun QuizResultBottomSheet(
                     Spacer(Modifier.height(16.dp))
                     Text(
                         text = stringResource(R.string.other_means),
-                        style = AppTypography.fontSize16SemiBold.copy(White)
+                        style = AppTypography.fontSize16SemiBold.copy(
+                            color = Color.White
+                        )
                     )
                     Text(
                         text = otherMeans.joinToString(", "),
-                        style = AppTypography.fontSize16SemiBold.copy(White)
+                        style = AppTypography.fontSize16SemiBold.copy(
+                            color = Color.White
+                        )
                     )
                 }
             }else {
                 Spacer(Modifier.height(16.dp))
                 Text(
                     text = stringResource(R.string.answer),
-                    style = AppTypography.fontSize16Regular.copy(White)
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = Color.White)
                 )
                 Text(
                     text = answerResult.allMeanings.joinToString(", "),
-                    style = AppTypography.fontSize16SemiBold.copy(White)
+                    style = AppTypography.fontSize16SemiBold.copy(
+                        color = Color.White
+                    )
                 )
             }
             Spacer(Modifier.height(16.dp))
@@ -121,7 +131,9 @@ fun QuizResultBottomSheet(
             ) {
                 Text(
                     text = if (isLastQuestion) stringResource(R.string.complete) else stringResource(R.string.next),
-                    style = AppTypography.fontSize20SemiBold
+                    style = AppTypography.fontSize20SemiBold.copy(
+                        color = Color.White
+                    )
                 )
             }
             Spacer(Modifier.height(24.dp))

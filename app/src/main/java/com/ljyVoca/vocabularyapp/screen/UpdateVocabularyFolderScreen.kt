@@ -15,13 +15,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,13 +27,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -45,7 +41,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.LanguageSelectBottomSheet
 import com.ljyVoca.vocabularyapp.model.Language
 import com.ljyVoca.vocabularyapp.model.Vocabulary
@@ -83,31 +78,31 @@ fun UpdateVocabularyFolderScreen(
     val defaultLanguageText = stringResource(R.string.select_language)
 
 
-    Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.vocabulary), style = AppTypography.fontSize20Regular)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        },
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
+
+
         Column(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                text = stringResource(R.string.vocabulary),
+                style = AppTypography.fontSize20Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier.padding(16.dp)
+            )
+
             Text(
                 text = stringResource(R.string.title),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(top = 16.dp, start = 16.dp)
             )
             TextField(
@@ -119,20 +114,24 @@ fun UpdateVocabularyFolderScreen(
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
-                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
+                    focusedContainerColor = MaterialTheme.colorScheme.onBackground,     // 포커스된 배경
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onBackground,   // 일반 배경
+                    disabledContainerColor = MaterialTheme.colorScheme.onBackground // 비활성 배경
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                textStyle = AppTypography.fontSize16Regular
+                textStyle = AppTypography.fontSize16Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                )
             )
 
             Spacer(Modifier.height(36.dp))
             Text(
                 text = stringResource(R.string.title_description),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             TextField(
@@ -144,9 +143,9 @@ fun UpdateVocabularyFolderScreen(
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
-                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
+                    focusedContainerColor = MaterialTheme.colorScheme.onBackground,     // 포커스된 배경
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onBackground,   // 일반 배경
+                    disabledContainerColor = MaterialTheme.colorScheme.onBackground // 비활성 배경
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,7 +155,9 @@ fun UpdateVocabularyFolderScreen(
             Spacer(Modifier.height(36.dp))
             Text(
                 text = stringResource(R.string.select_language),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
 
@@ -172,7 +173,9 @@ fun UpdateVocabularyFolderScreen(
             ) {
                 Text(
                     text = selectedLanguage?.displayName() ?: defaultLanguageText,
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = MaterialTheme.colorScheme.onSurface
+                    ),
                     modifier = Modifier
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .clickable {
@@ -215,7 +218,9 @@ fun UpdateVocabularyFolderScreen(
             ) {
                 Text(
                     text = stringResource(R.string.ok),
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = Color.White
+                    ),
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                     textAlign = TextAlign.Center,
                 )

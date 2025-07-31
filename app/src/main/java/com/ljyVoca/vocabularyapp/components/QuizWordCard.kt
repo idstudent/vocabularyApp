@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -85,7 +86,7 @@ fun QuizWordCard(
                         .clip(RoundedCornerShape(20.dp))
                         .border(
                             width = 1.dp,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.onSurface,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .clickable {
@@ -97,7 +98,9 @@ fun QuizWordCard(
                         text = if (!showAnswer) stringResource(R.string.show_answer) else stringResource(
                             R.string.hide_answer
                         ),
-                        style = AppTypography.fontSize16Regular,
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.onSurface
+                        ),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                         textAlign = TextAlign.Center
                     )
@@ -109,12 +112,6 @@ fun QuizWordCard(
                     .fillMaxSize()
                     .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
                 verticalArrangement = Arrangement.Center
-
-//                    if (word.description.isBlank()) {
-//                    Arrangement.Center // description 없으면 중앙 정렬
-//                } else {
-//                    Arrangement.Top // description 있으면 위부터 정렬
-//                }
             ) {
                 Row(
                     modifier = Modifier
@@ -124,7 +121,9 @@ fun QuizWordCard(
                 ) {
                     Text(
                         text = if (quizType == QuizType.MEANING_TO_WORD) word.word else word.mean,
-                        style = AppTypography.fontSize20SemiBold,
+                        style = AppTypography.fontSize20SemiBold.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
                         modifier = Modifier
                             .padding(top = 8.dp)
                             .weight(1f),
@@ -143,7 +142,7 @@ fun QuizWordCard(
                             )
                             .clip(RoundedCornerShape(24.dp))
                             .background(
-                                color = MaterialTheme.colorScheme.onPrimary,
+                                color = Color.White,
                                 shape = RoundedCornerShape(24.dp)
                             ),
                     ) {
@@ -160,13 +159,17 @@ fun QuizWordCard(
                     if (word.category == Language.KOREAN.code) {
                         Text(
                             "${Koroman.romanize(word.mean)}",
-                            style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
+                            style = AppTypography.fontSize16Regular.copy(
+                                MaterialTheme.colorScheme.onSecondary
+                            )
                         )
                         Spacer(Modifier.height(16.dp))
                     }
                     Text(
                         "${word.description}",
-                        style = AppTypography.fontSize16Regular,
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -175,7 +178,9 @@ fun QuizWordCard(
                     Spacer(Modifier.height(8.dp))
                     Text(
                         "${Koroman.romanize(word.mean)}",
-                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
+                        style = AppTypography.fontSize16Regular.copy(
+                            MaterialTheme.colorScheme.onSecondary
+                        )
                     )
                 }
             }

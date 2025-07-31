@@ -27,11 +27,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.ljyVoca.vocabularyapp.R
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.VocabularyFolder
 import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
@@ -53,7 +53,7 @@ fun VocabularyListScreen(
                     navController.navigate(AppRoutes.ADD_VOCABULARY_FOLDER_SCREEN)
                 },
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
+                contentColor = Color.White,
                 shape = androidx.compose.foundation.shape.CircleShape
             ) {
                 Icon(
@@ -66,14 +66,16 @@ fun VocabularyListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(Modifier.height(24.dp))
             Text(
                 text = stringResource(R.string.vocabulary),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(16.dp)
             )
 

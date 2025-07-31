@@ -25,19 +25,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.BannerAdView
-import com.ljyVoca.vocabularyapp.components.Divider
 import com.ljyVoca.vocabularyapp.components.InputTextFieldSection
 import com.ljyVoca.vocabularyapp.model.VocaWord
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddWordScreen(
     category: String,
@@ -54,28 +53,27 @@ fun AddWordScreen(
     val toastEmptyMean = stringResource(R.string.hint_mean)
     val toastComplete = stringResource(R.string.toast_save)
     val toastError = stringResource(R.string.toast_word_exists)
-    Scaffold(
-        topBar = {
-            Column {
-                TopAppBar(
-                    title = {
-                        Text(stringResource(R.string.vocabulary), style = AppTypography.fontSize20Regular)
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                    )
-                )
-                Divider()
-            }
-        },
-    ) { innerPadding ->
+
+    Scaffold { innerPadding ->
         Column(
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                text = stringResource(R.string.vocabulary),
+                style = AppTypography.fontSize20Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier.padding(top = 16.dp, start = 16.dp)
+            )
+
+            Spacer(Modifier.height(16.dp))
+
             InputTextFieldSection(
                 title = stringResource(R.string.title_word),
                 value = wordTextFieldValue,
@@ -143,7 +141,9 @@ fun AddWordScreen(
             ) {
                 Text(
                     text = stringResource(R.string.ok),
-                    style = AppTypography.fontSize16Regular,
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = Color.White
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),

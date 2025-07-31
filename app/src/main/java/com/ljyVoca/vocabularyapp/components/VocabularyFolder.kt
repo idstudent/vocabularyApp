@@ -64,7 +64,9 @@ fun VocabularyFolder(
             ) {
                 Text(
                     text = vocabulary.title,
-                    style = AppTypography.fontSize20ExtraBold,
+                    style = AppTypography.fontSize20ExtraBold.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier
                         .padding(top = 4.dp, end = 16.dp)
                         .weight(1f)
@@ -89,7 +91,9 @@ fun VocabularyFolder(
 
             Text(
                 text = vocabulary.description,
-                style = AppTypography.fontSize16Regular,
+                style = AppTypography.fontSize16Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp)
@@ -97,7 +101,9 @@ fun VocabularyFolder(
 
             Text(
                 text = displayCategory,
-                style = AppTypography.fontSize14Regular,
+                style = AppTypography.fontSize14Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),

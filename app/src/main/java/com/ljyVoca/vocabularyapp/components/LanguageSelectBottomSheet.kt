@@ -42,7 +42,9 @@ fun LanguageSelectBottomSheet(
         ){
             Text(
                 text = stringResource(R.string.language_title),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -51,7 +53,9 @@ fun LanguageSelectBottomSheet(
 
                 Text(
                     text = displayName,
-                    style = AppTypography.fontSize16SemiBold,
+                    style = AppTypography.fontSize16SemiBold.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,7 +34,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.ljyVoca.vocabularyapp.components.Divider
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
@@ -55,7 +55,10 @@ fun BottomNavigationBar(navController: NavController, currentRoute: String?) {
     )
 
     Column {
-        Divider(MaterialTheme.colorScheme.primary)
+        HorizontalDivider(
+            color = MaterialTheme.colorScheme.primary,
+            thickness = 0.5.dp
+        )
         Box(
             modifier = Modifier
                 .fillMaxWidth()

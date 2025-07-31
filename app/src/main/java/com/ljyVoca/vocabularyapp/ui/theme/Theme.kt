@@ -9,17 +9,20 @@ import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color3D68D2,
-    onPrimary = White,
-    secondary = Black,
+    onBackground = Black,
+    onPrimary = Color2D2D2D,
+    secondary = ColorC4C7C5,
     onSecondary = Color868686,
     primaryContainer = Color4CAF50,
     secondaryContainer = ColorFF5722,
     tertiaryContainer = ColorF6447C,
     tertiary = ColorFFC107,
+    onSurface = White,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color3D68D2,
+    onBackground = White,
     onPrimary = White,
     secondary = Black,
     onSecondary = Color868686,
@@ -27,6 +30,7 @@ private val LightColorScheme = lightColorScheme(
     secondaryContainer = ColorFF5722,
     tertiaryContainer = ColorF6447C,
     tertiary = ColorFFC107,
+    onSurface = Black,
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),

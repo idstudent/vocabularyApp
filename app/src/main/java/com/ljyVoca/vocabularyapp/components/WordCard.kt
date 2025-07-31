@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.daissue.koroman.Koroman
@@ -76,7 +77,9 @@ fun WordCard(
             ) {
                 Text(
                     text = word.word,
-                    style = AppTypography.fontSize20SemiBold,
+                    style = AppTypography.fontSize20SemiBold.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
                     modifier = Modifier
                         .padding(top = 8.dp)
                         .weight(1f),
@@ -94,7 +97,7 @@ fun WordCard(
                         )
                         .clip(RoundedCornerShape(24.dp))
                         .background(
-                            color = MaterialTheme.colorScheme.onPrimary,
+                            color = Color.White,
                             shape = RoundedCornerShape(24.dp)
                         ),
                 ) {
@@ -106,7 +109,9 @@ fun WordCard(
             }
             Text(
                 text= word.mean,
-                style = AppTypography.fontSize16SemiBold
+                style = AppTypography.fontSize16SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                )
             )
             Spacer(Modifier.width(8.dp))
 
@@ -116,7 +121,9 @@ fun WordCard(
                 if(word.category == Language.KOREAN.code) {
                     Text(
                         Koroman.romanize(word.mean),
-                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        )
                     )
                     Spacer(Modifier.height(8.dp))
                 }
@@ -125,7 +132,9 @@ fun WordCard(
                 ) {
                     Text(
                         word.description,
-                        style = AppTypography.fontSize16Regular,
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
@@ -157,7 +166,9 @@ fun WordCard(
                 ) {
                     Text(
                         Koroman.romanize(word.mean),
-                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary),
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        ),
                         modifier = Modifier
                             .weight(1f)
                             .padding(end = 8.dp)

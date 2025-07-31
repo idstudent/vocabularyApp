@@ -19,7 +19,6 @@ fun SetStatusBarColor() {
         val window = (view.context as Activity).window
         val insetsController = WindowCompat.getInsetsController(window, view)
 
-        // 최신 방식
         window.statusBarColor = if (darkTheme) {
             Color.Black.toArgb()
         } else {

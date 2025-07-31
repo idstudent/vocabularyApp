@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -76,7 +77,9 @@ fun FilterBottomSheet(
         ){
             Text(
                 text = stringResource(R.string.study_settings),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -132,7 +135,13 @@ fun FilterBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                Text(stringResource(R.string.ok), style = AppTypography.fontSize16Regular)
+                Text(
+                    text = stringResource(R.string.ok),
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = Color.White
+                    ),
+                    modifier = Modifier.padding(vertical = 6.dp)
+                )
             }
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -151,7 +160,9 @@ private fun <T> FilterSection(
     Column {
         Text(
             text = title,
-            style = AppTypography.fontSize16SemiBold,
+            style = AppTypography.fontSize16SemiBold.copy(
+                color = MaterialTheme.colorScheme.secondary
+            ),
             modifier = Modifier.padding(bottom = 12.dp)
         )
 
@@ -186,7 +197,7 @@ private fun <T> FilterSection(
                         text = displayName,
                         style = AppTypography.fontSize14Regular,
                         color = if (isSelected)
-                            MaterialTheme.colorScheme.onPrimary
+                            Color.White
                         else
                             MaterialTheme.colorScheme.onSecondary
                     )

@@ -52,6 +52,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -111,7 +112,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
         ) {
@@ -155,7 +156,7 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                     textAlign = TextAlign.Center,
                     color = if(hasFilterSetting) {
-                        MaterialTheme.colorScheme.onPrimary
+                        Color.White
                     }else {
                         MaterialTheme.colorScheme.onSecondary
                     }
@@ -205,7 +206,9 @@ private fun GoalSection(
     ) {
         Text(
             text = stringResource(R.string.weekly_goal),
-            style = AppTypography.fontSize20SemiBold
+            style = AppTypography.fontSize20SemiBold.copy(
+                color = MaterialTheme.colorScheme.secondary
+            )
         )
 
         if(hasGoal) {
@@ -236,7 +239,9 @@ private fun GoalSection(
                     ) {
                         Text(
                             text = stringResource(R.string.new_words),
-                            style = AppTypography.fontSize16SemiBold
+                            style = AppTypography.fontSize16SemiBold.copy(
+                                color = MaterialTheme.colorScheme.secondary
+                            )
                         )
                         Text(
                             text = "$thisWeekWords / $goalWords",
@@ -302,7 +307,9 @@ private fun GoalSection(
                     Spacer(Modifier.width(4.dp))
                     Text(
                         text = stringResource(R.string.goal_setting),
-                        style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary)
+                        style = AppTypography.fontSize16Regular.copy(
+                            color = MaterialTheme.colorScheme.secondary
+                        )
                     )
                 }
             }
@@ -323,7 +330,9 @@ private fun TodayWordTitleSection(
     ) {
         Text(
             stringResource(R.string.today_words),
-            style = AppTypography.fontSize20SemiBold,
+            style = AppTypography.fontSize20SemiBold.copy(
+                color = MaterialTheme.colorScheme.secondary
+            ),
             modifier = Modifier.padding(16.dp)
         )
 
@@ -396,7 +405,9 @@ private fun TodayCardEmptySection() {
         ) {
             Text(
                 text = stringResource(R.string.today_word_empty),
-                style = AppTypography.fontSize16Regular.copy(MaterialTheme.colorScheme.onSecondary),
+                style = AppTypography.fontSize16Regular.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                )
             )
         }
     }
@@ -417,7 +428,9 @@ private fun WordFilterSection(
         ) {
             Text(
                 text = stringResource(R.string.filter),
-                style = AppTypography.fontSize20SemiBold
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                )
             )
             IconButton(
                 onClick = filterClick
@@ -452,7 +465,9 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
                         } else {
                             stringResource(R.string.all_languages)
                         },
-                        style = AppTypography.fontSize14Regular
+                        style = AppTypography.fontSize14Regular.copy(
+                            color = Color.White
+                        )
                     )
                 },
                 colors = AssistChipDefaults.assistChipColors(
@@ -468,7 +483,9 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
                 label = {
                     Text(
                         text = getStudyModeDisplayName(filterState.studyMode),
-                        style = AppTypography.fontSize14Regular
+                        style = AppTypography.fontSize14Regular.copy(
+                            color = Color.White
+                        )
                     )
                 },
                 colors = AssistChipDefaults.assistChipColors(
@@ -484,7 +501,9 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
                 label = {
                     Text(
                         text = getQuizTypeDisplayName(filterState.quizType),
-                        style = AppTypography.fontSize14Regular
+                        style = AppTypography.fontSize14Regular.copy(
+                            color = Color.White
+                        )
                     )
                 },
                 colors = AssistChipDefaults.assistChipColors(
@@ -500,7 +519,9 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
                 label = {
                     Text(
                         text = getWordFilterDisplayName(filterState.wordFilter),
-                        style = AppTypography.fontSize14Regular
+                        style = AppTypography.fontSize14Regular.copy(
+                            color = Color.White
+                        )
                     )
                 },
                 colors = AssistChipDefaults.assistChipColors(
@@ -514,7 +535,9 @@ private fun FilterChipSection(filterState: FilterState, hasFilterSetting: Boolea
     }else {
         Text(
             text = stringResource(R.string.empty_filter),
-            style = AppTypography.fontSize16SemiBold.copy(MaterialTheme.colorScheme.onSecondary),
+            style = AppTypography.fontSize16SemiBold.copy(
+                color = MaterialTheme.colorScheme.secondary
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),

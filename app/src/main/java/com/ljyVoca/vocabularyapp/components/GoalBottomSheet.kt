@@ -73,7 +73,9 @@ fun GoalBottomSheet(
         ) {
             Text(
                 text = stringResource(R.string.weekly_learning_goal),
-                style = AppTypography.fontSize20SemiBold,
+                style = AppTypography.fontSize20SemiBold.copy(
+                    color = MaterialTheme.colorScheme.secondary
+                ),
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
@@ -132,7 +134,7 @@ fun GoalBottomSheet(
                 Text(
                     text = stringResource(R.string.edit_goal),
                     style = AppTypography.fontSize14Regular,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
@@ -196,7 +198,13 @@ fun GoalBottomSheet(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(stringResource(R.string.complete_setting), style = AppTypography.fontSize16Regular)
+                Text(
+                    text = stringResource(R.string.complete_setting),
+                    style = AppTypography.fontSize16Regular.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    ),
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))

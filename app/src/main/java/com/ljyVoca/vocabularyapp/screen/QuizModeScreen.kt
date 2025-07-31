@@ -16,7 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -30,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -145,13 +145,12 @@ fun QuizModeScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.onPrimary)
+                .background(MaterialTheme.colorScheme.onBackground)
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center
         ) {
             QuizProgressSection(
-                navController = navController,
                 currentIndex = currentIndex + 1,
                 totalCount = quizWordList.size
             )
@@ -160,25 +159,13 @@ fun QuizModeScreen(
                     word = word,
                     quizType = filterState.quizType,
                     studyMode = filterState.studyMode,
-                    onShowClick = {
-                        showAnswer = !showAnswer
-                    },
+                    onShowClick = {},
                     ttsClick = {
                         vocabularyViewModel.speakWord(word)
                     },
                 )
             }
-            if(showAnswer) {
-                Text(
-                    text = if(filterState.quizType == QuizType.WORD_TO_MEANING) {
-                        "${stringResource(R.string.answer)}${currentQuizWord?.word}"
-                    }else {
-                        "${stringResource(R.string.answer)}${currentQuizWord?.mean}"
-                    },
-                    style = AppTypography.fontSize16Regular,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-            }
+
             TextField(
                 value = answer,
                 onValueChange = {
@@ -191,9 +178,9 @@ fun QuizModeScreen(
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = MaterialTheme.colorScheme.primary,     // 포커스된 밑줄
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,   // 일반 밑줄
-                    focusedContainerColor = MaterialTheme.colorScheme.onPrimary,     // 포커스된 배경
-                    unfocusedContainerColor = MaterialTheme.colorScheme.onPrimary,   // 일반 배경
-                    disabledContainerColor = MaterialTheme.colorScheme.onPrimary // 비활성 배경
+                    focusedContainerColor = MaterialTheme.colorScheme.onBackground,     // 포커스된 배경
+                    unfocusedContainerColor = MaterialTheme.colorScheme.onBackground,   // 일반 배경
+                    disabledContainerColor = MaterialTheme.colorScheme.onBackground // 비활성 배경
                 ),
                 textStyle = AppTypography.fontSize16SemiBold.copy(
                     textAlign = TextAlign.Center,
@@ -223,13 +210,15 @@ fun QuizModeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 36.dp)
-                    .height(48.dp)
+                    .height(52.dp)
 
             ) {
                 Text(
                     if(isQuizCompleted) stringResource(R.string.complete)
                     else stringResource(R.string.next),
-                    style = AppTypography.fontSize20Regular
+                    style = AppTypography.fontSize20Regular.copy(
+                        color = Color.White
+                    )
                 )
             }
 
