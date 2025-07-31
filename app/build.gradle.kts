@@ -6,6 +6,7 @@ plugins {
     id("com.google.gms.google-services")
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -103,6 +104,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.kizitonwose.calendar:compose:2.6.1")
 
     implementation("com.patrykandpatrick.vico:compose:2.1.0")

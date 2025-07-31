@@ -5,4 +5,5 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.52" apply false  // 2.48 → 2.52
     id("com.google.devtools.ksp") version "2.0.20-1.0.25" apply false  // 업그레이드
     id("com.google.gms.google-services") version "4.4.3" apply false
+    id("com.google.firebase.crashlytics") version "3.0.2" apply false
 }
