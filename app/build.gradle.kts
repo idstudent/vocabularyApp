@@ -5,7 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
     id("kotlin-parcelize")
-    id("org.jetbrains.kotlin.plugin.compose")  // 이 줄 추가
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
