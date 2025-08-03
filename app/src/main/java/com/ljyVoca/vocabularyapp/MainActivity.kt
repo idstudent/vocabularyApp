@@ -7,13 +7,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.ads.MobileAds
 import com.ljyVoca.vocabularyapp.screen.MainScreen
 import com.ljyVoca.vocabularyapp.ui.theme.LjyVocaTheme
-import com.ljyVoca.vocabularyapp.ui.theme.SetStatusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,18 +22,16 @@ class MainActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         MobileAds.initialize(this) {}
-
         requestNotificationPermission()
-
         enableEdgeToEdge()
 
         setContent {
             LjyVocaTheme {
-                SetStatusBarColor()
                 MainScreen(navController = rememberNavController())
             }
         }
     }
+
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
@@ -47,5 +45,4 @@ class MainActivity: ComponentActivity() {
         }
     }
 }
-
 

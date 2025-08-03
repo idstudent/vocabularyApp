@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId = "com.ljyVoca.vocabularyapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 2
         versionName = "1.0.1"
@@ -70,10 +70,9 @@ tasks.withType(JavaCompile::class) {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
@@ -92,10 +91,10 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.activity:activity-compose:1.8.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 
-    implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.navigation:navigation-compose:2.8.4")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("androidx.compose.material:material-icons-extended")
 

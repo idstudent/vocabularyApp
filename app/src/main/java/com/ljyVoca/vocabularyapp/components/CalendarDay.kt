@@ -23,7 +23,6 @@ import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarDay(
     day: CalendarDay,

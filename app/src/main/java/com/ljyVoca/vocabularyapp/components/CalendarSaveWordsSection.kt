@@ -32,7 +32,6 @@ import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.CalendarViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarSaveWordSection(
     navController: NavHostController,
@@ -76,7 +75,6 @@ fun CalendarSaveWordSection(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun HorizontalCardSection(wordList: List<VocaWord>, calendarViewModel: CalendarViewModel) {
     if(wordList.isNotEmpty()) {

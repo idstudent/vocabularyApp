@@ -28,7 +28,6 @@ import com.ljyVoca.vocabularyapp.components.TodayWordCard
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
 import com.ljyVoca.vocabularyapp.viewmodel.CalendarViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarSaveWordsMoreScreen(
     calendarViewModel: CalendarViewModel

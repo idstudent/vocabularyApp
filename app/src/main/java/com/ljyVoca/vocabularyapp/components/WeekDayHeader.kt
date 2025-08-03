@@ -20,7 +20,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeekDaysHeader(firstDayOfWeek: DayOfWeek) {
     val dayFormatter = remember {

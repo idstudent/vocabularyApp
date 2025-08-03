@@ -30,7 +30,6 @@ import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph(navController: NavHostController) {
     val vocabularyViewModel: VocabularyViewModel = hiltViewModel()

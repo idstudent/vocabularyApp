@@ -22,7 +22,6 @@ import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
-@RequiresApi(Build.VERSION_CODES.O)
 class CalendarViewModel @Inject constructor(
     private val calendarRepository: CalendarRepository,
     @ApplicationContext private val context: Context

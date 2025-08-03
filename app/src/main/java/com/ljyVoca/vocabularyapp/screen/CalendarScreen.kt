@@ -37,7 +37,6 @@ import java.time.YearMonth
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarScreen(
     navController: NavHostController,

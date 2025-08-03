@@ -23,7 +23,6 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarHeader(
     currentMonth: YearMonth,
