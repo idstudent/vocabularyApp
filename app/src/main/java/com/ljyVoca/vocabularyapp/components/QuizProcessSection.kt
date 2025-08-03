@@ -52,36 +52,13 @@ fun QuizProgressSection(
             )
         }
 
-        QuizProgressBar(
+        CustomProgressBar(
             progress = progress,
             modifier = Modifier
                 .padding(top = 8.dp, start = 16.dp, end = 16.dp)
                 .height(16.dp),
             backgroundColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
             progressColor = MaterialTheme.colorScheme.primary,
-        )
-    }
-}
-
-@Composable
-private fun QuizProgressBar(
-    progress: Float,
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = Color.LightGray,
-    progressColor: Color = Color.Blue
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(16.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(backgroundColor)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(progress.coerceIn(0f, 1f))
-                .background(progressColor)
         )
     }
 }

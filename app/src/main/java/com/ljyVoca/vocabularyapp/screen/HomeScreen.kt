@@ -58,6 +58,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
+import com.ljyVoca.vocabularyapp.components.CustomProgressBar
 import com.ljyVoca.vocabularyapp.components.FilterBottomSheet
 import com.ljyVoca.vocabularyapp.components.GoalBottomSheet
 import com.ljyVoca.vocabularyapp.components.TodayWordCard
@@ -272,11 +273,11 @@ private fun GoalSection(
                         (thisWeekWords / goalWords.toFloat()).coerceAtMost(1f)
                     } else 0f
 
-                    LinearProgressIndicator(
-                        progress = { progress },
+                    CustomProgressBar(
+                        progress =  progress ,
                         modifier = Modifier.fillMaxWidth().height(16.dp),
-                        color = MaterialTheme.colorScheme.primary,
-                        trackColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                        backgroundColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                        progressColor = MaterialTheme.colorScheme.primary,
                     )
 
                     Spacer(modifier = Modifier.height(4.dp))
