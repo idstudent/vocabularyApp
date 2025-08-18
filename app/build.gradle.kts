@@ -18,7 +18,7 @@ android {
         applicationId = "com.ljyVoca.vocabularyapp"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
+        versionCode = 3
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -112,4 +112,7 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-ads:23.3.0")
     implementation("com.google.android.gms:play-services-oss-licenses:17.1.0")
+
+    implementation("org.apache.poi:poi:5.2.4")
+    implementation("org.apache.poi:poi-ooxml:5.2.4")
 }

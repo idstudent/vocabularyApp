@@ -2,10 +2,12 @@ package com.ljyVoca.vocabularyapp.screen
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
@@ -34,6 +37,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,8 +54,12 @@ import com.ljyVoca.vocabularyapp.R
 import com.ljyVoca.vocabularyapp.components.WordCard
 import com.ljyVoca.vocabularyapp.navigation.AppRoutes
 import com.ljyVoca.vocabularyapp.ui.theme.AppTypography
+import com.ljyVoca.vocabularyapp.util.ExcelExporter
 import com.ljyVoca.vocabularyapp.viewmodel.SaveWordViewModel
 import com.ljyVoca.vocabularyapp.viewmodel.VocabularyFolderViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun VocabularyDetailScreen(
@@ -64,8 +72,10 @@ fun VocabularyDetailScreen(
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
     var deleteWordId by remember { mutableStateOf<String?>(null) }
+    var isExporting by remember { mutableStateOf(false) }
 
     val toastDelete = stringResource(R.string.toast_delete_word)
+    val coroutineScope = rememberCoroutineScope()
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -77,6 +87,43 @@ fun VocabularyDetailScreen(
     val listState = rememberLazyListState()
 
     var searchQuery by remember { mutableStateOf("") }
+
+    val exportToExcel = {
+        if (words.isNotEmpty()) {
+            coroutineScope.launch {
+                isExporting = true
+                Toast.makeText(context, "다운로드 중입니다", Toast.LENGTH_SHORT).show()
+
+                try {
+                    withContext(Dispatchers.IO) {
+                        val exporter = ExcelExporter(context)
+                        val success = exporter.exportWordsToExcel(words, "${title}_단어장.xlsx")
+
+                        withContext(Dispatchers.Main) {
+                            if (success) {
+                                Toast.makeText(
+                                    context,
+                                    "엑셀 파일이 Downloads 폴더에 저장되었습니다!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                Toast.makeText(context, "파일 저장에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "오류가 발생했습니다: ${e.message}", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } finally {
+                    isExporting = false
+                }
+            }
+        } else {
+            Toast.makeText(context, "내보낼 단어가 없습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     LaunchedEffect(id) {
         vocabularyFolderViewModel.clearWords()
@@ -146,14 +193,25 @@ fun VocabularyDetailScreen(
                 .padding(innerPadding)
         ) {
             Spacer(Modifier.height(24.dp))
-            Text(
-                text = title,
-                style = AppTypography.fontSize20SemiBold.copy(
-                    color = MaterialTheme.colorScheme.secondary
-                ),
-                modifier = Modifier.padding(16.dp)
-            )
-
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = title,
+                    style = AppTypography.fontSize20SemiBold.copy(
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                )
+                Icon(
+                    imageVector = Icons.Default.Download,
+                    contentDescription = "download",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable { exportToExcel() }
+                )
+            }
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
