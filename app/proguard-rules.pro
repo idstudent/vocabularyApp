@@ -99,3 +99,36 @@
 
 -keep class com.google.android.gms.internal.oss_licenses.** { *; }
 -dontwarn com.google.android.gms.internal.oss_licenses.**
+
+-dontwarn java.awt.**
+-dontwarn javax.swing.**
+-dontwarn org.apache.batik.**
+-dontwarn javax.xml.stream.**
+-dontwarn net.sf.saxon.**
+-dontwarn org.osgi.**
+
+# Microsoft Office 스키마 관련
+-dontwarn com.microsoft.schemas.**
+-keep class com.microsoft.schemas.** { *; }
+
+# Apache POI
+-dontwarn org.apache.poi.**
+-dontwarn org.openxmlformats.**
+-dontwarn org.apache.xmlbeans.**
+-dontwarn java.awt.**
+-dontwarn javax.swing.**
+-dontwarn org.apache.batik.**
+-dontwarn javax.xml.stream.**
+-dontwarn net.sf.saxon.**
+-dontwarn org.osgi.**
+-dontwarn com.graphbuilder.**
+-dontwarn org.apache.commons.math3.**
+
+-keep class org.apache.poi.** { *; }
+-keep class org.apache.xmlbeans.** { *; }
+-keep class org.openxmlformats.schemas.** { *; }
+-keep class com.microsoft.schemas.** { *; }
+
+# 사용하지 않는 POI 기능 제외
+-dontnote org.apache.poi.**
+-dontnote org.apache.xmlbeans.**
