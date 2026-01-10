@@ -1,7 +1,7 @@
 # Notch지 말아요 - 단어암기 앱(Global vocabulary)
 
 ## 스토어 링크
-심사 끝나는 대로 추가 예정
+https://play.google.com/store/apps/details?id=com.ljyVoca.vocabularyapp
 
 ## 기술스택 
 이후에도 계속 추가될 예정이나, 현재 기술스택입니다.
